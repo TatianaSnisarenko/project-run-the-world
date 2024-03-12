@@ -14,45 +14,69 @@ class AddressBook(UserDict):
         with open(AddressBook.filename, "wb") as file:
             pickle.dump(self, file)
 
+
     def read_from_file(self):
         if os.path.exists(self.filename):
             with open(AddressBook.filename, "rb") as file:
                 return pickle.load(file)
         else:
             return AddressBook()
+        
 
-    def create_record(self, name: str, phone: str) -> None:
-        record = Record(name, phone)
-        self.add_record(record)
+    def create_record(self, name: str, phones: list, email: str, address: str, birthday: str) -> None:
+        pass
 
-    def add_record(self, record: Record) -> None:
-        if self.data.get(record.name) != None:
-            raise KeyError
-        self.data[record.name] = record
 
-    def change_record_phone(self, name: str, phone: str) -> None:
-        existing_record = self.data[Name(name)]
-        existing_record.edit_phone(phone)
+    def add_record_phone(self, name:str, phone:str) -> None:
+        pass
 
-    def add_record_birthday(self, name: str, birthday: str) -> None:
-        existing_record = self.data[Name(name)]
-        existing_record.add_birthday(birthday)
 
-    def show_record_phone(self, name: str) -> str:
-        existing_record = self.data[Name(name)]
-        return str(existing_record.phone)
+    def change_record_phone(self, name: str, old_phone:str, new_phone:str) -> None:
+        pass
 
-    def show_record_birthday(self, name: str) -> str:
-        existing_record = self.data[Name(name)]
-        return str(existing_record.birthday) if existing_record.birthday else f'Birthday is not added for {name}'
 
-    def delete(self, name: str) -> None:
-        self.data.pop(Name(name), None)
+    def show_records(self) -> list: #list of dictionaries(to_dict)
+        pass
 
-    def get_record_birthdays_per_week(self) -> list:
-        contact_birthdays = [{'name': str(name), 'birthday': record.birthday.birth_date}
-                             for name, record in self.data.items() if record.birthday is not None]
-        return get_birthdays_per_week(contact_birthdays)
 
-    def get_record_contacts(self) -> list:
-        return [': '.join((str(name), str(record.phone))) for name, record in self.data.items()]
+    def show_record(self, name:str) -> list: #list of dictionaries(to_dict)
+        pass
+
+
+    def find_by_name(self, name:str) -> list: #list of dictionaries(to_dict)
+        pass
+
+
+    def find_by_phone(self, phone:str) -> list: #list of dictionaries(to_dict)
+        pass
+
+
+    def find_by_email(self, email:str) -> list: #list of dictionaries(to_dict)
+        pass
+
+
+    def find_by_address(self, address:str) -> list: #list of dictionaries(to_dict)
+        pass
+
+
+    def find_by_birthday(self, birthday:str) -> list: #list of dictionaries(to_dict)
+        pass
+
+
+    def delete_record(self, name:str) -> None:
+        pass
+
+
+    def change_record_name(self, old_name:str, new_name:str) -> None:
+        pass
+
+
+    def change_record_address(self, name:str, new_address:str) -> None:
+        pass
+
+
+    def change_record_birthday(self, name:str, new_birthday) -> None:
+        pass
+
+
+
