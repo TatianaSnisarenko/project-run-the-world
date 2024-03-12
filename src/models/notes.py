@@ -33,31 +33,9 @@ class Notes(UserDict):
         self.data[note.id] = note
         Notes.note_id += 1
 
-    # def change_record_phone(self, name: str, phone: str) -> None:
-    #     existing_record = self.data[Name(name)]
-    #     existing_record.edit_phone(phone)
-
-    # def add_record_birthday(self, name: str, birthday: str) -> None:
-    #     existing_record = self.data[Name(name)]
-    #     existing_record.add_birthday(birthday)
-
     def get_notes(self) -> list:
         return [str(note) for id, note in self.data.items()]
 
     def get_dict_notes(self) -> list:
         return [note.to_dict() for id, note in self.data.items()]
 
-    # def show_record_birthday(self, name: str) -> str:
-    #     existing_record = self.data[Name(name)]
-    #     return str(existing_record.birthday) if existing_record.birthday else f'Birthday is not added for {name}'
-
-    # def delete(self, name: str) -> None:
-    #     self.data.pop(Name(name), None)
-
-    # def get_record_birthdays_per_week(self) -> list:
-    #     contact_birthdays = [{'name': str(name), 'birthday': record.birthday.birth_date}
-    #                          for name, record in self.data.items() if record.birthday is not None]
-    #     return get_birthdays_per_week(contact_birthdays)
-
-    # def get_record_contacts(self) -> list:
-    #     return [': '.join((str(name), str(record.phone))) for name, record in self.data.items()]
