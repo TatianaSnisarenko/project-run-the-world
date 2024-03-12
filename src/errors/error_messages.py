@@ -3,6 +3,7 @@ from src.errors.errors import ValidationError
 generic_error_message = 'Something went wrong, please try again.'
 invalid_phone_number_error_message = 'Invalid phone number: must be 10 digits value.'
 invalid_birthday_format_error_message = 'Invalid birthday format: must be <DD.MM.YYYY>.'
+invalid_name_error_message = 'Name can´t be empty'
 
 generic_invalid_command_format_message = '''Invalid "command" format. Available commands: 
     - <add Name phone_namber> - to add contact, 
