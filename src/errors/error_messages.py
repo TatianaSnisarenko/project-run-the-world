@@ -3,6 +3,10 @@ from src.errors.errors import ValidationError
 generic_error_message = 'Something went wrong, please try again.'
 invalid_phone_number_error_message = 'Invalid phone number: must be 10 digits value.'
 invalid_birthday_format_error_message = 'Invalid birthday format: must be <DD.MM.YYYY>.'
+invalid_name_format_error_message = 'Invalid name format: name must not be empty.'
+invalid_note_id_format_error_message = 'Invalid note id: id must not be a valid number.'
+tag_already_exists_error_message_template = 'Such tag: [{tag}] is already present for the note with id: [{id}]'
+tag_doenst_exist_error_message_template = 'Such tag: [{tag}] is not found for the note with id: [{id}]'
 invalid_per_days_error_message = 'Invalid value: must be only numbers from 1 to 365'
 
 generic_invalid_command_format_message = '''Invalid "command" format. Available commands: 
@@ -72,20 +76,3 @@ show_all_birthdays_error_messages = {
 parse_input_error_messages = {
     'FormatError': generic_invalid_command_format_message,
 }
-
-
-def input_error(error_messages):
-    def decorator(func):
-        def inner(*args, **kwargs):
-            try:
-                return func(*args, **kwargs)
-            except (IndexError, ValueError):
-                return error_messages.get('FormatError') if 'FormatError' in error_messages else generic_error_message
-            except KeyError:
-                return error_messages.get('KeyError') if 'KeyError' in error_messages else generic_error_message
-            except ValidationError:
-                return error_messages.get('ValidationError') if 'ValidationError' in error_messages else generic_error_message
-            except Exception as e:
-                return generic_error_message
-        return inner
-    return decorator

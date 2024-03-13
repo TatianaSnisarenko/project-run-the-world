@@ -1,5 +1,4 @@
 from src.errors.error_messages import (
-    input_error,
     parse_input_error_messages,
     add_contact_error_messages,
     change_contact_error_messages,
@@ -11,6 +10,7 @@ from src.errors.error_messages import (
     add_note_error_messages,
     show_all_notes_error_messages
 )
+from src.errors.error_decorator import input_error
 from src.models.address_book import AddressBook
 from src.models.notes import Notes
 from src.errors.errors import ValidationError

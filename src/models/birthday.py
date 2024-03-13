@@ -7,7 +7,7 @@ from src.errors.error_messages import invalid_birthday_format_error_message
 
 class Birthday(Field):
     def __init__(self, birthday: str):
-        super().__init__(self.clear_birthday(birthday))
+        super().__init__(self.validate_and_get_value(birthday))
 
     def __eq__(self, other):
         if isinstance(other, Birthday):
@@ -22,7 +22,7 @@ class Birthday(Field):
         return datetime.strptime(self.value, '%d.%m.%Y') if self.value else None
 
     @staticmethod
-    def clear_birthday(birthday: str) -> str:
+    def validate_and_get_value(birthday: str) -> str:
         cleared_birthday = birthday.strip()
         pattern = re.compile(r'^\d{2}\.\d{2}\.\d{4}$')
         if not bool(pattern.match(cleared_birthday)):
