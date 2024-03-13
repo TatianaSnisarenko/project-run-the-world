@@ -70,3 +70,19 @@ show_all_birthdays_error_messages = {
 parse_input_error_messages = {
     'FormatError': generic_invalid_command_format_message,
 }
+
+change_title_error_messages = {
+    'KeyError': 'Note with provided ID does not exist'
+}
+
+change_content_error_messages = {
+    'KeyError': 'Note with provided ID does not exist'
+}
+
+add_tag_error_messages = {
+    'KeyError': 'Note with provided ID does not exist'
+}
+
+change_tag_error_messages = {
+    'KeyError': 'Note with provided ID does not exist'
+}
