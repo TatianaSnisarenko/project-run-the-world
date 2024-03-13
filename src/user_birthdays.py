@@ -27,7 +27,6 @@ def get_birthdays_per_week_from_date(users, from_date, per_days):
 
         # re-establish delta
         delta_days = (birthday_this_year - date).days
-        # birthday_week_day = birthday_this_year.weekday()
 
         # check delta should be within a week from today
         if delta_days < int(per_days):
