@@ -3,6 +3,7 @@ from src.errors.errors import ValidationError
 generic_error_message = 'Something went wrong, please try again.'
 invalid_phone_number_error_message = 'Invalid phone number: must be 10 digits value.'
 invalid_birthday_format_error_message = 'Invalid birthday format: must be <DD.MM.YYYY>.'
+invalid_per_days_error_message = 'Invalid value: must be only numbers from 1 to 365'
 
 generic_invalid_command_format_message = '''Invalid "command" format. Available commands: 
     - <add Name phone_namber> - to add contact, 
@@ -53,6 +54,7 @@ show_birthday_error_messages = {
 
 show_all_error_messages = {
     'FormatError': 'Contacts are empty. Please, use "add" command to add new contacts.',
+    
 }
 
 show_all_notes_error_messages = {
@@ -60,7 +62,11 @@ show_all_notes_error_messages = {
 }
 
 show_all_birthdays_error_messages = {
-    'FormatError': 'Contacts are empty. Please, use "add" command to add new contacts first.'
+    'FormatError': 'Invalid "birthdays" format. Command "birthdays" must have argument: birthdays <per_days>.',
+    'KeyError': 'Contacts are empty. Please, use "add" command to add new contacts first.',
+    'ValidationError': invalid_per_days_error_message,
+    
+
 }
 
 parse_input_error_messages = {

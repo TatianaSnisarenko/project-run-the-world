@@ -13,6 +13,7 @@ from src.errors.error_messages import (
 )
 from src.models.address_book import AddressBook
 from src.models.notes import Notes
+from src.errors.errors import ValidationError
 from src.functions import format_as_table
 from src.constants import commands_description
 
@@ -87,11 +88,16 @@ def show_birthday(args, book: AddressBook):
 
 
 @input_error(show_all_birthdays_error_messages)
-def show_all_birthdays(book: AddressBook):
+def show_all_birthdays(args, book: AddressBook):
+    if len(args) != 1:
+       raise ValueError(show_all_birthdays_error_messages) 
+    if not args[0].isdigit() or int(args[0]) == 0 or int(args[0]) > 365 or len(args[0]) > 3:
+        raise ValidationError(show_all_birthdays_error_messages)
+    per_days = int(args[0])
     if not book:
-        raise ValueError
-    birthdays = book.get_record_birthdays_per_week()
-    return '\n'.join(birthdays) if birthdays else 'No birthdays for this week.'
+        raise KeyError(show_all_birthdays_error_messages) 
+    birthdays = book.get_record_birthdays_per_week(per_days)
+    return format_as_table(birthdays, 40) if birthdays else 'No birthdays for this week.'
 
 
 @input_error([])

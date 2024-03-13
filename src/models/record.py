@@ -24,6 +24,5 @@ class Record:
         return hash(self.name, self.phone, self.birthday)
 
     def __str__(self):
-        birthday_str = f', birthday: {
-            self.birthday.value}' if self.birthday else ''
+        birthday_str = f', birthday: {self.birthday.value}' if self.birthday else ''
         return f'Contact name: {self.name.value}, phone: {self.phone.value}' + birthday_str

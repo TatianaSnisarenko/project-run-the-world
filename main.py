@@ -56,7 +56,7 @@ def main():
         elif command == 'notes':
             print(show_all_notes(notes))
         elif command == 'birthdays':
-            print(show_all_birthdays(book))
+            print(show_all_birthdays(args,book))
         else:
             print(generic_invalid_command_format_message)
 

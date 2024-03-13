@@ -49,10 +49,10 @@ class AddressBook(UserDict):
     def delete(self, name: str) -> None:
         self.data.pop(Name(name), None)
 
-    def get_record_birthdays_per_week(self) -> list:
+    def get_record_birthdays_per_week(self,per_days:int) -> list:
         contact_birthdays = [{'name': str(name), 'birthday': record.birthday.birth_date}
                              for name, record in self.data.items() if record.birthday is not None]
-        return get_birthdays_per_week(contact_birthdays)
+        return get_birthdays_per_week(contact_birthdays,per_days)
 
     def get_record_contacts(self) -> list:
         return [': '.join((str(name), str(record.phone))) for name, record in self.data.items()]

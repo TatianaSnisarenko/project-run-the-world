@@ -3,19 +3,14 @@ from collections import defaultdict
 from calendar import isleap
 
 
-def get_birthdays_per_week(users):
+def get_birthdays_per_week(users, per_days):
     if not users:
         return tuple()
-    return get_birthdays_per_week_from_date(users, datetime.today())
+    return get_birthdays_per_week_from_date(users, datetime.today(), per_days)
 
 
-def get_birthdays_per_week_from_date(users, from_date):
+def get_birthdays_per_week_from_date(users, from_date, per_days):
     date = from_date.date()
-    date_day_of_week = date.weekday()
-
-    # Calculate the date of the next Monday
-    days_until_monday = (0 - date.weekday()) % 7
-    closest_monday = date + timedelta(days=days_until_monday)
 
     result = defaultdict(list)
 
@@ -25,14 +20,6 @@ def get_birthdays_per_week_from_date(users, from_date):
         birthday_this_year = get_date(date.year, birthday.month, birthday.day)
         delta_days = (birthday_this_year - date).days
 
-        # handle negative delta for weekends
-        # include past saturday's birthday for Monday
-        is_today_sunday = date_day_of_week == 6 and delta_days == -1
-        # include past weekends birthdays for Monday
-        is_today_monday = date_day_of_week == 0 and delta_days in [-1, -2]
-        if is_today_sunday or is_today_monday:
-            result[closest_monday].append(name)
-
         # if birthday less than today, consider next year's birthday.
         if delta_days < 0:
             birthday_this_year = get_date(
@@ -40,25 +27,20 @@ def get_birthdays_per_week_from_date(users, from_date):
 
         # re-establish delta
         delta_days = (birthday_this_year - date).days
-        birthday_week_day = birthday_this_year.weekday()
+        # birthday_week_day = birthday_this_year.weekday()
 
         # check delta should be within a week from today
-        if delta_days < 7:
-            # exclude next weekends
-            if birthday_week_day in [5, 6]:
-                if (delta_days >= birthday_week_day):
-                    continue
-                else:
-                    result[closest_monday].append(name)
-            # add all birthdays to its weekdays
-            else:
-                result[birthday_this_year].append(name)
+        if delta_days < int(per_days):
+           result[birthday_this_year].append(name)
     ordered_dict = dict(sorted(result.items()))
     formatted_list = []
     for key, value in ordered_dict.items():
         formatted_list.append(
-            f'{key.strftime("%A")}: {', '.join(value)}')
-    return tuple(formatted_list)
+            f'{key.strftime("%d.%m.%Y")}: {", ".join(value)}')
+    formatted_l =[]
+    for key, value in ordered_dict.items():
+        formatted_l.append({'Birthday': key.strftime("%d.%m.%Y"), 'Name': ", ".join(value)})
+    return formatted_l
 
 
 def show_birthdays_per_week_from_date(users_birthdays):
