@@ -36,9 +36,13 @@ def add_note(notes: Notes):
 
 
 @input_error(add_contact_error_messages)
-def add_contact(args, book: AddressBook):
-    name, phone = args
-    book.create_record(name, phone)
+def add_contact(book: AddressBook):
+    #name, phone, address = args
+    name_add = input('Enter name: ')
+    phone_add = input('Enter phone: ')
+    #address_add = input('Enter address:')
+    #email_add = input('Enter email:')
+    book.create_record(name_add, phone_add)
     return 'Contact added.'
 
 
@@ -48,6 +52,33 @@ def change_contact(args, book: AddressBook):
     book.change_record_phone(name, phone)
     return 'Contact updated.'
 
+#@input_error(show_contact_error_messages)
+def show_contact(args, book: AddressBook):
+    name = args[0] 
+    return book.show_record_contact(name)
+
+#@input_error(find_by_phone_error_messages)
+def find_by_phone(args, book: AddressBook): 
+    phone = args[0]
+    contacts = book.get_record_contacts()
+
+    if phone in [contact.split(":")[0].strip() for contact in contacts]:
+        book.find_record_by_phone(phone)
+        return f'Contact {phone} found successfully.'
+    else:
+        return f'Contact {phone} not found.'
+
+#@input_error(find_by_email_error_messages)
+def find_by_email(args, book: AddressBook): 
+    pass
+#    email = args[0]  
+#    return book.find_record_by_email(email)
+
+#@input_error(find_by_address_error_messages)
+def find_by_address(args, book: AddressBook): 
+    pass
+#    address = args[0]  
+#    return book.find_record_by_address(address)
 
 @input_error(show_phone_error_messages)
 def show_phone(args, book: AddressBook):
@@ -56,7 +87,7 @@ def show_phone(args, book: AddressBook):
     return book.show_record_phone(args[0])
 
 
-@input_error(show_all_error_messages)
+#@input_error(show_all_error_messages)
 def show_all_contacts(book: AddressBook):
     contacts = book.get_record_contacts()
     if not contacts:
@@ -97,3 +128,14 @@ def show_all_birthdays(book: AddressBook):
 @input_error([])
 def show_help():
     return format_as_table(commands_description, 40)
+
+#@input_error(delete_contact_error_messages)
+def delete_contact(args, book: AddressBook):
+    name = args[0]
+    contacts = book.get_record_contacts()
+
+    if name in [contact.split(":")[0].strip() for contact in contacts]:
+        book.delete(name)
+        return f'Contact {name} deleted successfully.'
+    else:
+        return f'Contact {name} not found.'

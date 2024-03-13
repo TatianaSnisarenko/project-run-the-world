@@ -3,7 +3,9 @@ from src.user_birthdays import get_birthdays_per_week
 import pickle
 import os
 from src.models.name import Name
+from src.models.phone import Phone
 from src.models.record import Record
+from src.models.address import Address
 
 
 class AddressBook(UserDict):
@@ -22,6 +24,8 @@ class AddressBook(UserDict):
             return AddressBook()
 
     def create_record(self, name: str, phone: str) -> None:
+        #address: str
+        # record = Record(name, phone, address)
         record = Record(name, phone)
         self.add_record(record)
 
@@ -34,9 +38,35 @@ class AddressBook(UserDict):
         existing_record = self.data[Name(name)]
         existing_record.edit_phone(phone)
 
+    def change_record_address(self, name: str, address: str) -> None:
+        existing_record = self.data[Name(name)]
+        existing_record.edit_address(address)
+
     def add_record_birthday(self, name: str, birthday: str) -> None:
         existing_record = self.data[Name(name)]
         existing_record.add_birthday(birthday)
+
+    def find_record_by_phone(self, phone: str) -> str:
+        existing_record = None
+        for record in self.data.values():
+            if record.phone == phone:
+                existing_record = record
+                break
+
+        if existing_record:
+            return f"{existing_record.name}: Phone - {existing_record.phone}, Birthday - {existing_record.birthday}"
+        else:
+            return f'Contact with phone {phone} not found'
+
+    def find_record_by_address(self, address: str) -> str: 
+        pass
+
+    def find_record_by_email(self, email: str) -> str: 
+        pass
+
+    def show_record_contact(self, name: str) -> str:
+        existing_record = self.data[Name(name)]
+        return f"{name}: Phone - {existing_record.phone}, Birthday - {existing_record.birthday}" if existing_record.name else f'Contact with name {name} not found'
 
     def show_record_phone(self, name: str) -> str:
         existing_record = self.data[Name(name)]
@@ -46,8 +76,8 @@ class AddressBook(UserDict):
         existing_record = self.data[Name(name)]
         return str(existing_record.birthday) if existing_record.birthday else f'Birthday is not added for {name}'
 
-    def delete(self, name: str) -> None:
-        self.data.pop(Name(name), None)
+    def delete(self, name: str) -> str:
+        self.data.pop(Name(name), 'Contact deleted')
 
     def get_record_birthdays_per_week(self) -> list:
         contact_birthdays = [{'name': str(name), 'birthday': record.birthday.birth_date}
@@ -55,4 +85,5 @@ class AddressBook(UserDict):
         return get_birthdays_per_week(contact_birthdays)
 
     def get_record_contacts(self) -> list:
-        return [': '.join((str(name), str(record.phone))) for name, record in self.data.items()]
+        return [f"{name}: Phone - {record.phone}, Birthday - {record.birthday} " for name, record in self.data.items()]
+        #return [f"{name}: Phone - {record.phone}, Birthday - {record.birthday}, Address - {record.address} " for name, record in self.data.items()]

@@ -5,11 +5,14 @@ from src.commands import (
     show_all_contacts,
     parse_input,
     add_birthday,
+    find_by_phone,
     show_birthday,
+    show_contact,
     show_all_birthdays,
     add_note,
     show_all_notes,
-    show_help)
+    show_help,
+    delete_contact)
 from src.errors.error_messages import generic_invalid_command_format_message
 from src.models.address_book import AddressBook
 from src.models.notes import Notes
@@ -42,7 +45,7 @@ def main():
         elif command == 'hello':
             print('How can I help you?')
         elif command == 'add':
-            print(add_contact(args, book))
+            print(add_contact(book))
         elif command == 'change':
             print(change_contact(args, book))
         elif command == 'phone':
@@ -53,10 +56,16 @@ def main():
             print(add_birthday(args, book))
         elif command == 'show-birthday':
             print(show_birthday(args, book))
+        elif command == 'show-contact':
+            print(show_contact(args, book))
         elif command == 'notes':
             print(show_all_notes(notes))
         elif command == 'birthdays':
             print(show_all_birthdays(book))
+        elif command == 'find-by-phone':
+            print(find_by_phone(args, book))
+        elif command == 'delete':
+            print(delete_contact(args, book))
         else:
             print(generic_invalid_command_format_message)
 
