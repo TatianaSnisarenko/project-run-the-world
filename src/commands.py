@@ -8,7 +8,8 @@ from src.errors.error_messages import (
     show_birthday_error_messages,
     show_all_birthdays_error_messages,
     add_note_error_messages,
-    show_all_notes_error_messages
+    show_all_notes_error_messages,
+    change_birthday_error_messages
 )
 from src.errors.error_decorator import input_error
 from src.models.address_book import AddressBook
@@ -78,6 +79,12 @@ def add_birthday(args, book: AddressBook):
     name, birthday = args
     book.add_record_birthday(name, birthday)
     return 'Birthday added.'
+
+@input_error(change_birthday_error_messages)
+def change_birthday(args, book: AddressBook):
+    name, birthday = args
+    book.change_record_birthday(name, birthday)
+    return 'Contact updated.'
 
 
 @input_error(show_birthday_error_messages)

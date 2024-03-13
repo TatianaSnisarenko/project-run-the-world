@@ -46,6 +46,12 @@ change_contact_error_messages = {
     'ValidationError': invalid_phone_number_error_message
 }
 
+change_birthday_error_messages = {
+    'FormatError': 'Invalid "change" format. Command "change" must have 2 arguments: change-birthday <Name> <new_birthday>.',
+    'KeyError': 'Such name is not found, please, use "add" command instead.',
+    'ValidationError': invalid_birthday_format_error_message
+}
+
 show_phone_error_messages = {
     'FormatError': 'Invalid "phone" format. Command "phone" must have 2 arguments: <phone Name>.',
     'KeyError': 'Such name is not found, please, try again.'

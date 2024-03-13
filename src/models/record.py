@@ -9,8 +9,11 @@ class Record:
         self.phone = Phone(phone)
         self.birthday = None
 
-    def add_birthday(self, birthday: str) -> None:
+    def add_birthday(self, birthday) -> None:
         self.birthday = Birthday(birthday)
+
+    def change_birthday(self, new_birthday):
+        self.birthday = Birthday(new_birthday)
 
     def edit_phone(self, phone) -> None:
         self.phone = Phone(phone)
