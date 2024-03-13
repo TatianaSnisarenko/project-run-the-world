@@ -38,4 +38,35 @@ class Notes(UserDict):
 
     def get_dict_notes(self) -> list:
         return [note.to_dict() for id, note in self.data.items()]
+    
+    #імплементувати методи change_title, change_content, add_tag та change_tag в класі Notes, 
+    #які будуть викликати відповідні методи для зміни властивостей нотатки в класі Note. 
+    #Перед викликом цих методів ви маєте перевірити, чи існує нотатка з вказаним ідентифікатором.
 
+    def change_title(self, note_id: str, new_title: str) -> None:
+            int_id = Note.validate_and_get_id(note_id)
+            existing_note = self.data.get(int_id)
+            if existing_note is None:
+                raise KeyError("Note with provided ID does not exist")
+            existing_note.change_title(new_title)
+
+    def change_content(self, note_id: str, new_content: str) -> None:
+        int_id = Note.validate_and_get_id(note_id)
+        existing_note = self.data.get(int_id)
+        if existing_note is None:
+            raise KeyError("Note with provided ID does not exist")
+        existing_note.change_content(new_content)
+
+    def add_tag(self, note_id: str, new_tag: str) -> None:
+        int_id = Note.validate_and_get_id(note_id)
+        existing_note = self.data.get(int_id)
+        if existing_note is None:
+            raise KeyError("Note with provided ID does not exist")
+        existing_note.add_tag(new_tag)
+
+    def change_tag(self, note_id: str, old_tag: str, new_tag: str) -> None:
+        int_id = Note.validate_and_get_id(note_id)
+        existing_note = self.data.get(int_id)
+        if existing_note is None:
+            raise KeyError("Note with provided ID does not exist")
+        existing_note.change_tag(old_tag, new_tag)
