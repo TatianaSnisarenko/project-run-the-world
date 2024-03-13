@@ -61,5 +61,8 @@ commands_description = [
      {"Command": "notes",
      "Format": "notes <title> <text>",
      "Example": "notes <Reminder> <How to be beautiful. Apply the cream to the face every night.>"},
+     {"Command": "birthday",
+     "Format": "birthday <Name>",
+     "Example": "birthday <Ann>"},
 
 ]
