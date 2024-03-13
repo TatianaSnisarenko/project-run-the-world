@@ -1,6 +1,8 @@
 from src.models.tag import Tag
 from src.models.title import Title
 from src.models.content import Content
+from src.errors.errors import ValidationError
+from src.errors.error_messages import invalid_note_id_format_error_message
 
 
 class Note:
@@ -33,3 +35,10 @@ class Note:
             "Title": self.title.value,
             "Content": self.content.value
         }
+
+    @staticmethod
+    def validate_and_get_id(id: str) -> int:
+        try:
+            return int(id.strip())
+        except:
+            raise ValidationError(invalid_note_id_format_error_message)

@@ -11,8 +11,8 @@ def input_error(error_messages):
                 return error_messages.get('FormatError') if 'FormatError' in error_messages else generic_error_message
             except KeyError:
                 return error_messages.get('KeyError') if 'KeyError' in error_messages else generic_error_message
-            except ValidationError:
-                return error_messages.get('ValidationError') if 'ValidationError' in error_messages else generic_error_message
+            except ValidationError as e:
+                return str(e)
             except Exception as e:
                 return generic_error_message
         return inner
