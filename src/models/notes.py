@@ -44,11 +44,11 @@ class Notes(UserDict):
     #Перед викликом цих методів ви маєте перевірити, чи існує нотатка з вказаним ідентифікатором.
 
     def change_title(self, note_id: str, new_title: str) -> None:
-            int_id = Note.validate_and_get_id(note_id)
-            existing_note = self.data.get(int_id)
-            if existing_note is None:
-                raise KeyError("Note with provided ID does not exist")
-            existing_note.change_title(new_title)
+        int_id = Note.validate_and_get_id(note_id)
+        existing_note = self.data.get(int_id)
+        if existing_note is None:
+            raise KeyError("Note with provided ID does not exist")
+        existing_note.change_title(new_title)
 
     def change_content(self, note_id: str, new_content: str) -> None:
         int_id = Note.validate_and_get_id(note_id)
