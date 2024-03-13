@@ -86,3 +86,11 @@ add_tag_error_messages = {
 change_tag_error_messages = {
     'KeyError': 'Note with provided ID does not exist'
 }
+
+change_phone_error_messages = {
+    'ValueError': 'Phone number not found in the record'
+}
+
+delete_phone_error_messages = {
+    'ValueError': 'Phone number not found in the record'
+}
