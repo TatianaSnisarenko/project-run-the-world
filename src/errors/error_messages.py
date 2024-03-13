@@ -5,6 +5,8 @@ invalid_phone_number_error_message = 'Invalid phone number: must be 10 digits va
 invalid_birthday_format_error_message = 'Invalid birthday format: must be <DD.MM.YYYY>.'
 invalid_name_format_error_message = 'Invalid name format: name must not be empty.'
 invalid_note_id_format_error_message = 'Invalid note id: id must not be a valid number.'
+tag_already_exists_error_message_template = 'Such tag: [{tag}] is already present for the note with id: [{id}]'
+tag_doenst_exist_error_message_template = 'Such tag: [{tag}] is not found for the note with id: [{id}]'
 
 generic_invalid_command_format_message = '''Invalid "command" format. Available commands: 
     - <add Name phone_namber> - to add contact, 
