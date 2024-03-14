@@ -3,7 +3,7 @@ from src.models.field import Field
 
 class Address(Field):
     def __init__(self, address: str):
-        super().__init__(address)
+        super().__init__(address.strip())
 
     def __eq__(self, other):
         if isinstance(other, Address):

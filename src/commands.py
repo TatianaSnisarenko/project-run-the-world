@@ -81,9 +81,10 @@ def add_birthday(args, book: AddressBook):
     book.add_record_birthday(name, birthday)
     return 'Birthday added.'
 
+
 @input_error(change_birthday_error_messages)
 def change_birthday(args, book: AddressBook):
-    if (len(args) != 2):    
+    if (len(args) != 2):
         raise ValueError
     name, birthday = args
     book.change_record_birthday(name, birthday)
@@ -101,18 +102,18 @@ def show_birthday(args, book: AddressBook):
 def show_all_birthdays(args, book: AddressBook):
     days = args[0].strip()
     if len(args) != 1:
-       raise ValueError()
+        raise ValueError()
     if not days.isdigit():
-       raise ValidationError(invalid_per_days_error_message)  
+        raise ValidationError(invalid_per_days_error_message)
     per_days = int(days)
     if per_days < 1 or per_days > 365:
         raise ValidationError(invalid_per_days_error_message)
     if not book:
-        raise KeyError() 
+        raise KeyError()
     birthdays = book.get_record_birthdays_per_week(per_days)
     return format_as_table(birthdays, 40) if birthdays else 'No birthdays for next {days} days.'
 
 
 @input_error([])
 def show_help():
-    return format_as_table(commands_description, 40)
+    return format_as_table(commands_description, 20)
