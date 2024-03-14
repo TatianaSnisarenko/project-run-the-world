@@ -5,6 +5,7 @@ from src.commands import (
     show_all_contacts,
     parse_input,
     add_birthday,
+    change_birthday,
     show_birthday,
     show_all_birthdays,
     add_note,
@@ -51,12 +52,14 @@ def main():
             print(show_all_contacts(book))
         elif command == 'add-birthday':
             print(add_birthday(args, book))
+        elif command == 'change-birthday':
+            print(change_birthday(args, book))
         elif command == 'show-birthday':
             print(show_birthday(args, book))
         elif command == 'notes':
             print(show_all_notes(notes))
         elif command == 'birthdays':
-            print(show_all_birthdays(book))
+            print(show_all_birthdays(args, book))
         else:
             print(generic_invalid_command_format_message)
 

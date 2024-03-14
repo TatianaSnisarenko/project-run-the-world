@@ -7,6 +7,8 @@ invalid_name_format_error_message = 'Invalid name format: name must not be empty
 invalid_note_id_format_error_message = 'Invalid note id: id must not be a valid number.'
 tag_already_exists_error_message_template = 'Such tag: [{tag}] is already present for the note with id: [{id}]'
 tag_doenst_exist_error_message_template = 'Such tag: [{tag}] is not found for the note with id: [{id}]'
+invalid_email_error_message_template = 'Not a valid email provided: [{email}]. Please try again'
+invalid_per_days_error_message = 'Invalid value: must be only numbers from 1 to 365'
 
 generic_invalid_command_format_message = '''Invalid "command" format. Available commands: 
     - <add Name phone_namber> - to add contact, 
@@ -45,18 +47,26 @@ change_contact_error_messages = {
     'ValidationError': invalid_phone_number_error_message
 }
 
+change_birthday_error_messages = {
+    'FormatError': 'Invalid "change-birthday" format. Command "change-birthday" must have 3 arguments: <change-birthday Namenew_birthday>.',
+    'KeyError': 'Such name is not found, please, use "add" command instead.',
+    'ValidationError': invalid_birthday_format_error_message
+}
+
 show_phone_error_messages = {
     'FormatError': 'Invalid "phone" format. Command "phone" must have 2 arguments: <phone Name>.',
     'KeyError': 'Such name is not found, please, try again.'
 }
 
 show_birthday_error_messages = {
-    'FormatError': 'Invalid "show-birthday" format. Command "show-birthday" must have 2 arguments: <show-birthday Name>.',
-    'KeyError': 'Such name is not found, please, try again.'
+    'FormatError': 'Invalid "show-birthday" format. Command "show-birthday" must have 3 arguments: <show-birthday Name>.',
+    'KeyError': 'Such name is not found, please, try again.',
+    'ValidationError': invalid_phone_number_error_message
 }
 
 show_all_error_messages = {
     'FormatError': 'Contacts are empty. Please, use "add" command to add new contacts.',
+    
 }
 
 show_all_notes_error_messages = {
@@ -64,7 +74,11 @@ show_all_notes_error_messages = {
 }
 
 show_all_birthdays_error_messages = {
-    'FormatError': 'Contacts are empty. Please, use "add" command to add new contacts first.'
+    'FormatError': 'Invalid "birthdays" format. Command "birthdays" must have 2 arguments: <birthdays per_days>.',
+    'KeyError': 'Contacts are empty. Please, use "add" command to add new contacts first.',
+    'ValidationError': invalid_per_days_error_message,
+    
+
 }
 
 parse_input_error_messages = {

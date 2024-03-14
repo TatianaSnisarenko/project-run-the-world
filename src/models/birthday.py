@@ -30,5 +30,5 @@ class Birthday(Field):
         try:
             date_object = datetime.strptime(cleared_birthday, '%d.%m.%Y')
             return cleared_birthday
-        except ValueError:
+        except (ValueError,KeyError):
             raise ValidationError(invalid_birthday_format_error_message)
