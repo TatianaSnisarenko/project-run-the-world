@@ -23,15 +23,15 @@ class AddressBook(UserDict):
         else:
             return AddressBook()
 
-    def create_record(self, name: str, phone: str) -> None:
-        #address: str
-        # record = Record(name, phone, address)
-        record = Record(name, phone)
+    def create_record(self, name: str, phone: str, email: str, birthday: str, address: str ) -> None:
+         #address: str
+        # record = Record(name, phone, address, birthday)
+        record = Record(name, phone, email ,birthday, address)
         self.add_record(record)
 
     def add_record(self, record: Record) -> None:
-        if self.data.get(record.name) != None:
-            raise KeyError
+        if not record.name:
+            raise ValueError("Name cannot be empty.")
         self.data[record.name] = record
 
     def change_record_phone(self, name: str, phone: str) -> None:
@@ -72,9 +72,6 @@ class AddressBook(UserDict):
         else:
             return f'Contact with name {name} not found'
 
-
-
-
     def show_record_phone(self, name: str) -> str:
         existing_record = self.data[Name(name)]
         return str(existing_record.phone)
@@ -93,7 +90,7 @@ class AddressBook(UserDict):
 
     def get_record_contacts(self) -> list:
         contacts = [
-            f"{name}: Phone - {', '.join(str(phone) for phone in record.phones)}, Birthday - {record.birthday}"
+            f"{name}: Phone - {', '.join(str(phone) for phone in record.phones)}, Birthday - {record.birthday}, Email - {record.email}, Address - {record.address}"
             if hasattr(record, 'phones') and record.phones else
             f"{name}: Phone - None, Birthday - {record.birthday}"
             for name, record in self.data.items()

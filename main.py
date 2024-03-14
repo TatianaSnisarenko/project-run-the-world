@@ -64,6 +64,12 @@ def main():
             print(show_all_birthdays(book))
         elif command == 'find-by-phone':
             print(find_by_phone(args, book))
+        elif command == 'find-by-email':
+            pass
+            #print(find_by_email(args, email))
+        elif command == 'find-by-address':
+            pass
+            #print(find_by_address(args, address))
         elif command == 'delete':
             print(delete_contact(args, book))
             print(show_all_contacts(book))
