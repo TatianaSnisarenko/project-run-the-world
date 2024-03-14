@@ -7,6 +7,7 @@ invalid_name_format_error_message = 'Invalid name format: name must not be empty
 invalid_note_id_format_error_message = 'Invalid note id: id must not be a valid number.'
 tag_already_exists_error_message_template = 'Such tag: [{tag}] is already present for the note with id: [{id}]'
 tag_doenst_exist_error_message_template = 'Such tag: [{tag}] is not found for the note with id: [{id}]'
+invalid_email_error_message_template = 'Not a valid email provided: [{email}]. Please try again'
 invalid_per_days_error_message = 'Invalid value: must be only numbers from 1 to 365'
 
 generic_invalid_command_format_message = '''Invalid "command" format. Available commands: 
