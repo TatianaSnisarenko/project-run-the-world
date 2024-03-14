@@ -9,6 +9,7 @@ tag_already_exists_error_message_template = 'Such tag: [{tag}] is already presen
 tag_doenst_exist_error_message_template = 'Such tag: [{tag}] is not found for the note with id: [{id}]'
 invalid_email_error_message_template = 'Not a valid email provided: [{email}]. Please try again'
 invalid_per_days_error_message = 'Invalid value: must be only numbers from 1 to 365'
+empty_notes_error_message = 'Notes are empty. Please, use "add-note" command to add new notes.'
 
 generic_invalid_command_format_message = '''Invalid "command" format. Available commands: 
     - <add Name phone_namber> - to add contact, 
