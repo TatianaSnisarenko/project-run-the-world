@@ -38,10 +38,6 @@ class Notes(UserDict):
 
     def get_dict_notes(self) -> list:
         return [note.to_dict() for id, note in self.data.items()]
-    
-    #імплементувати методи change_title, change_content, add_tag та change_tag в класі Notes, 
-    #які будуть викликати відповідні методи для зміни властивостей нотатки в класі Note. 
-    #Перед викликом цих методів ви маєте перевірити, чи існує нотатка з вказаним ідентифікатором.
 
     def change_title(self, note_id: str, new_title: str) -> None:
         int_id = Note.validate_and_get_id(note_id)

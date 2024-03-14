@@ -86,25 +86,28 @@ parse_input_error_messages = {
 }
 
 change_title_error_messages = {
-    'KeyError': 'Note with provided ID does not exist'
+    'FormatError': 'Note with provided ID does not exist'
 }
 
 change_content_error_messages = {
-    'KeyError': 'Note with provided ID does not exist'
+    'FormatError': 'Note with provided ID does not exist'
 }
 
 add_tag_error_messages = {
-    'KeyError': 'Note with provided ID does not exist'
+    'FormatError': 'Note with provided ID does not exist'
 }
 
 change_tag_error_messages = {
-    'KeyError': 'Note with provided ID does not exist'
+    'FormatError': 'Note with provided ID does not exist'
 }
 
 change_phone_error_messages = {
-    'ValueError': 'Phone number not found in the record'
+    'FormatError': 'Phone number not found in the record',
+     'KeyError': 'Such name is not found, please, try again'
 }
 
 delete_phone_error_messages = {
-    'ValueError': 'Phone number not found in the record'
+    'FormatError': 'Phone number not found in the record',
+     'KeyError': 'Such name is not found, please, try again'
 }
+
