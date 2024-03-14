@@ -15,7 +15,7 @@ class Record:
 
     def add_birthday(self, birthday: str) -> None:
         self.birthday = Birthday(birthday)
-
+        
     def edit_phone(self, phone) -> None:
         self.phone = Phone(phone)
 
@@ -40,6 +40,6 @@ class Record:
         # {address_str}
         # email_str = birthday_str = f', email: {self.email.value}' if self.email else ''
         # {email_str}
-        return f'Contact name: {self.name.value}, phone: {self.phone.value}{birthday_str}'
-
+        #return f'Contact name: {self.name.value}, phone: {self.phone.value}{birthday_str}'
+        return f'Contact name: {self.name.value}, phone: {self.phone.value}' + birthday_str
 

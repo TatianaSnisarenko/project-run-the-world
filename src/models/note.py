@@ -51,7 +51,7 @@ class Note:
     def __str__(self):
         str_tags = [str(tag.value) for tag in self.tags]
         return f'Note id: [{self.id}], title: [{self.title.value}], content: [{self.content.value}], tags: [{', '.join(str_tags)}]'
-
+    
     def to_dict(self):
         return {
             "Id": self.id,

@@ -66,6 +66,7 @@ def main():
             print(find_by_phone(args, book))
         elif command == 'delete':
             print(delete_contact(args, book))
+            print(show_all_contacts(book))
         else:
             print(generic_invalid_command_format_message)
 
