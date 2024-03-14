@@ -47,7 +47,7 @@ change_contact_error_messages = {
 }
 
 change_birthday_error_messages = {
-    'FormatError': 'Invalid "change" format. Command "change" must have 2 arguments: change-birthday <Name> <new_birthday>.',
+    'FormatError': 'Invalid "change-birthday" format. Command "change-birthday" must have 3 arguments: <change-birthday Namenew_birthday>.',
     'KeyError': 'Such name is not found, please, use "add" command instead.',
     'ValidationError': invalid_birthday_format_error_message
 }
@@ -58,8 +58,9 @@ show_phone_error_messages = {
 }
 
 show_birthday_error_messages = {
-    'FormatError': 'Invalid "show-birthday" format. Command "show-birthday" must have 2 arguments: <show-birthday Name>.',
-    'KeyError': 'Such name is not found, please, try again.'
+    'FormatError': 'Invalid "show-birthday" format. Command "show-birthday" must have 3 arguments: <show-birthday Name>.',
+    'KeyError': 'Such name is not found, please, try again.',
+    'ValidationError': invalid_phone_number_error_message
 }
 
 show_all_error_messages = {
@@ -72,7 +73,7 @@ show_all_notes_error_messages = {
 }
 
 show_all_birthdays_error_messages = {
-    'FormatError': 'Invalid "birthdays" format. Command "birthdays" must have argument: birthdays <per_days>.',
+    'FormatError': 'Invalid "birthdays" format. Command "birthdays" must have 2 arguments: <birthdays per_days>.',
     'KeyError': 'Contacts are empty. Please, use "add" command to add new contacts first.',
     'ValidationError': invalid_per_days_error_message,
     

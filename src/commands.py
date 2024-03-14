@@ -7,6 +7,7 @@ from src.errors.error_messages import (
     add_birthday_error_messages,
     show_birthday_error_messages,
     show_all_birthdays_error_messages,
+    invalid_per_days_error_message,
     add_note_error_messages,
     show_all_notes_error_messages,
     change_birthday_error_messages
@@ -82,9 +83,11 @@ def add_birthday(args, book: AddressBook):
 
 @input_error(change_birthday_error_messages)
 def change_birthday(args, book: AddressBook):
+    if (len(args) != 2):    
+        raise ValueError
     name, birthday = args
     book.change_record_birthday(name, birthday)
-    return 'Contact updated.'
+    return 'Birthday changed.'
 
 
 @input_error(show_birthday_error_messages)
@@ -96,15 +99,18 @@ def show_birthday(args, book: AddressBook):
 
 @input_error(show_all_birthdays_error_messages)
 def show_all_birthdays(args, book: AddressBook):
+    days = args[0].strip()
     if len(args) != 1:
-       raise ValueError(show_all_birthdays_error_messages) 
-    if not args[0].isdigit() or int(args[0]) == 0 or int(args[0]) > 365 or len(args[0]) > 3:
-        raise ValidationError(show_all_birthdays_error_messages)
-    per_days = int(args[0])
+       raise ValueError()
+    if not days.isdigit():
+       raise ValidationError(invalid_per_days_error_message)  
+    per_days = int(days)
+    if per_days < 1 or per_days > 365:
+        raise ValidationError(invalid_per_days_error_message)
     if not book:
-        raise KeyError(show_all_birthdays_error_messages) 
+        raise KeyError() 
     birthdays = book.get_record_birthdays_per_week(per_days)
-    return format_as_table(birthdays, 40) if birthdays else 'No birthdays for this week.'
+    return format_as_table(birthdays, 40) if birthdays else 'No birthdays for next {days} days.'
 
 
 @input_error([])
