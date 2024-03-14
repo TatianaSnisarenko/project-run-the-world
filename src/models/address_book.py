@@ -77,13 +77,19 @@ class AddressBook(UserDict):
         return str(existing_record.birthday) if existing_record.birthday else f'Birthday is not added for {name}'
 
     def delete(self, name: str) -> str:
-        self.data.pop(Name(name), 'Contact deleted')
-
+        self.data.pop(Name(name), None)
+        
     def get_record_birthdays_per_week(self) -> list:
         contact_birthdays = [{'name': str(name), 'birthday': record.birthday.birth_date}
                              for name, record in self.data.items() if record.birthday is not None]
         return get_birthdays_per_week(contact_birthdays)
 
     def get_record_contacts(self) -> list:
-        return [f"{name}: Phone - {record.phone}, Birthday - {record.birthday} " for name, record in self.data.items()]
-        #return [f"{name}: Phone - {record.phone}, Birthday - {record.birthday}, Address - {record.address} " for name, record in self.data.items()]
+        contacts = [
+            f"{name}: Phone - {', '.join(str(phone) for phone in record.phones)}, Birthday - {record.birthday}"
+            if hasattr(record, 'phones') and record.phones else
+            f"{name}: Phone - None, Birthday - {record.birthday}"
+            for name, record in self.data.items()
+        ]
+        return contacts
+

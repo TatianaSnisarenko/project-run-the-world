@@ -8,7 +8,8 @@ from src.errors.error_messages import (
     show_birthday_error_messages,
     show_all_birthdays_error_messages,
     add_note_error_messages,
-    show_all_notes_error_messages
+    show_all_notes_error_messages,
+    change_birthday_error_messages
 )
 from src.errors.error_decorator import input_error
 from src.models.address_book import AddressBook
@@ -62,11 +63,17 @@ def find_by_phone(args, book: AddressBook):
     phone = args[0]
     contacts = book.get_record_contacts()
 
-    if phone in [contact.split(":")[0].strip() for contact in contacts]:
-        book.find_record_by_phone(phone)
-        return f'Contact {phone} found successfully.'
-    else:
-        return f'Contact {phone} not found.'
+    # Extrahiere Telefonnummern und vergleiche sie
+    phone_numbers = [contact.split("Phone - ")[1].split(",")[0].strip() for contact in contacts]
+    if phone in phone_numbers:
+        for contact in contacts:
+            if f"Phone - {phone}" in contact:
+                return f'Contact {phone} found successfully. {contact}'
+    
+    # Wenn die Telefonnummer nicht gefunden wurde
+    return f'Contact {phone} not found.'
+
+
 
 #@input_error(find_by_email_error_messages)
 def find_by_email(args, book: AddressBook): 
@@ -110,6 +117,15 @@ def add_birthday(args, book: AddressBook):
     return 'Birthday added.'
 
 
+@input_error(change_birthday_error_messages)
+def change_birthday(args, book: AddressBook):
+    if (len(args) != 2):
+        raise ValueError
+    name, birthday = args
+    book.change_record_birthday(name, birthday)
+    return 'Birthday changed.'
+
+
 @input_error(show_birthday_error_messages)
 def show_birthday(args, book: AddressBook):
     if (len(args) != 1):
@@ -118,16 +134,24 @@ def show_birthday(args, book: AddressBook):
 
 
 @input_error(show_all_birthdays_error_messages)
-def show_all_birthdays(book: AddressBook):
+def show_all_birthdays(args, book: AddressBook):
+    days = args[0].strip()
+    if len(args) != 1:
+        raise ValueError()
+    if not days.isdigit():
+        raise ValidationError(invalid_per_days_error_message)
+    per_days = int(days)
+    if per_days < 1 or per_days > 365:
+        raise ValidationError(invalid_per_days_error_message)
     if not book:
-        raise ValueError
-    birthdays = book.get_record_birthdays_per_week()
-    return '\n'.join(birthdays) if birthdays else 'No birthdays for this week.'
+        raise KeyError()
+    birthdays = book.get_record_birthdays_per_week(per_days)
+    return format_as_table(birthdays, 40) if birthdays else 'No birthdays for next {days} days.'
 
 
 @input_error([])
 def show_help():
-    return format_as_table(commands_description, 40)
+    return format_as_table(commands_description, 20)
 
 #@input_error(delete_contact_error_messages)
 def delete_contact(args, book: AddressBook):
