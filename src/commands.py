@@ -7,12 +7,15 @@ from src.errors.error_messages import (
     add_birthday_error_messages,
     show_birthday_error_messages,
     show_all_birthdays_error_messages,
+    invalid_per_days_error_message,
     add_note_error_messages,
-    show_all_notes_error_messages
+    show_all_notes_error_messages,
+    change_birthday_error_messages
 )
 from src.errors.error_decorator import input_error
 from src.models.address_book import AddressBook
 from src.models.notes import Notes
+from src.errors.errors import ValidationError
 from src.functions import format_as_table
 from src.constants import commands_description
 
@@ -78,6 +81,14 @@ def add_birthday(args, book: AddressBook):
     book.add_record_birthday(name, birthday)
     return 'Birthday added.'
 
+@input_error(change_birthday_error_messages)
+def change_birthday(args, book: AddressBook):
+    if (len(args) != 2):    
+        raise ValueError
+    name, birthday = args
+    book.change_record_birthday(name, birthday)
+    return 'Birthday changed.'
+
 
 @input_error(show_birthday_error_messages)
 def show_birthday(args, book: AddressBook):
@@ -87,11 +98,19 @@ def show_birthday(args, book: AddressBook):
 
 
 @input_error(show_all_birthdays_error_messages)
-def show_all_birthdays(book: AddressBook):
+def show_all_birthdays(args, book: AddressBook):
+    days = args[0].strip()
+    if len(args) != 1:
+       raise ValueError()
+    if not days.isdigit():
+       raise ValidationError(invalid_per_days_error_message)  
+    per_days = int(days)
+    if per_days < 1 or per_days > 365:
+        raise ValidationError(invalid_per_days_error_message)
     if not book:
-        raise ValueError
-    birthdays = book.get_record_birthdays_per_week()
-    return '\n'.join(birthdays) if birthdays else 'No birthdays for this week.'
+        raise KeyError() 
+    birthdays = book.get_record_birthdays_per_week(per_days)
+    return format_as_table(birthdays, 40) if birthdays else 'No birthdays for next {days} days.'
 
 
 @input_error([])
