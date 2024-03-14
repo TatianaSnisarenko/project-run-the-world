@@ -61,9 +61,9 @@ class Note:
     def to_dict(self):
         return {
             "Id": self.id,
-            "Tags": ", ".join([str(tag.value) for tag in self.tags]),
-            "Title": self.title.value,
-            "Content": self.content.value
+            "Tags": ", ".join([str(tag) for tag in self.tags]),
+            "Title": str(self.title),
+            "Content": str(self.content)
         }
 
     @staticmethod
