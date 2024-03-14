@@ -66,7 +66,14 @@ class AddressBook(UserDict):
 
     def show_record_contact(self, name: str) -> str:
         existing_record = self.data[Name(name)]
-        return f"{name}: Phone - {existing_record.phone}, Birthday - {existing_record.birthday}" if existing_record.name else f'Contact with name {name} not found'
+        if existing_record:
+            phones = ", ".join(str(phone) for phone in existing_record.phones) if existing_record.phones else "None"
+            return f"{name}: Phone - {phones}, Birthday - {existing_record.birthday}"
+        else:
+            return f'Contact with name {name} not found'
+
+
+
 
     def show_record_phone(self, name: str) -> str:
         existing_record = self.data[Name(name)]
