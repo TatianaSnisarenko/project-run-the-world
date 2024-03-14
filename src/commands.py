@@ -63,14 +63,12 @@ def find_by_phone(args, book: AddressBook):
     phone = args[0]
     contacts = book.get_record_contacts()
 
-    # Extrahiere Telefonnummern und vergleiche sie
     phone_numbers = [contact.split("Phone - ")[1].split(",")[0].strip() for contact in contacts]
     if phone in phone_numbers:
         for contact in contacts:
             if f"Phone - {phone}" in contact:
                 return f'Contact {phone} found successfully. {contact}'
-    
-    # Wenn die Telefonnummer nicht gefunden wurde
+
     return f'Contact {phone} not found.'
 
 
