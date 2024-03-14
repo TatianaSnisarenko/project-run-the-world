@@ -45,6 +45,12 @@ class Note:
             if existing_tag == t:
                 self.tags[index] = Tag(new_tag.strip())
 
+    def has_in_content(self, line: str) -> bool:
+        return line.strip() in self.content.value
+
+    def has_in_title(self, line: str) -> bool:
+        return line.strip() in self.title.value
+
     def __hash__(self):
         return hash(self.title, self.content, tuple(self.tags))
 
@@ -55,9 +61,9 @@ class Note:
     def to_dict(self):
         return {
             "Id": self.id,
-            "Tags": ", ".join([str(tag.value) for tag in self.tags]),
-            "Title": self.title.value,
-            "Content": self.content.value
+            "Tags": ", ".join([str(tag) for tag in self.tags]),
+            "Title": str(self.title),
+            "Content": str(self.content)
         }
 
     @staticmethod

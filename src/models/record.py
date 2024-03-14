@@ -73,3 +73,12 @@ class Record:
             ", ".join(str(phone) for phone in self.phones)}' if self.phones else ''
 
         return f'Contact name: {self.name.value}, ' + birthday_str + email_str + address_str + phones_str
+    
+    def to_dict(self) -> dict:
+        return {
+            "Name": self.name.value,
+            "Phones": ", ".join([str(phone) for phone in self.phones]),
+            "Email": str(self.email),
+            "Birthday": str(self.birthday),
+            "Address": str(self.address)
+        }

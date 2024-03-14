@@ -64,7 +64,7 @@ def show_all_contacts(book: AddressBook):
     contacts = book.get_record_contacts()
     if not contacts:
         raise ValueError
-    return '\n'.join(contacts)
+    return format_as_table(contacts, 20)
 
 
 @input_error(show_all_notes_error_messages)

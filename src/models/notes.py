@@ -2,6 +2,8 @@ from collections import UserDict
 import pickle
 import os
 from src.models.note import Note
+from src.errors.errors import EmptyNotesError
+from src.errors.error_messages import empty_notes_error_message
 
 
 class Notes(UserDict):
@@ -32,6 +34,18 @@ class Notes(UserDict):
             raise ValueError
         self.data[note.id] = note
         Notes.note_id += 1
+
+    def find_by_title(self, title: str) -> list:  # list of dictionaries(to_dict)
+        if len(self.data) == 0:
+            raise EmptyNotesError(empty_notes_error_message)
+        return [note.to_dict() for id, note in self.data.items()
+                if note.has_in_title(title)]
+
+    def find_by_content(self, content: str) -> list:  # list of dictionaries(to_dict)
+        if len(self.data) == 0:
+            raise EmptyNotesError(empty_notes_error_message)
+        return [note.to_dict() for id, note in self.data.items()
+                if note.has_in_content(content)]
 
     def get_notes(self) -> list:
         return [str(note) for id, note in self.data.items()]
