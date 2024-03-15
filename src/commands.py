@@ -121,14 +121,22 @@ def find_by_tags(args, notes: Notes):
 
 
 @input_error(add_note_error_messages)
-def sort_by_tag(args, notes: Notes):
-    tag1, tag2 = args
-    result = notes.sort_record_tag(tag1, tag2)
-    return format_as_table(result, 40)
+def sort_by_tag(notes: Notes):
+    '''
+    Function sorts tags in notes
+    Args : Notes
+    Returns : list of sorted tags
+    '''
+    return notes.sort_record_tag()
 
 
 @input_error(show_note_error_messages)
 def show_note(args, notes: Notes):
+    '''
+    Function find note by ID
+    Args : Notes, ID
+    Returns : Note in dictionary (formated as table)
+    '''
     if (len(args) != 1):
         raise ValueError
     return format_as_table(notes.show_note(args[0]), 40)
@@ -136,6 +144,11 @@ def show_note(args, notes: Notes):
 
 @input_error(delete_note_error_messages)
 def delete_note(args, notes: Notes):
+    '''
+    Function delete note by ID
+    Args : Notes, ID
+    Returns : message
+    '''
     if (len(args) != 1):
         raise ValueError
     notes.delete_note(args[0])
@@ -151,24 +164,24 @@ def add_birthday(args, book: AddressBook):
 
 @input_error(change_birthday_error_messages)
 def change_birthday(args, book: AddressBook):
+    '''
+    Function changed contact's birthday
+    Args : name(str), birthday(str)
+    Returns : message
+    '''
     if (len(args) != 2):
         raise ValueError
     name, birthday = args
     book.change_record_birthday(name, birthday)
     return f'{GREEN}Birthday changed.{RESET}'
-
-
-@input_error(change_birthday_error_messages)
-def change_birthday(args, book: AddressBook):
-    if (len(args) != 2):
-        raise ValueError
-    name, birthday = args
-    book.change_record_birthday(name, birthday)
-    return f'{GREEN}Birthday changed.{RESET}'
-
 
 @input_error(show_all_birthdays_error_messages)
 def show_all_birthdays(args, book: AddressBook):
+    '''
+    Function return list of contacts' birthdays in periodic interval
+    Args : days(int)
+    Returns : list if dictionarys (formated as table)
+    '''
     days = args[0].strip()
     if len(args) != 1:
         raise ValueError()

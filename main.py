@@ -84,7 +84,7 @@ def main():
         elif command == 'find-by-content':
             print(find_by_content(args, notes))
         elif command == 'sort-by-tag':
-            print(sort_by_tag(args, notes))
+            print(sort_by_tag(notes))
         elif command == 'show-note':
             print(show_note(args, notes))
         elif command == 'delete-note':

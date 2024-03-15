@@ -4,15 +4,16 @@ RED = "\33[91m"
 GREEN = "\033[32m"
 RESET = "\033[0m"
 
-generic_error_message = f'{RED}Something went wrong, please try again.{RESET}'
-invalid_phone_number_error_message = f'{
-    RED}Invalid phone number: must be 10 digits value.{RESET}'
-invalid_birthday_format_error_message = f'{
-    RED}Invalid birthday format: must be <DD.MM.YYYY>.{RESET}'
-invalid_name_format_error_message = f'{
-    RED}Invalid name format: name must not be empty.{RESET}'
-invalid_note_id_format_error_message = f'{
-    RED}Invalid note id: id must not be a valid number.{RESET}'
+generic_error_message = (
+    f'{RED}Something went wrong, please try again.{RESET}')
+invalid_phone_number_error_message = (
+     f'{RED}Invalid phone number: must be 10 digits value.{RESET}')
+invalid_birthday_format_error_message = ( 
+    f'{RED}Invalid birthday format: must be <DD.MM.YYYY>.{RESET}')
+invalid_name_format_error_message = ( 
+    f'{RED}Invalid name format: name must not be empty.{RESET}')
+invalid_note_id_format_error_message = ( 
+    f'{RED}Invalid note id: id must not be a valid number.{RESET}')
 tag_already_exists_error_message_template = 'Such tag: [{tag}] is already present for the note with id: [{id}]'
 tag_doenst_exist_error_message_template = 'Such tag: [{tag}] is not found for the note with id: [{id}]'
 empty_notes_error_message = 'Notes are empty, please add new notes first'
@@ -20,13 +21,10 @@ invalid_email_error_message_template = 'Not a valid email provided: [{email}]. P
 invalid_per_days_error_message = 'Invalid value: must be only numbers from 1 to 365'
 empty_notes_error_message = 'Notes are empty. Please, use "add-note" command to add new notes.'
 
-empty_notes_error_message = f'{
-    RED}Notes are empty, please add new notes first{RESET}'
+empty_notes_error_message = (f'{RED}Notes are empty, please add new notes first{RESET}')
 invalid_email_error_message_template = 'Not a valid email provided: [{email}]. Please try again'
-invalid_per_days_error_message = f'{
-    RED}Invalid value: must be only numbers from 1 to 365{RESET}'
-empty_notes_error_message = f'{
-    RED}Notes are empty. Please, use "add-note" command to add new notes.{RESET}'
+invalid_per_days_error_message = (f'{RED}Invalid value: must be only numbers from 1 to 365{RESET}')
+empty_notes_error_message = (f'{RED}Notes are empty. Please, use "add-note" command to add new notes.{RESET}')
 
 generic_invalid_command_format_message = f'''{RED}Invalid "command" format.
 Please use <help> to display
