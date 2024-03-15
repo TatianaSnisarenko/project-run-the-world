@@ -74,9 +74,9 @@ add_tag_error_messages = {
     'KeyError': note_doesnt_exist_error_message
 }
 
-change_contact_error_messages = {
-    'FormatError': f'{RED}Invalid "change" format. Command "change" must have 3 arguments: <change Name new_phone_number>.{RESET}',
-    'KeyError': f'{RED}Such name is not found, please, use "add" command instead.{RESET}',
+change_phone_error_messages = {
+    'FormatError': f'{RED}Invalid "change-phone" format. Command "change-phone" must have 3 arguments: <change-phone Name old_phone new_phone>.{RESET}',
+    'KeyError': f'{RED}Such name with such phone is not found, please, use "add" command instead.{RESET}',
     'ValidationError': invalid_phone_number_error_message
 }
 
@@ -118,7 +118,7 @@ find_by_phone_error_messages = {
     'ValidationError': invalid_phone_number_error_message,
 }
 
-find_by_birthday_error_messages =  {
+find_by_birthday_error_messages = {
     'FormatError': 'Invalid "find-by-phone" format. Command "find-by-phone" must have 2 arguments: <find-by-phone Phone>.',
     'KeyError': 'Such name is not found, please, try again.',
     'ValidationError': invalid_birthday_format_error_message,
@@ -174,11 +174,6 @@ change_content_error_messages = {
 add_tag_error_messages = {
     'FormatError': f'{RED}Invalid "add-tag" format. Command "add-tag" must have 3 arguments: <add-tag ID Tag_value>.{RESET}',
     'KeyError': note_doesnt_exist_error_message
-}
-
-change_phone_error_messages = {
-    'FormatError': f'{RED}Phone number not found in the record{RESET}',
-    'KeyError': f'{RED}Such name is not found, please, try again{RESET}'
 }
 
 delete_phone_error_messages = {

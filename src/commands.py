@@ -1,7 +1,7 @@
 from src.errors.error_messages import (
     parse_input_error_messages,
     add_contact_error_messages,
-    change_contact_error_messages,
+    change_phone_error_messages,
     show_contact_error_messages,
     show_all_error_messages,
     add_birthday_error_messages,
@@ -63,17 +63,20 @@ def add_note(notes: Notes):
     notes.create_note(note_title, note_text, note_tags)
     return f'{GREEN}Note added.{RESET}'
 
+
 def validate_name(name: str) -> str:
     if len(name.strip()) < 1:
         raise ValueError("Name must be at least 1 character long.")
     return name
+
 
 def validate_phone(phone: str) -> str:
     try:
         return Phone.validate_and_get(phone)
     except ValidationError as ve:
         raise ValueError(str(ve))
-    
+
+
 def validate_birthday(birthday: str) -> str:
     try:
         validated_birthday = Birthday.validate_and_get_value(birthday)
@@ -81,12 +84,14 @@ def validate_birthday(birthday: str) -> str:
     except ValidationError as ve:
         raise ValueError(str(ve))
 
+
 def validate_email(email: str) -> str:
     try:
         validated_birthday = Email.validate_and_get_email(email)
         return validated_birthday
     except ValidationError as ve:
         raise ValueError(str(ve))
+
 
 @input_error(add_tag_error_messages)
 def add_tag(args, notes: Notes):
@@ -157,17 +162,17 @@ def add_contact(book: AddressBook):
                 break
             except ValueError as ve:
                 print(ve)
-    
+
     while True:
         email_add = input('Enter email: ')
         if not email_add.strip():
             break
         try:
-            validated_email= validate_email(email_add)
-            break 
+            validated_email = validate_email(email_add)
+            break
         except ValueError as ve:
             print(ve)
-        
+
     while True:
         birthday_add = input('Enter birthday: ')
         if not birthday_add.strip():
@@ -188,17 +193,22 @@ def add_contact(book: AddressBook):
         except ValueError as ve:
             print(ve)
 
-    book.create_record(validated_name, validated_phone, validated_email, validated_birthday, validated_address)
+    book.create_record(validated_name, validated_phone,
+                       validated_email, validated_birthday, validated_address)
     return f'{GREEN}Contact added.{RESET}'
 
-@input_error(change_contact_error_messages)
-def change_contact(args, book: AddressBook):
-    name, phone = args
-    book.change_record_phone(name, phone)
+
+@input_error(change_phone_error_messages)
+def change_record_phone(args, book: AddressBook):
+    if (len(args) != 3):
+        raise ValueError
+    name, old_phone, new_phone = args
+    book.change_record_phone(name, old_phone, new_phone)
     return f'{GREEN}Contact updated.{RESET}'
 
+
 @input_error(find_by_birthday_error_messages)
-def find_by_brithday(args, book: AddressBook): 
+def find_by_brithday(args, book: AddressBook):
     birthday = args[0]
     matching_records = book.find_record_by_birthday(birthday)
     if not matching_records:
@@ -206,15 +216,17 @@ def find_by_brithday(args, book: AddressBook):
     else:
         return format_as_table(matching_records, cell_width=20)
 
+
 @input_error(find_by_phone_error_messages)
-def find_by_phone(args, book: AddressBook): 
+def find_by_phone(args, book: AddressBook):
     phone = args[0]
     matching_records = book.find_record_by_phone(phone)
     if not matching_records:
         return 'No contact found with this phone number'
     else:
         return format_as_table(matching_records, cell_width=20)
-    
+
+
 @input_error(find_by_email_error_messages)
 def find_by_email(args, book: AddressBook):
     email = args[0]
@@ -223,6 +235,7 @@ def find_by_email(args, book: AddressBook):
         return 'No contact found with this email'
     else:
         return format_as_table(matching_records, cell_width=20)
+
 
 @input_error(find_by_address_error_messages)
 def find_by_address(args, book: AddressBook):
@@ -233,11 +246,13 @@ def find_by_address(args, book: AddressBook):
     else:
         return format_as_table(matching_records, cell_width=20)
 
+
 @input_error(show_contact_error_messages)
 def show_contact(args, book: AddressBook):
     if (len(args) != 1):
         raise ValueError
     return format_as_table(book.show_record(args[0]), 40)
+
 
 @input_error(show_all_error_messages)
 def show_all_contacts(book: AddressBook):
@@ -245,6 +260,7 @@ def show_all_contacts(book: AddressBook):
     if not contacts:
         raise ValueError
     return format_as_table(contacts, 20)
+
 
 @input_error(show_all_notes_error_messages)
 def show_all_notes(notes: Notes):
@@ -319,6 +335,7 @@ def add_birthday(args, book: AddressBook):
     book.add_record_birthday(name, birthday)
     return f'{GREEN}Birthday added.{RESET}'
 
+
 @input_error(change_birthday_error_messages)
 def change_birthday(args, book: AddressBook):
     if (len(args) != 2):
@@ -335,6 +352,7 @@ def change_birthday(args, book: AddressBook):
     name, birthday = args
     book.change_record_birthday(name, birthday)
     return f'{GREEN}Birthday changed.{RESET}'
+
 
 @input_error(change_email_error_messages)
 def change_email(args, book: AddressBook):
@@ -343,6 +361,7 @@ def change_email(args, book: AddressBook):
     name, new_email = args
     book.change_record_email(name, new_email)
     return f'Email for contact {name} changed to {new_email}'
+
 
 @input_error(change_address_error_messages)
 def change_address(args, book: AddressBook):
@@ -378,9 +397,11 @@ def find_by_tags(args, notes: Notes):
     else:
         return f'There are no notes for such tags: [{', '.join(tags)}]'
 
+
 @input_error([])
 def show_help():
     return format_as_table(commands_description, 20)
+
 
 @input_error(delete_contact_error_messages)
 def delete_contact(args, book: AddressBook):

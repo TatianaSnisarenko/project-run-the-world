@@ -33,9 +33,9 @@ class AddressBook(UserDict):
             raise ValueError("Name cannot be empty.")
         self.data[record.name] = record
 
-    def change_record_phone(self, name: str, new_phone: str) -> None:
+    def change_record_phone(self, name: str, old_phone: str, new_phone: str) -> None:
         existing_record: Record = self.data[Name(name)]
-        existing_record.change_phone(new_phone)
+        existing_record.change_phone(old_phone, new_phone)
 
     def add_record_birthday(self, name: str, birthday: str) -> None:
         existing_record = self.data[Name(name)]
