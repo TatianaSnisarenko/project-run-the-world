@@ -1,10 +1,10 @@
-from src.models.tag import Tag
-from src.models.title import Title
-from src.models.content import Content
-from src.errors.errors import ValidationError
-from src.errors.error_messages import invalid_note_id_format_error_message
-from src.errors.error_messages import tag_already_exists_error_message_template
-from src.errors.error_messages import tag_doenst_exist_error_message_template
+from assistant.src.models.tag import Tag
+from assistant.src.models.title import Title
+from assistant.src.models.content import Content
+from assistant.src.errors.errors import ValidationError
+from assistant.src.errors.error_messages import invalid_note_id_format_error_message
+from assistant.src.errors.error_messages import tag_already_exists_error_message_template
+from assistant.src.errors.error_messages import tag_doenst_exist_error_message_template
 
 
 class Note:
@@ -60,7 +60,7 @@ class Note:
     def __str__(self):
         str_tags = [str(tag.value) for tag in self.tags]
         return f'Note id: [{self.id}], title: [{self.title.value}], content: [{self.content.value}], tags: [{', '.join(str_tags)}]'
-    
+
     def to_dict(self):
         return {
             "Id": self.id,

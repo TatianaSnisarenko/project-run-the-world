@@ -1,12 +1,12 @@
 from collections import UserDict
-from src.user_birthdays import get_birthdays_per_week
+from assistant.src.user_birthdays import get_birthdays_per_week
 import pickle
 import os
-from src.models.name import Name
-from src.models.email import Email
-from src.models.phone import Phone
-from src.models.record import Record
-from src.models.address import Address
+from assistant.src.models.name import Name
+from assistant.src.models.email import Email
+from assistant.src.models.phone import Phone
+from assistant.src.models.record import Record
+from assistant.src.models.address import Address
 
 
 class AddressBook(UserDict):

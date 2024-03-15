@@ -1,6 +1,6 @@
-from src.models.field import Field
-from src.errors.errors import ValidationError
-from src.errors.error_messages import invalid_email_error_message_template
+from assistant.src.models.field import Field
+from assistant.src.errors.errors import ValidationError
+from assistant.src.errors.error_messages import invalid_email_error_message_template
 import re
 
 

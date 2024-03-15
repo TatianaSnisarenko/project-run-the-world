@@ -1,4 +1,4 @@
-from src.commands import (
+from assistant.src.commands import (
     add_contact,
     change_record_phone,
     change_email,
@@ -33,10 +33,10 @@ from src.commands import (
     change_content,
     change_title,
     add_tag)
-from src.errors.error_messages import generic_invalid_command_format_message
-from src.models.address_book import AddressBook
-from src.models.notes import Notes
-from src.constants import available_commands
+from assistant.src.errors.error_messages import generic_invalid_command_format_message
+from assistant.src.models.address_book import AddressBook
+from assistant.src.models.notes import Notes
+from assistant.src.constants import available_commands
 from prompt_toolkit.completion import WordCompleter
 from prompt_toolkit import PromptSession
 from prompt_toolkit.styles import Style

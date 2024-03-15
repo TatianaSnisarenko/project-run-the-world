@@ -1,5 +1,5 @@
-from src.errors.errors import ValidationError, EmptyNotesError
-from src.errors.error_messages import generic_error_message
+from assistant.src.errors.errors import ValidationError, EmptyNotesError
+from assistant.src.errors.error_messages import generic_error_message
 
 
 def input_error(error_messages):

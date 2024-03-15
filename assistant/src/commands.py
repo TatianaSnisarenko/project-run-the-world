@@ -1,4 +1,4 @@
-from src.errors.error_messages import (
+from assistant.src.errors.error_messages import (
     parse_input_error_messages,
     add_contact_error_messages,
     change_phone_error_messages,
@@ -26,19 +26,19 @@ from src.errors.error_messages import (
     change_note_content_error_messages,
     add_tag_error_messages
 )
-from src.errors.error_decorator import input_error
-from src.models.address_book import AddressBook
-from src.models.address import Address
-from src.models.notes import Notes
-from src.models.phone import Phone
-from src.models.email import Email
-from src.models.birthday import Birthday
-from src.models.note import Note
-from src.errors.errors import ValidationError
-from src.functions import format_as_table
-from src.constants import commands_description
-from src.errors.errors import ValidationError
-from src.errors.error_messages import invalid_phone_number_error_message
+from assistant.src.errors.error_decorator import input_error
+from assistant.src.models.address_book import AddressBook
+from assistant.src.models.address import Address
+from assistant.src.models.notes import Notes
+from assistant.src.models.phone import Phone
+from assistant.src.models.email import Email
+from assistant.src.models.birthday import Birthday
+from assistant.src.models.note import Note
+from assistant.src.errors.errors import ValidationError
+from assistant.src.functions import format_as_table
+from assistant.src.constants import commands_description
+from assistant.src.errors.errors import ValidationError
+from assistant.src.errors.error_messages import invalid_phone_number_error_message
 
 RED = "\33[91m"
 GREEN = "\033[32m"

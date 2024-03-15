@@ -1,4 +1,4 @@
-from src.models.field import Field
+from assistant.src.models.field import Field
 
 
 class Content(Field):

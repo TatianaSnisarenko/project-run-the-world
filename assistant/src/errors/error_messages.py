@@ -1,4 +1,4 @@
-from src.errors.errors import ValidationError
+from assistant.src.errors.errors import ValidationError
 
 RED = "\33[91m"
 GREEN = "\033[32m"

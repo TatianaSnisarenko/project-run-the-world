@@ -1,10 +1,10 @@
 from collections import UserDict
 import pickle
 import os
-from src.models.note import Note
-from src.models.record import Record
-from src.errors.errors import EmptyNotesError
-from src.errors.error_messages import empty_notes_error_message, note_doesnt_exist_error_message
+from assistant.src.models.note import Note
+from assistant.src.models.record import Record
+from assistant.src.errors.errors import EmptyNotesError
+from assistant.src.errors.error_messages import empty_notes_error_message, note_doesnt_exist_error_message
 from collections import defaultdict
 
 
