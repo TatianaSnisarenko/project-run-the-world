@@ -36,7 +36,8 @@ class AddressBook(UserDict):
     
     def add_record_birthday(self, name: str, birthday: str) -> None:
         existing_record = self.data[Name(name)]
-        existing_record.add_birthday(birthday)
+        existing_record.change_birthday(birthday)
+
 
     def change_record_birthday(self, name: str, birthday: str) -> None:
         existing_record = self.data[Name(name)]

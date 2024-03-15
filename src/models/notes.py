@@ -71,6 +71,37 @@ class Notes(UserDict):
         return result
 
 
+    def show_note(self, id: str) -> list:
+        note_id = Note.validate_and_get_id(id)
+        existing_note = self.data[note_id]
+        return [existing_note.to_dict()]
+
+    def delete_note(self, id: str) -> None:
+        note_id = Note.validate_and_get_id(id)
+        del self.data[note_id]
+
+    def find_by_title(self, title: str) -> list:  # list of dictionaries(to_dict)
+        if len(self.data) == 0:
+            raise EmptyNotesError(empty_notes_error_message)
+        return [note.to_dict() for id, note in self.data.items()
+                if note.has_in_title(title)]
+
+    def find_by_content(self, content: str) -> list:  # list of dictionaries(to_dict)
+        if len(self.data) == 0:
+            raise EmptyNotesError(empty_notes_error_message)
+        return [note.to_dict() for id, note in self.data.items()
+                if note.has_in_content(content)]
+
+    def find_by_tags(self, tags: list) -> dict:
+        if len(self.data) == 0:
+            raise EmptyNotesError(empty_notes_error_message)
+        result = []
+        for tag in tags:
+            for note in self.data.values():
+                if note.has_tag(tag):
+                    result.append(self.convert_to_dict_by_tag(tag, note))
+        return result
+
     def get_notes(self) -> list:
         return [str(note) for id, note in self.data.items()]
 
@@ -123,3 +154,39 @@ class Notes(UserDict):
     def sort_record_tag(self, tag1, tag2):
         pass
 
+    def change_title(self, note_id: str, new_title: str) -> None:
+        int_id = Note.validate_and_get_id(note_id)
+        existing_note = self.data.get(int_id)
+        if existing_note is None:
+            raise KeyError("Note with provided ID does not exist")
+        existing_note.change_title(new_title)
+
+    def change_content(self, note_id: str, new_content: str) -> None:
+        int_id = Note.validate_and_get_id(note_id)
+        existing_note = self.data.get(int_id)
+        if existing_note is None:
+            raise KeyError("Note with provided ID does not exist")
+        existing_note.change_content(new_content)
+
+    def add_tag(self, note_id: str, new_tag: str) -> None:
+        int_id = Note.validate_and_get_id(note_id)
+        existing_note = self.data.get(int_id)
+        if existing_note is None:
+            raise KeyError("Note with provided ID does not exist")
+        existing_note.add_tag(new_tag)
+
+    def change_tag(self, note_id: str, old_tag: str, new_tag: str) -> None:
+        int_id = Note.validate_and_get_id(note_id)
+        existing_note = self.data.get(int_id)
+        if existing_note is None:
+            raise KeyError("Note with provided ID does not exist")
+        existing_note.change_tag(old_tag, new_tag)
+
+    def convert_to_dict_by_tag(self, tag: str, note: Record):
+        return {
+            "Tag": tag.strip(),
+            "Id": note.id,
+            "Tags": ", ".join([str(tag) for tag in note.tags]),
+            "Title": str(note.title),
+            "Content": str(note.content)
+        }
