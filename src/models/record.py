@@ -21,14 +21,16 @@ class Record:
 
 # phone
 
-    def change_phone(self, old_phone, new_phone):
+    def change_phone(self, old_phone: str, new_phone: str) -> None:
         old_phone_obj = Phone(old_phone.strip())
         new_phone_obj = Phone(new_phone.strip())
         phone_found = False
         for i, p in enumerate(self.phones):
+
             if p == old_phone_obj:
                 self.phones[i] = new_phone_obj
                 phone_found = True
+                break
         if not phone_found:
             raise KeyError(f'{RED}Phone number not found in the record')
 

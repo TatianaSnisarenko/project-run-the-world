@@ -406,10 +406,8 @@ def show_help():
 @input_error(delete_contact_error_messages)
 def delete_contact(args, book: AddressBook):
     name = args[0]
-    contacts = book.get_record_contacts()
-
-    if name in [contact.split(":")[0].strip() for contact in contacts]:
-        book.delete(name)
-        return f'Contact {name} deleted successfully.'
+    deleted = book.delete(name)
+    if deleted:
+        return f"Contact '{name}' deleted successfully."
     else:
-        return f'Contact {name} not found.'
+        return f"Contact '{name}' not found."
