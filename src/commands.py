@@ -41,25 +41,32 @@ def add_note(notes: Notes):
     notes.create_note(note_title, note_text, note_tags)
     return 'Note added.'
 
-
-@input_error(add_contact_error_messages)
-
 def validate_name(name: str) -> str:
     if len(name.strip()) < 1:
         raise ValueError("Name must be at least 1 character long.")
     return name
 
 def validate_phone(phone: str) -> str:
-    return Phone.validate_and_get(phone)
+    try:
+        return Phone.validate_and_get(phone)
+    except ValidationError as ve:
+        raise ValueError(str(ve))
     
 def validate_birthday(birthday: str) -> str:
-    validated_birthday = Birthday.validate_and_get_value(birthday)
-    return validated_birthday
+    try:
+        validated_birthday = Birthday.validate_and_get_value(birthday)
+        return validated_birthday
+    except ValidationError as ve:
+        raise ValueError(str(ve))
 
 def validate_email(email: str) -> str:
-    validated_birthday = Email.validate_and_get_email(email)
-    return validated_birthday
+    try:
+        validated_birthday = Email.validate_and_get_email(email)
+        return validated_birthday
+    except ValidationError as ve:
+        raise ValueError(str(ve))
 
+@input_error(add_contact_error_messages)
 def add_contact(book: AddressBook):
     validated_name = ''
     validated_email = ''
@@ -82,34 +89,47 @@ def add_contact(book: AddressBook):
         if not phone_add.strip():
             print("Phone can't be empty.")
             continue
-        try:
-            validated_phone = validate_phone(phone_add)
-            break
-        except ValueError as ve:
-            print(ve)
+        else:
+            try:
+                validated_phone = validate_phone(phone_add)
+                break
+            except ValueError as ve:
+                print(ve)
     
     while True:
         email_add = input('Enter email: ')
         if not email_add.strip():
             break
-        validated_email= validate_email(email_add)
-        break 
+        try:
+            validated_email= validate_email(email_add)
+            break 
+        except ValueError as ve:
+            print(ve)
+        
     while True:
         birthday_add = input('Enter birthday: ')
         if not birthday_add.strip():
             break
-        validated_birthday = validate_birthday(birthday_add)
-        break
+        try:
+            validated_birthday = validate_birthday(birthday_add)
+            break
+        except ValueError as ve:
+            print(ve)
+
     while True:
         address_add = input('Enter address: ')
         if not address_add.strip():
             break
+        try:
+            validated_address = address_add
+            break
+        except ValueError as ve:
+            print(ve)
 
-    try:
-        book.create_record(validated_name, validated_phone, validated_email, validated_birthday, address_add)
-        return 'Contact added.'
-    except ValueError as ve:
-        return str(ve)
+    book.create_record(validated_name, validated_phone, validated_email, validated_birthday, validated_address)
+    return 'Contact added.'
+
+
 
 @input_error(change_contact_error_messages)
 def change_contact(args, book: AddressBook):
