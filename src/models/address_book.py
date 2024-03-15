@@ -108,3 +108,8 @@ class AddressBook(UserDict):
 
     def get_record_contacts(self) -> list:
         return [record.to_dict() for record in self.data.values()]
+
+    def get_record_birthdays_per_week(self, per_days: int) -> list:
+        contact_birthdays = [{'name': str(name), 'birthday': record.birthday.birth_date}
+                             for name, record in self.data.items() if record.birthday is not None]
+        return get_birthdays_per_week(contact_birthdays, per_days)
