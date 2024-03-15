@@ -2,16 +2,16 @@ from src.errors.error_messages import (
     parse_input_error_messages,
     add_contact_error_messages,
     change_contact_error_messages,
-    show_phone_error_messages,
+    show_contact_error_messages,
     show_all_error_messages,
     add_birthday_error_messages,
-    show_birthday_error_messages,
     show_all_birthdays_error_messages,
     add_note_error_messages,
     show_all_notes_error_messages,
     change_birthday_error_messages,
     change_email_error_messages,
-    change_address_error_messages
+    change_address_error_messages,
+    change_birthday_error_messages
 )
 from src.errors.error_decorator import input_error
 from src.models.address_book import AddressBook
@@ -139,9 +139,9 @@ def change_contact(args, book: AddressBook):
     return 'Contact updated.'
 
 #@input_error(show_contact_error_messages)
-def show_contact(args, book: AddressBook):
-    name = args[0] 
-    return book.show_record_contact(name)
+#def show_contact(args, book: AddressBook):
+#    name = args[0] 
+#    return book.show_record_contact(name)
 
 #@input_error(find_by_phone_error_messages)
 def find_by_phone(args, book: AddressBook): 
@@ -191,14 +191,19 @@ def find_by_address(args, book: AddressBook):
         return f'Contact with address {address} not found.'
 
 
-@input_error(show_phone_error_messages)
-def show_phone(args, book: AddressBook):
+@input_error(show_contact_error_messages)
+def show_contact(args, book: AddressBook):
     if (len(args) != 1):
         raise ValueError
-    return book.show_record_phone(args[0])
+    return format_as_table(book.show_record(args[0]), 40)
 
 
 #@input_error(show_all_error_messages)
+#def show_all_contacts(book: AddressBook):
+#    contacts = book.get_record_contacts()
+#    if not contacts:
+#        raise ValueError
+#    return format_as_table(contacts, 20)
 def show_all_contacts(book: AddressBook):
     contacts = book.get_record_contacts()
     if not contacts:
@@ -246,13 +251,6 @@ def change_address(args, book: AddressBook):
     return f'Address for contact {name} changed to {new_address}'
 
 
-@input_error(show_birthday_error_messages)
-def show_birthday(args, book: AddressBook):
-    if (len(args) != 1):
-        raise ValueError
-    return book.show_record_birthday(args[0])
-
-
 @input_error(show_all_birthdays_error_messages)
 def show_all_birthdays(args, book: AddressBook):
     days = args[0].strip()
@@ -264,9 +262,19 @@ def show_all_birthdays(args, book: AddressBook):
     if per_days < 1 or per_days > 365:
         raise ValidationError(invalid_per_days_error_message)
     if not book:
-        raise KeyError()
+        raise KeyError
     birthdays = book.get_record_birthdays_per_week(per_days)
     return format_as_table(birthdays, 40) if birthdays else 'No birthdays for next {days} days.'
+
+
+#@input_error(find_by_tags_error_messages)
+def find_by_tags(args, notes: Notes):
+    tags = [tag.strip() for arg in args for tag in arg.split(',')]
+    result = notes.find_by_tags(tags)
+    if result:
+        return format_as_table(result, 40)
+    else:
+        return f'There are no notes for such tags: [{', '.join(tags)}]'
 
 
 @input_error([])

@@ -49,7 +49,6 @@ class Record:
     def change_address(self, new_address) -> None:
         self.address = Address(new_address)
 
-# other
     def __eq__(self, other):
         if isinstance(other, Record):
             return self.name == other.name and self.phones == other.phones and self.birthday == other.birthday and self.email == other.email and self.address == other.address
@@ -68,3 +67,13 @@ class Record:
             ", ".join(str(phone) for phone in self.phones)}' if self.phones else ''
 
         return f'Contact name: {self.name.value}, ' + birthday_str  + address_str + phones_str
+        #return f'Contact name: {self.name.value}, ' + birthday_str + email_str + address_str + phones_str
+    
+    def to_dict(self) -> dict:
+        return {
+            "Name": self.name.value,
+            "Phones": ", ".join([str(phone) for phone in self.phones]),
+            "Email": str(self.email),
+            "Birthday": str(self.birthday),
+            "Address": str(self.address)
+        }

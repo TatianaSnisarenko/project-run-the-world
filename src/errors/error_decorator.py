@@ -1,4 +1,4 @@
-from src.errors.errors import ValidationError
+from src.errors.errors import ValidationError, EmptyNotesError
 from src.errors.error_messages import generic_error_message
 
 
@@ -12,6 +12,8 @@ def input_error(error_messages):
             except KeyError:
                 return error_messages.get('KeyError') if 'KeyError' in error_messages else generic_error_message
             except ValidationError as e:
+                return str(e)
+            except EmptyNotesError as e:
                 return str(e)
             except Exception as e:
                 return generic_error_message

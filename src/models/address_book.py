@@ -76,8 +76,6 @@ class AddressBook(UserDict):
         else:
             return f'No contacts found with email {email}'
 
-
-
     def show_record_contact(self, name: str) -> str:
         existing_record = self.data[Name(name)]
         if existing_record:
@@ -85,14 +83,6 @@ class AddressBook(UserDict):
             return f"{name}: Phone - {phones}, Birthday - {existing_record.birthday}, Email - {existing_record.email} ,Address - {existing_record.address}"
         else:
             return f'Contact with name {name} not found'
-
-    def show_record_phone(self, name: str) -> str:
-        existing_record = self.data[Name(name)]
-        return str(existing_record.phone)
-
-    def show_record_birthday(self, name: str) -> str:
-        existing_record = self.data[Name(name)]
-        return str(existing_record.birthday) if existing_record.birthday else f'Birthday is not added for {name}'
 
     def delete(self, name: str) -> None:
         self.data.pop(Name(name), None)
@@ -111,3 +101,25 @@ class AddressBook(UserDict):
         ]
         return contacts
 
+    def change_record_name(self, old_name: str, new_name: str) -> None:
+        existing_record: Record = self.data[Name(old_name)]
+        existing_record.change_name(new_name)
+
+    def show_record(self, name: str) -> list:
+        existing_record = self.data[Name(name)]
+        return [existing_record.to_dict()]
+
+    def delete_record(self, name: str) -> None:
+        del self.data[Name(name)]
+
+    def delete_phone(self, name: str, phone: str) -> None:
+        existing_record: Record = self.data[Name(name)]
+        existing_record.delete_phone(phone)
+
+    def get_record_birthdays_per_week(self, per_days: int) -> list:
+        contact_birthdays = [{'name': str(name), 'birthday': record.birthday.birth_date}
+                             for name, record in self.data.items() if record.birthday is not None]
+        return get_birthdays_per_week(contact_birthdays, per_days)
+
+    #def get_record_contacts(self) -> list:
+     #   return [record.to_dict() for record in self.data.values()]

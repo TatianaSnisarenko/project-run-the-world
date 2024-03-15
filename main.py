@@ -5,20 +5,23 @@ from src.commands import (
     change_address,
     change_birthday,
     change_contact,
-    show_phone,
-    show_all_contacts,
     parse_input,
     add_birthday,
     find_by_phone,
     find_by_email,
     find_by_address,
-    show_birthday,
     show_contact,
+    show_contact,
+    show_all_contacts,
+    parse_input,
+    add_birthday,
+    change_birthday,
     show_all_birthdays,
     add_note,
     show_all_notes,
     show_help,
-    delete_contact)
+    delete_contact,
+    find_by_tags)
 from src.errors.error_messages import generic_invalid_command_format_message
 from src.models.address_book import AddressBook
 from src.models.notes import Notes
@@ -48,8 +51,6 @@ def main():
             print(show_help())
         elif command == 'add-note':
             print(add_note(notes))
-        elif command == 'hello':
-            print('How can I help you?')
         elif command == 'add':
             print(add_contact(book))
         elif command == 'change':
@@ -63,13 +64,14 @@ def main():
         elif command == 'change-phone':
             print(change_contact(args, book))
         elif command == 'phone':
-            print(show_phone(args, book))
+            pass
+            #print(show_phone(args, book))
+        elif command == 'show-contact':
+            print(show_contact(args, book))
         elif command == 'contacts':
             print(show_all_contacts(book))
         elif command == 'add-birthday':
             print(add_birthday(args, book))
-        elif command == 'show-birthday':
-            print(show_birthday(args, book))
         elif command == 'show-contact':
             print(show_contact(args, book))
         elif command == 'notes':
@@ -85,6 +87,14 @@ def main():
         elif command == 'delete-contact':
             print(delete_contact(args, book))
             print(show_all_contacts(book))
+        elif command == 'change-birthday':
+            print(change_birthday(args, book))
+        elif command == 'notes':
+            print(show_all_notes(notes))
+        elif command == 'birthdays':
+            print(show_all_birthdays(args, book))
+        elif command == 'find-by-tag':
+            print(find_by_tags(args, notes))
         else:
             print(generic_invalid_command_format_message)
 
