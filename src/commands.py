@@ -2,10 +2,9 @@ from src.errors.error_messages import (
     parse_input_error_messages,
     add_contact_error_messages,
     change_contact_error_messages,
-    show_phone_error_messages,
+    show_contact_error_messages,
     show_all_error_messages,
     add_birthday_error_messages,
-    show_birthday_error_messages,
     show_all_birthdays_error_messages,
     invalid_per_days_error_message,
     add_note_error_messages,
@@ -53,11 +52,11 @@ def change_contact(args, book: AddressBook):
     return 'Contact updated.'
 
 
-@input_error(show_phone_error_messages)
-def show_phone(args, book: AddressBook):
+@input_error(show_contact_error_messages)
+def show_contact(args, book: AddressBook):
     if (len(args) != 1):
         raise ValueError
-    return book.show_record_phone(args[0])
+    return format_as_table(book.show_record(args[0]), 40)
 
 
 @input_error(show_all_error_messages)
@@ -90,13 +89,6 @@ def change_birthday(args, book: AddressBook):
     name, birthday = args
     book.change_record_birthday(name, birthday)
     return 'Birthday changed.'
-
-
-@input_error(show_birthday_error_messages)
-def show_birthday(args, book: AddressBook):
-    if (len(args) != 1):
-        raise ValueError
-    return book.show_record_birthday(args[0])
 
 
 @input_error(show_all_birthdays_error_messages)

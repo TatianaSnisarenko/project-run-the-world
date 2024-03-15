@@ -12,19 +12,9 @@ invalid_email_error_message_template = 'Not a valid email provided: [{email}]. P
 invalid_per_days_error_message = 'Invalid value: must be only numbers from 1 to 365'
 empty_notes_error_message = 'Notes are empty. Please, use "add-note" command to add new notes.'
 
-generic_invalid_command_format_message = '''Invalid "command" format. Available commands: 
-    - <add Name phone_namber> - to add contact, 
-    - <change Name new_phone_number> - to update contact,
-    - <phone Name> - to show phone for the contact
-    - <contacts> - to show all contacts,
-    - <hello> - to show assistance message,
-    - <add-birthday Name DD.MM.YYYY> - to add birthday for contact,
-    - <show-birthday Name> - to show birthday for the contact,
-    - <birthdays> - to show all birthdays per working week,
-    - <add_note> - to add new note,
-    - <notes> - to show all messages,
-    - <exit> - to exit the bot,
-    - <close> - to close the bot'''
+generic_invalid_command_format_message = '''Invalid "command" format. 
+Please use <help> to display
+all available commands'''
 
 add_note_error_messages = {
     'FormatError': 'Such note is already present, please, use "change_note" command instead.',
@@ -55,15 +45,9 @@ change_birthday_error_messages = {
     'ValidationError': invalid_birthday_format_error_message
 }
 
-show_phone_error_messages = {
-    'FormatError': 'Invalid "phone" format. Command "phone" must have 2 arguments: <phone Name>.',
+show_contact_error_messages = {
+    'FormatError': 'Invalid "show-contact" format. Command "show-contact" must have 2 arguments: <show-contact Name>.',
     'KeyError': 'Such name is not found, please, try again.'
-}
-
-show_birthday_error_messages = {
-    'FormatError': 'Invalid "show-birthday" format. Command "show-birthday" must have 3 arguments: <show-birthday Name>.',
-    'KeyError': 'Such name is not found, please, try again.',
-    'ValidationError': invalid_phone_number_error_message
 }
 
 find_by_tags_error_messages = {
