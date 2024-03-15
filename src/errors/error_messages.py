@@ -64,15 +64,19 @@ add_contact_error_messages = {
     'KeyError': f'{RED}Such name is already present, please, use "change" command instead.{RESET}',
     'ValidationError': invalid_phone_number_error_message
 }
+change_address_error_messages = {
+    'FormatError': 'Invalid "change" format. Command "change" must have 3 arguments: <change Name new_address>.',
+    'KeyError': 'Such name is not found, please, use "add" command instead.'
+}
 
 add_tag_error_messages = {
     'FormatError': f'{RED}Invalid "add-tag" format. Command "add-tag" must have 2 arguments: <add-tag Tag_value>.{RESET}',
     'KeyError': note_doesnt_exist_error_message
 }
 
-change_contact_error_messages = {
-    'FormatError': f'{RED}Invalid "change" format. Command "change" must have 3 arguments: <change Name new_phone_number>.{RESET}',
-    'KeyError': f'{RED}Such name is not found, please, use "add" command instead.{RESET}',
+change_phone_error_messages = {
+    'FormatError': f'{RED}Invalid "change-phone" format. Command "change-phone" must have 3 arguments: <change-phone Name old_phone new_phone>.{RESET}',
+    'KeyError': f'{RED}Such name with such phone is not found, please, use "add" command instead.{RESET}',
     'ValidationError': invalid_phone_number_error_message
 }
 
@@ -80,6 +84,17 @@ change_birthday_error_messages = {
     'FormatError': f'{RED}Invalid "change-birthday" format. Command "change-birthday" must have 3 arguments: <change-birthday Namenew_birthday>.{RESET}',
     'KeyError': f'{RED}Such name is not found, please, use "add" command instead.{RESET}',
     'ValidationError': invalid_birthday_format_error_message
+}
+
+change_email_error_messages = {
+    'FormatError': 'Invalid "change-email" format. Command "change-email" must have 3 arguments: <change-email  Name  new_email>.',
+    'KeyError': 'Such name is not found, please, use "add" command instead.',
+    'ValidationError': invalid_email_error_message_template
+}
+
+
+show_phone_error_messages = {
+    'FormatError': 'Invalid "phone" format. Command "phone" must have 2 arguments: <phone Name>.',
 }
 
 show_contact_error_messages = {
@@ -95,6 +110,28 @@ show_phone_error_messages = {
 
 find_by_tags_error_messages = {
     'FormatError': f'{RED}Invalid "find-by-tag" format. Command "find-by-tag" must have not less then 2 arguments: <find-by-tag tag1,tag2,tag3>.{RESET}',
+}
+
+find_by_phone_error_messages = {
+    'FormatError': 'Invalid "find-by-phone" format. Command "find-by-phone" must have 2 arguments: <find-by-phone Phone>.',
+    'KeyError': 'Such name is not found, please, try again.',
+    'ValidationError': invalid_phone_number_error_message,
+}
+
+find_by_birthday_error_messages = {
+    'FormatError': 'Invalid "find-by-phone" format. Command "find-by-phone" must have 2 arguments: <find-by-phone Phone>.',
+    'KeyError': 'Such name is not found, please, try again.',
+    'ValidationError': invalid_birthday_format_error_message,
+}
+
+find_by_email_error_messages = {
+    'FormatError': 'Invalid "find-by-email" format. Command "find-by-email" must have 2 arguments: <find-by-phone Email>.',
+    'KeyError': 'Such name is not found, please, try again.'
+}
+
+find_by_address_error_messages = {
+    'FormatError': 'Invalid "find-by-address" format. Command "find-by-address" must have 2 arguments: <find-by-address Email>.',
+    'KeyError': 'Such name is not found, please, try again.'
 }
 
 find_by_tags_error_messages = {
@@ -139,11 +176,6 @@ add_tag_error_messages = {
     'KeyError': note_doesnt_exist_error_message
 }
 
-change_phone_error_messages = {
-    'FormatError': f'{RED}Phone number not found in the record{RESET}',
-    'KeyError': f'{RED}Such name is not found, please, try again{RESET}'
-}
-
 delete_phone_error_messages = {
     'FormatError': f'{RED}Phone number not found in the record{RESET}',
     'KeyError': f'{RED}Such name is not found, please, try again{RESET}'
@@ -152,4 +184,9 @@ delete_phone_error_messages = {
 delete_note_error_messages = {
     'FormatError': f'{RED}Invalid "delete-note" format. Command "delete-note" must have 2 arguments: <delete-note ID.{RESET}',
     'KeyError': f'{RED}Such note with provided ID does not exist.{RESET}'
+}
+
+delete_contact_error_messages = {
+    'FormatError': 'Contact not found in the record',
+    'KeyError': 'Such name is not found, please, try again'
 }

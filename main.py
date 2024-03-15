@@ -1,6 +1,17 @@
 from src.commands import (
     add_contact,
-    change_contact,
+    change_record_phone,
+    change_email,
+    change_address,
+    change_birthday,
+    change_record_phone,
+    parse_input,
+    add_birthday,
+    find_by_phone,
+    find_by_email,
+    find_by_address,
+    find_by_brithday,
+    show_contact,
     show_contact,
     show_all_contacts,
     parse_input,
@@ -10,6 +21,8 @@ from src.commands import (
     add_note,
     show_all_notes,
     show_help,
+    delete_contact,
+    find_by_tags,
     change_tag,
     find_by_title,
     find_by_content,
@@ -62,24 +75,44 @@ def main():
             print(show_help())
         elif command == 'add-note':
             print(add_note(notes))
+        elif command == 'add-contact':
+            print(add_contact(book))
         elif command == 'change-title':
             print(change_title(args, notes))
         elif command == 'change-content':
             print(change_content(args, notes))
         elif command == 'add-tag':
             print(add_tag(args, notes))
-        elif command == 'add':
-            print(add_contact(args, book))
         elif command == 'change':
-            print(change_contact(args, book))
+            print(change_record_phone(args, book))
+        elif command == 'change-email':
+            print(change_email(args, book))
+        elif command == 'change-address':
+            print(change_address(args, book))
+        elif command == 'change-birthday':
+            print(change_birthday(args, book))
+        elif command == 'change-phone':
+            print(change_record_phone(args, book))
         elif command == 'show-contact':
             print(show_contact(args, book))
         elif command == 'contacts':
             print(show_all_contacts(book))
         elif command == 'add-birthday':
             print(add_birthday(args, book))
-        elif command == 'change-birthday':
-            print(change_birthday(args, book))
+        elif command == 'show-contact':
+            print(show_contact(args, book))
+        elif command == 'notes':
+            print(show_all_notes(notes))
+        elif command == 'find-by-phone':
+            print(find_by_phone(args, book))
+        elif command == 'find-by-email':
+            print(find_by_email(args, book))
+        elif command == 'find-by-address':
+            print(find_by_address(args, book))
+        elif command == 'find-by-birthday':
+            print(find_by_brithday(args, book))
+        elif command == 'delete-contact':
+            print(delete_contact(args, book))
         elif command == 'notes':
             print(show_all_notes(notes))
         elif command == 'birthdays':

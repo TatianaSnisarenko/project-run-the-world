@@ -27,18 +27,20 @@ def get_birthdays_per_week_from_date(users, from_date, per_days):
 
         # re-establish delta
         delta_days = (birthday_this_year - date).days
+        birthday_week_day = birthday_this_year.weekday()
 
         # check delta should be within a week from today
         if delta_days < int(per_days):
-           result[birthday_this_year].append(name)
+            result[birthday_this_year].append(name)
     ordered_dict = dict(sorted(result.items()))
     formatted_list = []
     for key, value in ordered_dict.items():
         formatted_list.append(
             f'{key.strftime("%d.%m.%Y")}: {", ".join(value)}')
-    formatted_l =[]
+    formatted_l = []
     for key, value in ordered_dict.items():
-        formatted_l.append({'Birthday': key.strftime("%d.%m.%Y"), 'Name': ", ".join(value)})
+        formatted_l.append({'Birthday': key.strftime(
+            "%d.%m.%Y"), 'Name': ", ".join(value)})
     return formatted_l
 
 
