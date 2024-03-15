@@ -1,12 +1,7 @@
 from src.errors.errors import ValidationError
 
 RED = "\33[91m"
-BLUE = "\33[94m"
 GREEN = "\033[32m"
-YELLOW = "\033[93m" 
-PURPLE = '\033[0;35m' 
-CYAN = "\033[36m"
-END = "\033[0m"
 
 generic_error_message = f'{RED}Something went wrong, please try again.'
 invalid_phone_number_error_message = f'{RED}Invalid phone number: must be 10 digits value.'
@@ -16,12 +11,12 @@ invalid_note_id_format_error_message = f'{RED}Invalid note id: id must not be a 
 tag_already_exists_error_message_template = 'Such tag: [{tag}] is already present for the note with id: [{id}]'
 tag_doenst_exist_error_message_template = 'Such tag: [{tag}] is not found for the note with id: [{id}]'
 
-empty_notes_error_message = 'Notes are empty, please add new notes first'
+empty_notes_error_message = f'{RED}Notes are empty, please add new notes first'
 invalid_email_error_message_template = 'Not a valid email provided: [{email}]. Please try again'
-invalid_per_days_error_message = 'Invalid value: must be only numbers from 1 to 365'
-empty_notes_error_message = 'Notes are empty. Please, use "add-note" command to add new notes.'
+invalid_per_days_error_message = f'{RED}Invalid value: must be only numbers from 1 to 365'
+empty_notes_error_message = f'{RED}Notes are empty. Please, use "add-note" command to add new notes.'
 
-generic_invalid_command_format_message = '''Invalid "command" format. 
+generic_invalid_command_format_message = f'''{RED}Invalid "command" format. 
 Please use <help> to display
 all available commands'''
 
@@ -55,23 +50,23 @@ change_birthday_error_messages = {
 }
 
 show_contact_error_messages = {
-    'FormatError': 'Invalid "show-contact" format. Command "show-contact" must have 2 arguments: <show-contact Name>.',
-    'KeyError': 'Such name is not found, please, try again.'
+    'FormatError': f'{RED}Invalid "show-contact" format. Command "show-contact" must have 2 arguments: <show-contact Name>.',
+    'KeyError': f'{RED}Such name is not found, please, try again.'
 }
 
 show_phone_error_messages = {
-    'FormatError': 'Invalid "phone" format. Command "phone" must have 2 arguments: <phone Name>.',
-    'KeyError': 'Such name is not found, please, try again.'
+    'FormatError': f'{RED}Invalid "phone" format. Command "phone" must have 2 arguments: <phone Name>.',
+    'KeyError': f'{RED}Such name is not found, please, try again.'
 }
 
 show_birthday_error_messages = {
-    'FormatError': 'Invalid "show-birthday" format. Command "show-birthday" must have 2 arguments: <show-birthday Name>.',
-    'KeyError': 'Such name is not found, please, try again.'
+    'FormatError': f'{RED}Invalid "show-birthday" format. Command "show-birthday" must have 2 arguments: <show-birthday Name>.',
+    'KeyError': f'{RED}Such name is not found, please, try again.'
 }
 
 
 find_by_tags_error_messages = {
-    'FormatError': 'Invalid "find-by-tag" format. Command "find-by-tag" must have not less then 2 arguments: <find-by-tag tag1,tag2,tag3>.',
+    'FormatError': f'{RED}Invalid "find-by-tag" format. Command "find-by-tag" must have not less then 2 arguments: <find-by-tag tag1,tag2,tag3>.',
 }
 
 show_all_error_messages = {
@@ -94,27 +89,27 @@ parse_input_error_messages = {
 }
 
 change_title_error_messages = {
-    'FormatError': 'Note with provided ID does not exist'
+    'FormatError': f'{RED}Note with provided ID does not exist'
 }
 
 change_content_error_messages = {
-    'FormatError': 'Note with provided ID does not exist'
+    'FormatError': f'{RED}Note with provided ID does not exist'
 }
 
 add_tag_error_messages = {
-    'FormatError': 'Note with provided ID does not exist'
+    'FormatError': f'{RED}Note with provided ID does not exist'
 }
 
 change_tag_error_messages = {
-    'FormatError': 'Note with provided ID does not exist'
+    'FormatError': f'{RED}Note with provided ID does not exist'
 }
 
 change_phone_error_messages = {
-    'FormatError': 'Phone number not found in the record',
-    'KeyError': 'Such name is not found, please, try again'
+    'FormatError': f'{RED}Phone number not found in the record',
+    'KeyError': f'{RED}Such name is not found, please, try again'
 }
 
 delete_phone_error_messages = {
-    'FormatError': 'Phone number not found in the record',
-    'KeyError': 'Such name is not found, please, try again'
+    'FormatError': f'{RED}Phone number not found in the record',
+    'KeyError': f'{RED}Such name is not found, please, try again'
 }

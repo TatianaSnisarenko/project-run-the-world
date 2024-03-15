@@ -10,7 +10,8 @@ from src.errors.error_messages import (
     add_note_error_messages,
     show_all_notes_error_messages,
     find_by_tags_error_messages,
-    change_birthday_error_messages
+    change_birthday_error_messages,
+    show_birthday_error_messages
 )
 from src.errors.error_decorator import input_error
 from src.models.address_book import AddressBook
@@ -20,12 +21,8 @@ from src.functions import format_as_table
 from src.constants import commands_description
 
 RED = "\33[91m"
-BLUE = "\33[94m"
 GREEN = "\033[32m"
-YELLOW = "\033[93m"
-PURPLE = '\033[0;35m' 
-CYAN = "\033[36m"
-END = "\033[0m"
+YELLOW = "\033[93m" 
 
 @input_error(parse_input_error_messages)
 def parse_input(user_input):
@@ -81,59 +78,57 @@ def show_all_notes(notes: Notes):
         raise ValueError
     return format_as_table(notes.get_dict_notes(), 40)
 
-'''
-    'change-tag <ID> <old_tag> <new_tag>',  done
-    'show-note <ID>,  done
-    'delete-note <ID>,   done          
-                      'find-by-title <title>',
-                      'find-by-content <content>',
-                      'sort-by-tag <tag> <tag>',
-'''
 @input_error(add_note_error_messages)
 def change_tag(args,notes: Notes):
     id, old_tag, new_tag = args
-    changed_note = notes.change_existing_tag(id, old_tag, new_tag)
+    changed_note = notes.change_tag(id, old_tag, new_tag)
     return f'{GREEN}Tag changeed. {changed_note}'
 
 @input_error(add_note_error_messages)
 def find_by_title(args,notes: Notes):
     title = args[0]
-    result = notes.find_title(title)
-    return f'{GREEN}Result of search by title: {result}'
+    result = notes.find_record_title(title)
+    if result:
+        return format_as_table(result, 40)
+    else:
+        return f"{YELLOW}There are no notes for such title: [{title}]"
 
 @input_error(add_note_error_messages)
 def find_by_content(args,notes: Notes):
     text = args[0]
-    result = notes.find_content(text)
-    return f'{GREEN}Result of search by content: {result}'
+    result = notes.find_record_content(text)
+    if result:
+        return format_as_table(result, 40)
+    else:
+        return f"{YELLOW}There are no notes for such content: [{text}]"
 
 @input_error(find_by_tags_error_messages)
 def find_by_tags(args, notes: Notes):
     tags = [tag.strip() for arg in args for tag in arg.split(',')]
-    result = notes.find_by_tags(tags)
+    result = notes.find_record_tags(tags)
     if result:
         return format_as_table(result, 40)
     else:
-        return f'There are no notes for such tags: [{', '.join(tags)}]'
+        return f"{YELLOW}There are no notes for such tags: [{', '.join(tags)}]"
 
 @input_error(add_note_error_messages)
 def sort_by_tag(args,notes: Notes):
     tag1, tag2 = args
-    result = notes.sort_tag(tag1, tag2)
+    result = notes.sort_record_tag(tag1, tag2)
     return f'{GREEN}Result of sort by tag: {result}'
 
 @input_error(add_note_error_messages)
 def show_note(args,notes: Notes):
     if (len(args) != 1):
         raise ValueError
-    notes.show_exist_note(args[0])
+    notes.show_note(args[0])
     return f'{GREEN}Here the note.'
 
 @input_error(add_note_error_messages)
 def delete_note(args,notes: Notes):
     if (len(args) != 1):
         raise ValueError
-    notes.delete_exist_note(args[0])
+    notes.delete_note(args[0])
     return f'{GREEN}The note was deletad. {notes}'
 
 @input_error(add_birthday_error_messages)
@@ -150,7 +145,11 @@ def change_birthday(args, book: AddressBook):
     book.change_record_birthday(name, birthday)
     return f'{GREEN}Birthday changed.'
 
-
+@input_error(show_birthday_error_messages)
+def show_birthday(args, book: AddressBook):
+    if (len(args) != 1):
+        raise ValueError
+    return book.show_record_birthday(args[0])
 
 @input_error(show_all_birthdays_error_messages)
 def show_all_birthdays(args, book: AddressBook):

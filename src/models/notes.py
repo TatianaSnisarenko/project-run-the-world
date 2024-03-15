@@ -7,6 +7,9 @@ from src.errors.errors import EmptyNotesError
 from src.errors.error_messages import empty_notes_error_message
 from collections import defaultdict
 
+RED = "\33[91m"
+GREEN = "\033[32m"
+
 class Notes(UserDict):
 
     note_id = 1
@@ -45,19 +48,19 @@ class Notes(UserDict):
         note_id = Note.validate_and_get_id(id)
         del self.data[note_id]
 
-    def find_by_title(self, title: str) -> list:  # list of dictionaries(to_dict)
+    def find_record_title(self, title: str) -> list:  # list of dictionaries(to_dict)
         if len(self.data) == 0:
             raise EmptyNotesError(empty_notes_error_message)
         return [note.to_dict() for id, note in self.data.items()
                 if note.has_in_title(title)]
 
-    def find_by_content(self, content: str) -> list:  # list of dictionaries(to_dict)
+    def find_record_content(self, content: str) -> list:  # list of dictionaries(to_dict)
         if len(self.data) == 0:
             raise EmptyNotesError(empty_notes_error_message)
         return [note.to_dict() for id, note in self.data.items()
                 if note.has_in_content(content)]
 
-    def find_by_tags(self, tags: list) -> dict:
+    def find_record_tags(self, tags: list) -> dict:
         if len(self.data) == 0:
             raise EmptyNotesError(empty_notes_error_message)
         result = []
@@ -84,28 +87,28 @@ class Notes(UserDict):
         int_id = Note.validate_and_get_id(note_id)
         existing_note = self.data.get(int_id)
         if existing_note is None:
-            raise KeyError("Note with provided ID does not exist")
+            raise KeyError(f"{RED}Note with provided ID does not exist")
         existing_note.change_title(new_title)
 
     def change_content(self, note_id: str, new_content: str) -> None:
         int_id = Note.validate_and_get_id(note_id)
         existing_note = self.data.get(int_id)
         if existing_note is None:
-            raise KeyError("Note with provided ID does not exist")
+            raise KeyError(f"{RED}Note with provided ID does not exist")
         existing_note.change_content(new_content)
 
     def add_tag(self, note_id: str, new_tag: str) -> None:
         int_id = Note.validate_and_get_id(note_id)
         existing_note = self.data.get(int_id)
         if existing_note is None:
-            raise KeyError("Note with provided ID does not exist")
+            raise KeyError(f"{RED}Note with provided ID does not exist")
         existing_note.add_tag(new_tag)
 
     def change_tag(self, note_id: str, old_tag: str, new_tag: str) -> None:
         int_id = Note.validate_and_get_id(note_id)
         existing_note = self.data.get(int_id)
         if existing_note is None:
-            raise KeyError("Note with provided ID does not exist")
+            raise KeyError(f"{RED}Note with provided ID does not exist")
         existing_note.change_tag(old_tag, new_tag)
 
     def convert_to_dict_by_tag(self, tag: str, note: Record):
@@ -116,3 +119,7 @@ class Notes(UserDict):
             "Title": str(note.title),
             "Content": str(note.content)
         }
+    
+    def sort_record_tag(self, tag1, tag2):
+        pass
+

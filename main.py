@@ -14,6 +14,7 @@ from src.commands import (
     change_tag,
     find_by_title,
     find_by_content,
+    find_by_tags,
     sort_by_tag,
     show_note,
     delete_note)
@@ -29,14 +30,6 @@ from prompt_toolkit.completion import WordCompleter
 from prompt_toolkit.lexers import PygmentsLexer
 from prompt_toolkit.styles import Style
 from pygments.lexers.sql import SqlLexer
-
-RED = "\33[91m"
-BLUE = "\33[94m"
-GREEN = "\033[32m"
-YELLOW = "\033[93m"
-PURPLE = '\033[0;35m' 
-CYAN = "\033[36m"
-END = "\033[0m"
 
 style = Style.from_dict({
     'completion-menu.completion': 'bg:#008888 #ffffff',
@@ -89,6 +82,8 @@ def main():
             print(change_tag(args, notes))
         elif command == 'find-by-title':
             print(find_by_title(args, notes))
+        elif command == 'find-by-tag':
+            print(find_by_tags(args, notes))
         elif command == 'find-by-content':
             print(find_by_content(args, notes))
         elif command == 'sort-by-tag':
