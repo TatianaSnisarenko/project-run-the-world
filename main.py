@@ -10,7 +10,8 @@ from src.commands import (
     show_all_birthdays,
     add_note,
     show_all_notes,
-    show_help)
+    show_help,
+    find_by_tags)
 from src.errors.error_messages import generic_invalid_command_format_message
 from src.models.address_book import AddressBook
 from src.models.notes import Notes
@@ -60,6 +61,8 @@ def main():
             print(show_all_notes(notes))
         elif command == 'birthdays':
             print(show_all_birthdays(args, book))
+        elif command == 'find-by-tag':
+            print(find_by_tags(args, notes))
         else:
             print(generic_invalid_command_format_message)
 
