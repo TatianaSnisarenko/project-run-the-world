@@ -65,6 +65,21 @@ show_contact_error_messages = {
     'KeyError': 'Such name is not found, please, try again.'
 }
 
+find_by_phone_error_messages = {
+    'FormatError': 'Invalid "find-by-phone" format. Command "find-by-phone" must have 2 arguments: <find-by-phone Phone>.',
+    'KeyError': 'Such name is not found, please, try again.'
+}
+
+find_by_email_error_messages = {
+    'FormatError': 'Invalid "find-by-email" format. Command "find-by-email" must have 2 arguments: <find-by-phone Email>.',
+    'KeyError': 'Such name is not found, please, try again.'
+}
+
+find_by_address_error_messages = {
+    'FormatError': 'Invalid "find-by-address" format. Command "find-by-address" must have 2 arguments: <find-by-address Email>.',
+    'KeyError': 'Such name is not found, please, try again.'
+}
+
 find_by_tags_error_messages = {
     'FormatError': 'Invalid "find-by-tag" format. Command "find-by-tag" must have not less then 2 arguments: <find-by-tag tag1,tag2,tag3>.',
 }
@@ -113,5 +128,10 @@ change_phone_error_messages = {
 
 delete_phone_error_messages = {
     'FormatError': 'Phone number not found in the record',
+    'KeyError': 'Such name is not found, please, try again'
+}
+
+delete_contact_error_messages = {
+    'FormatError': 'Contact not found in the record',
     'KeyError': 'Such name is not found, please, try again'
 }

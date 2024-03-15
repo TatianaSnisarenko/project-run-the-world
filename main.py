@@ -86,7 +86,6 @@ def main():
             print(find_by_address(args, book))
         elif command == 'delete-contact':
             print(delete_contact(args, book))
-            print(show_all_contacts(book))
         elif command == 'change-birthday':
             print(change_birthday(args, book))
         elif command == 'notes':

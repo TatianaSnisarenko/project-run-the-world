@@ -11,7 +11,13 @@ from src.errors.error_messages import (
     change_birthday_error_messages,
     change_email_error_messages,
     change_address_error_messages,
-    change_birthday_error_messages
+    change_birthday_error_messages,
+    find_by_tags_error_messages,
+    invalid_per_days_error_message,
+    find_by_phone_error_messages,
+    find_by_email_error_messages,
+    find_by_address_error_messages,
+    delete_contact_error_messages
 )
 from src.errors.error_decorator import input_error
 from src.models.address_book import AddressBook
@@ -68,7 +74,7 @@ def validate_email(email: str) -> str:
     except ValidationError as ve:
         raise ValueError(str(ve))
 
-#@input_error(add_contact_error_messages)
+@input_error(add_contact_error_messages)
 def add_contact(book: AddressBook):
     validated_name = ''
     validated_email = ''
@@ -143,7 +149,7 @@ def change_contact(args, book: AddressBook):
 #    name = args[0] 
 #    return book.show_record_contact(name)
 
-#@input_error(find_by_phone_error_messages)
+@input_error(find_by_phone_error_messages)
 def find_by_phone(args, book: AddressBook): 
     phone = args[0]
     contacts = book.get_record_contacts()
@@ -156,7 +162,7 @@ def find_by_phone(args, book: AddressBook):
 
     return f'Contact {phone} not found.'
 
-#@input_error(find_by_email_error_messages)
+@input_error(find_by_email_error_messages)
 def find_by_email(args, book: AddressBook):
     email = args[0]
     contacts = book.get_record_contacts()
@@ -173,7 +179,7 @@ def find_by_email(args, book: AddressBook):
     else:
         return f'Contact {email} not found.'
 
-#@input_error(find_by_address_error_messages)
+@input_error(find_by_address_error_messages)
 def find_by_address(args, book: AddressBook):
     address = args[0]
     contacts = book.get_record_contacts()
@@ -198,7 +204,7 @@ def show_contact(args, book: AddressBook):
     return format_as_table(book.show_record(args[0]), 40)
 
 
-#@input_error(show_all_error_messages)
+@input_error(show_all_error_messages)
 #def show_all_contacts(book: AddressBook):
 #    contacts = book.get_record_contacts()
 #    if not contacts:
@@ -267,7 +273,7 @@ def show_all_birthdays(args, book: AddressBook):
     return format_as_table(birthdays, 40) if birthdays else 'No birthdays for next {days} days.'
 
 
-#@input_error(find_by_tags_error_messages)
+@input_error(find_by_tags_error_messages)
 def find_by_tags(args, notes: Notes):
     tags = [tag.strip() for arg in args for tag in arg.split(',')]
     result = notes.find_by_tags(tags)
@@ -281,7 +287,7 @@ def find_by_tags(args, notes: Notes):
 def show_help():
     return format_as_table(commands_description, 20)
 
-#@input_error(delete_contact_error_messages)
+@input_error(delete_contact_error_messages)
 def delete_contact(args, book: AddressBook):
     name = args[0]
     contacts = book.get_record_contacts()
