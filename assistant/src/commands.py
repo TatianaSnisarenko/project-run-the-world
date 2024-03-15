@@ -400,7 +400,7 @@ def find_by_tags(args, notes: Notes):
 
 @input_error([])
 def show_help():
-    return format_as_table(commands_description, 20)
+    return format_as_table(commands_description, 30)
 
 
 @input_error(delete_contact_error_messages)
