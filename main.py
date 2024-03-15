@@ -10,7 +10,10 @@ from src.commands import (
     add_note,
     show_all_notes,
     show_help,
-    find_by_tags)
+    find_by_tags,
+    change_title,
+    change_content,
+    add_tag)
 from src.errors.error_messages import generic_invalid_command_format_message
 from src.models.address_book import AddressBook
 from src.models.notes import Notes
@@ -40,6 +43,12 @@ def main():
             print(show_help())
         elif command == 'add-note':
             print(add_note(notes))
+        elif command == 'change-title':
+            print(change_title(args, notes))
+        elif command == 'change-content':
+            print(change_content(args, notes))
+        elif command == 'add-tag':
+            print(add_tag(args, notes))
         elif command == 'add':
             print(add_contact(args, book))
         elif command == 'change':

@@ -10,7 +10,10 @@ from src.errors.error_messages import (
     add_note_error_messages,
     show_all_notes_error_messages,
     find_by_tags_error_messages,
-    change_birthday_error_messages
+    change_birthday_error_messages,
+    change_note_title_error_messages,
+    change_note_content_error_messages,
+    add_tag_error_messages
 )
 from src.errors.error_decorator import input_error
 from src.models.address_book import AddressBook
@@ -36,6 +39,35 @@ def add_note(notes: Notes):
     note_tags = [tag.strip() for tag in tags.split(',')]
     notes.create_note(note_title, note_text, note_tags)
     return 'Note added.'
+
+
+@input_error(change_note_title_error_messages)
+def change_title(args, notes: Notes):
+    if (len(args) != 1):
+        raise ValueError
+    note_id = args[0]
+    new_title = input('Enter new title: ')
+    notes.change_title(note_id, new_title)
+    return 'Note title changed.'
+
+
+@input_error(change_note_content_error_messages)
+def change_content(args, notes: Notes):
+    if (len(args) != 1):
+        raise ValueError
+    note_id = args[0]
+    new_content = input('Enter new content: ')
+    notes.change_content(note_id, new_content)
+    return 'Note content changed.'
+
+
+@input_error(add_tag_error_messages)
+def add_tag(args, notes: Notes):
+    if (len(args) != 2):
+        raise ValueError
+    note_id, tag = args
+    notes.add_tag(note_id, tag)
+    return 'Tag added.'
 
 
 @input_error(add_contact_error_messages)

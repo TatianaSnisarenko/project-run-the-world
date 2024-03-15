@@ -10,6 +10,9 @@ available_commands = [' add <Name> <phone_namber>',
                       ' exit',
                       ' close',
                       ' find-by-tag <tag1>,<tag2>,...',
+                      ' change-title <ID>',
+                      ' change-content <ID>',
+                      ' add-tag <ID> <tag_value>'
                       ' help',
                       'add <Name> <phone_namber>',
                       'change <Name> <new_phone_number>',
@@ -23,7 +26,10 @@ available_commands = [' add <Name> <phone_namber>',
                       'exit',
                       'close',
                       'help',
-                      'find-by-tag <tag1>,<tag2>,...'
+                      'find-by-tag <tag1>,<tag2>,...',
+                      'change-title <ID>',
+                      'change-content <ID>',
+                      'add-tag <ID> <tag_value>'
                       ]
 
 commands_description = [

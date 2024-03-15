@@ -4,7 +4,7 @@ import os
 from src.models.note import Note
 from src.models.record import Record
 from src.errors.errors import EmptyNotesError
-from src.errors.error_messages import empty_notes_error_message
+from src.errors.error_messages import empty_notes_error_message, note_doesnt_exist_error_message
 from collections import defaultdict
 
 
@@ -78,28 +78,28 @@ class Notes(UserDict):
         int_id = Note.validate_and_get_id(note_id)
         existing_note = self.data.get(int_id)
         if existing_note is None:
-            raise KeyError("Note with provided ID does not exist")
+            raise KeyError(note_doesnt_exist_error_message)
         existing_note.change_title(new_title)
 
     def change_content(self, note_id: str, new_content: str) -> None:
         int_id = Note.validate_and_get_id(note_id)
         existing_note = self.data.get(int_id)
         if existing_note is None:
-            raise KeyError("Note with provided ID does not exist")
+            raise KeyError(note_doesnt_exist_error_message)
         existing_note.change_content(new_content)
 
     def add_tag(self, note_id: str, new_tag: str) -> None:
         int_id = Note.validate_and_get_id(note_id)
         existing_note = self.data.get(int_id)
         if existing_note is None:
-            raise KeyError("Note with provided ID does not exist")
+            raise KeyError(note_doesnt_exist_error_message)
         existing_note.add_tag(new_tag)
 
     def change_tag(self, note_id: str, old_tag: str, new_tag: str) -> None:
         int_id = Note.validate_and_get_id(note_id)
         existing_note = self.data.get(int_id)
         if existing_note is None:
-            raise KeyError("Note with provided ID does not exist")
+            raise KeyError(note_doesnt_exist_error_message)
         existing_note.change_tag(old_tag, new_tag)
 
     def convert_to_dict_by_tag(self, tag: str, note: Record):
