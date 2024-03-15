@@ -13,11 +13,15 @@ from src.errors.error_messages import (
     change_birthday_error_messages,
     change_tag_error_messages,
     delete_note_error_messages,
-    show_note_error_messages
+    show_note_error_messages,
+    change_note_title_error_messages,
+    change_note_content_error_messages,
+    add_tag_error_messages
 )
 from src.errors.error_decorator import input_error
 from src.models.address_book import AddressBook
 from src.models.notes import Notes
+from src.models.note import Note
 from src.errors.errors import ValidationError
 from src.functions import format_as_table
 from src.constants import commands_description
@@ -44,6 +48,46 @@ def add_note(notes: Notes):
     note_tags = [tag.strip() for tag in tags.split(',')]
     notes.create_note(note_title, note_text, note_tags)
     return f'{GREEN}Note added.{RESET}'
+
+
+@input_error(add_tag_error_messages)
+def add_tag(args, notes: Notes):
+    if (len(args) != 2):
+        raise ValueError
+    note_id, tag = args
+    notes.add_tag(note_id, tag)
+    return f'{GREEN}Tag added.{RESET}'
+
+
+@input_error(change_note_title_error_messages)
+def change_title(args, notes: Notes):
+    if (len(args) != 1):
+        raise ValueError
+    note_id = args[0]
+    existing_note = notes.validate_and_get_note(note_id)
+    new_title = input('Enter new title: ')
+    notes.change_title(existing_note, new_title)
+    return f'{GREEN}Note title changed.{RESET}'
+
+
+@input_error(change_note_content_error_messages)
+def change_content(args, notes: Notes):
+    if (len(args) != 1):
+        raise ValueError
+    note_id = args[0]
+    existing_note = notes.validate_and_get_note(note_id)
+    new_content = input('Enter new content: ')
+    notes.change_content(existing_note, new_content)
+    return f'{GREEN}Note content changed.{RESET}'
+
+
+@input_error(add_tag_error_messages)
+def add_tag(args, notes: Notes):
+    if (len(args) != 2):
+        raise ValueError
+    note_id, tag = args
+    notes.add_tag(note_id, tag)
+    return f'{GREEN}Tag added.{RESET}'
 
 
 @input_error(add_contact_error_messages)
@@ -87,7 +131,7 @@ def show_all_notes(notes: Notes):
 def change_tag(args, notes: Notes):
     id, old_tag, new_tag = args
     changed_note = notes.change_tag(id, old_tag, new_tag)
-    return f'{GREEN}Tag changeed.{RESET}'
+    return f'{GREEN}Tag changed.{RESET}'
 
 
 @input_error(add_note_error_messages)
