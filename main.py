@@ -51,7 +51,7 @@ def main():
             print(show_help())
         elif command == 'add-note':
             print(add_note(notes))
-        elif command == 'add':
+        elif command == 'add-contact':
             print(add_contact(book))
         elif command == 'change':
             print(change_contact(args, book))
