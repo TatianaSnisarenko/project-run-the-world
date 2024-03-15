@@ -12,10 +12,11 @@ invalid_birthday_format_error_message = f'{
 invalid_name_format_error_message = f'{
     RED}Invalid name format: name must not be empty.{RESET}'
 invalid_note_id_format_error_message = f'{
-    RED}Invalid note id: id must not be a valid number.{RESET}'
+    RED}Invalid note id: id must be a valid number.{RESET}'
 tag_already_exists_error_message_template = 'Such tag: [{tag}] is already present for the note with id: [{id}]'
 tag_doenst_exist_error_message_template = 'Such tag: [{tag}] is not found for the note with id: [{id}]'
-empty_notes_error_message = 'Notes are empty, please add new notes first'
+note_doesnt_exist_error_message = f'{
+    RED}Note with provided ID does not exist{RESET}'
 invalid_email_error_message_template = 'Not a valid email provided: [{email}]. Please try again'
 invalid_per_days_error_message = 'Invalid value: must be only numbers from 1 to 365'
 empty_notes_error_message = 'Notes are empty. Please, use "add-note" command to add new notes.'
@@ -34,7 +35,17 @@ all available commands{RESET}'''
 
 add_note_error_messages = {
     'FormatError': f'{RED}Such note is already present, please, use "change_note" command instead.{RESET}',
-    'KeyError': f'{RED}Such note is already present, please, use "change_note" command instead.{RESET}'
+    'KeyError': f'{RED}Such note is already present, please, use "change-note" command instead.{RESET}'
+}
+
+change_note_title_error_messages = {
+    'FormatError': f'{RED}Invalid "change-title" format. Command "change-title" must have 2 arguments: <change-title ID>.{RESET}',
+    'KeyError': f'{RED}Such note is apsent, please, use "add-note" command instead.{RESET}'
+}
+
+change_note_content_error_messages = {
+    'FormatError': f'{RED}Invalid "change-content" format. Command "change-content" must have 2 arguments: <change-content ID>.{RESET}',
+    'KeyError': f'{RED}Such note is apsent, please, use "add-note" command instead.{RESET}'
 }
 
 show_note_error_messages = {
@@ -56,6 +67,11 @@ add_contact_error_messages = {
 change_address_error_messages = {
     'FormatError': 'Invalid "change" format. Command "change" must have 3 arguments: <change Name new_address>.',
     'KeyError': 'Such name is not found, please, use "add" command instead.'
+}
+
+add_tag_error_messages = {
+    'FormatError': f'{RED}Invalid "add-tag" format. Command "add-tag" must have 2 arguments: <add-tag Tag_value>.{RESET}',
+    'KeyError': note_doesnt_exist_error_message
 }
 
 change_contact_error_messages = {
@@ -140,21 +156,24 @@ parse_input_error_messages = {
     'FormatError': generic_invalid_command_format_message,
 }
 
+change_tag_error_messages = {
+    'FormatError': f'{RED}Invalid "change-tag" format. Command "change-tag" must have at least 2 arguments: <change-tag Tag_value1 tag_value2>.{RESET}',
+    'KeyError':  note_doesnt_exist_error_message
+}
+
 change_title_error_messages = {
-    'FormatError': f'{RED}Note with provided ID does not exist{RESET}'
+    'FormatError': f'{RED}Invalid "change-title" format. Command "change-title" must have 2 arguments: <change-title ID>.{RESET}',
+    'KeyError':  note_doesnt_exist_error_message
 }
 
 change_content_error_messages = {
-    'FormatError': f'{RED}Note with provided ID does not exist{RESET}'
+    'FormatError': f'{RED}Invalid "change-content" format. Command "change-content" must have 2 arguments: <change-content ID>.{RESET}',
+    'KeyError': note_doesnt_exist_error_message
 }
 
 add_tag_error_messages = {
-    'FormatError': f'{RED}Note with provided ID does not exist{RESET}'
-}
-
-change_tag_error_messages = {
-    'FormatError': f'{RED}Invalid "change-tag" format. Command "change-tag" must have at least 2 arguments: <change-tag Tag_value1 tag_value2>.{RESET}',
-    'KeyError': f'{RED}Note with provided ID does not exist{RESET}'
+    'FormatError': f'{RED}Invalid "add-tag" format. Command "add-tag" must have 3 arguments: <add-tag ID Tag_value>.{RESET}',
+    'KeyError': note_doesnt_exist_error_message
 }
 
 change_phone_error_messages = {

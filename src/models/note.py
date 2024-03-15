@@ -11,7 +11,7 @@ class Note:
     def __init__(self, title: str = '', content: str = '', tags: list = [], id: int = None) -> None:
         self.title = Title(title)
         self.content = Content(content)
-        self.tags = [Tag(tag) for tag in tags]
+        self.tags = [Tag(tag) for tag in tags if tag]
         self.id = id
 
     def __eq__(self, other):
@@ -44,11 +44,11 @@ class Note:
         for index, t in enumerate(self.tags):
             if existing_tag == t:
                 self.tags[index] = Tag(new_tag.strip())
-    
+
     def has_tag(self, tag: str):
         return Tag(tag.strip()) in self.tags
-    
-    def has_in_title(self, line:str) -> bool:
+
+    def has_in_title(self, line: str) -> bool:
         return line.strip() in self.title.value
 
     def has_in_content(self, line: str) -> bool:
