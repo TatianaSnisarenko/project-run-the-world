@@ -7,6 +7,7 @@ invalid_name_format_error_message = 'Invalid name format: name must not be empty
 invalid_note_id_format_error_message = 'Invalid note id: id must not be a valid number.'
 tag_already_exists_error_message_template = 'Such tag: [{tag}] is already present for the note with id: [{id}]'
 tag_doenst_exist_error_message_template = 'Such tag: [{tag}] is not found for the note with id: [{id}]'
+empty_notes_error_message = 'Notes are empty, please add new notes first'
 invalid_email_error_message_template = 'Not a valid email provided: [{email}]. Please try again'
 invalid_per_days_error_message = 'Invalid value: must be only numbers from 1 to 365'
 empty_notes_error_message = 'Notes are empty. Please, use "add-note" command to add new notes.'
@@ -65,9 +66,13 @@ show_birthday_error_messages = {
     'ValidationError': invalid_phone_number_error_message
 }
 
+find_by_tags_error_messages = {
+    'FormatError': 'Invalid "find-by-tag" format. Command "find-by-tag" must have not less then 2 arguments: <find-by-tag tag1,tag2,tag3>.',
+}
+
 show_all_error_messages = {
     'FormatError': 'Contacts are empty. Please, use "add" command to add new contacts.',
-    
+
 }
 
 show_all_notes_error_messages = {
@@ -78,7 +83,7 @@ show_all_birthdays_error_messages = {
     'FormatError': 'Invalid "birthdays" format. Command "birthdays" must have 2 arguments: <birthdays per_days>.',
     'KeyError': 'Contacts are empty. Please, use "add" command to add new contacts first.',
     'ValidationError': invalid_per_days_error_message,
-    
+
 
 }
 
@@ -104,11 +109,10 @@ change_tag_error_messages = {
 
 change_phone_error_messages = {
     'FormatError': 'Phone number not found in the record',
-     'KeyError': 'Such name is not found, please, try again'
+    'KeyError': 'Such name is not found, please, try again'
 }
 
 delete_phone_error_messages = {
     'FormatError': 'Phone number not found in the record',
-     'KeyError': 'Such name is not found, please, try again'
+    'KeyError': 'Such name is not found, please, try again'
 }
-

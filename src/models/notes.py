@@ -2,8 +2,10 @@ from collections import UserDict
 import pickle
 import os
 from src.models.note import Note
+from src.models.record import Record
 from src.errors.errors import EmptyNotesError
 from src.errors.error_messages import empty_notes_error_message
+from collections import defaultdict
 
 
 class Notes(UserDict):
@@ -35,6 +37,15 @@ class Notes(UserDict):
         self.data[note.id] = note
         Notes.note_id += 1
 
+    def show_note(self, id: str) -> list:
+        note_id = Note.validate_and_get_id(id)
+        existing_note = self.data[note_id]
+        return [existing_note.to_dict()]
+
+    def delete_note(self, id: str) -> None:
+        note_id = Note.validate_and_get_id(id)
+        del self.data[note_id]
+
     def find_by_title(self, title: str) -> list:  # list of dictionaries(to_dict)
         if len(self.data) == 0:
             raise EmptyNotesError(empty_notes_error_message)
@@ -46,6 +57,16 @@ class Notes(UserDict):
             raise EmptyNotesError(empty_notes_error_message)
         return [note.to_dict() for id, note in self.data.items()
                 if note.has_in_content(content)]
+
+    def find_by_tags(self, tags: list) -> dict:
+        if len(self.data) == 0:
+            raise EmptyNotesError(empty_notes_error_message)
+        result = []
+        for tag in tags:
+            for note in self.data.values():
+                if note.has_tag(tag):
+                    result.append(self.convert_to_dict_by_tag(tag, note))
+        return result
 
     def get_notes(self) -> list:
         return [str(note) for id, note in self.data.items()]
@@ -80,3 +101,12 @@ class Notes(UserDict):
         if existing_note is None:
             raise KeyError("Note with provided ID does not exist")
         existing_note.change_tag(old_tag, new_tag)
+
+    def convert_to_dict_by_tag(self, tag: str, note: Record):
+        return {
+            "Tag": tag.strip(),
+            "Id": note.id,
+            "Tags": ", ".join([str(tag) for tag in note.tags]),
+            "Title": str(note.title),
+            "Content": str(note.content)
+        }

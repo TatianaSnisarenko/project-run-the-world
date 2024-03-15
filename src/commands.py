@@ -10,6 +10,7 @@ from src.errors.error_messages import (
     invalid_per_days_error_message,
     add_note_error_messages,
     show_all_notes_error_messages,
+    find_by_tags_error_messages,
     change_birthday_error_messages
 )
 from src.errors.error_decorator import input_error
@@ -109,9 +110,19 @@ def show_all_birthdays(args, book: AddressBook):
     if per_days < 1 or per_days > 365:
         raise ValidationError(invalid_per_days_error_message)
     if not book:
-        raise KeyError()
+        raise KeyError
     birthdays = book.get_record_birthdays_per_week(per_days)
     return format_as_table(birthdays, 40) if birthdays else 'No birthdays for next {days} days.'
+
+
+@input_error(find_by_tags_error_messages)
+def find_by_tags(args, notes: Notes):
+    tags = [tag.strip() for arg in args for tag in arg.split(',')]
+    result = notes.find_by_tags(tags)
+    if result:
+        return format_as_table(result, 40)
+    else:
+        return f'There are no notes for such tags: [{', '.join(tags)}]'
 
 
 @input_error([])

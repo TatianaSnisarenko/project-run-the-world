@@ -11,6 +11,8 @@ available_commands = [' add <Name> <phone_namber>',
                       ' notes',
                       ' exit',
                       ' close',
+                      ' find-by-tag <tag1>,<tag2>,...',
+                      ' help',
                       'add <Name> <phone_namber>',
                       'change <Name> <new_phone_number>',
                       'phone <Name>',
@@ -25,7 +27,8 @@ available_commands = [' add <Name> <phone_namber>',
                       'exit',
                       'close',
                       'help',
-                      ' help']
+                      'find-by-tag <tag1>,<tag2>,...'
+                      ]
 
 commands_description = [
     {"Command": "add - to add new contact",
