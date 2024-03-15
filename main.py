@@ -53,6 +53,7 @@ style = Style.from_dict({
     'scrollbar.button': 'bg:#222222',
 })
 
+
 def main():
     book = AddressBook()
     book = book.read_from_file()
