@@ -189,7 +189,7 @@ def add_contact(book: AddressBook):
             print(ve)
 
     book.create_record(validated_name, validated_phone, validated_email, validated_birthday, validated_address)
-    return 'Contact added.'
+    return f'{GREEN}Contact added.{RESET}'
 
 @input_error(change_contact_error_messages)
 def change_contact(args, book: AddressBook):
