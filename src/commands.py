@@ -2,14 +2,14 @@ from src.errors.error_messages import (
     parse_input_error_messages,
     add_contact_error_messages,
     change_contact_error_messages,
-    show_phone_error_messages,
+    show_contact_error_messages,
     show_all_error_messages,
     add_birthday_error_messages,
-    show_birthday_error_messages,
     show_all_birthdays_error_messages,
     invalid_per_days_error_message,
     add_note_error_messages,
     show_all_notes_error_messages,
+    find_by_tags_error_messages,
     change_birthday_error_messages
 )
 from src.errors.error_decorator import input_error
@@ -59,11 +59,11 @@ def change_contact(args, book: AddressBook):
     return f'{GREEN}Contact updated.'
 
 
-@input_error(show_phone_error_messages)
-def show_phone(args, book: AddressBook):
+@input_error(show_contact_error_messages)
+def show_contact(args, book: AddressBook):
     if (len(args) != 1):
         raise ValueError
-    return book.show_record_phone(args[0])
+    return format_as_table(book.show_record(args[0]), 40)
 
 
 @input_error(show_all_error_messages)
@@ -71,7 +71,7 @@ def show_all_contacts(book: AddressBook):
     contacts = book.get_record_contacts()
     if not contacts:
         raise ValueError
-    return '\n'.join(contacts)
+    return format_as_table(contacts, 20)
 
 
 @input_error(show_all_notes_error_messages)
@@ -107,6 +107,15 @@ def find_by_content(args,notes: Notes):
     result = notes.find_content(text)
     return f'{GREEN}Result of search by content: {result}'
 
+@input_error(find_by_tags_error_messages)
+def find_by_tags(args, notes: Notes):
+    tags = [tag.strip() for arg in args for tag in arg.split(',')]
+    result = notes.find_by_tags(tags)
+    if result:
+        return format_as_table(result, 40)
+    else:
+        return f'There are no notes for such tags: [{', '.join(tags)}]'
+
 @input_error(add_note_error_messages)
 def sort_by_tag(args,notes: Notes):
     tag1, tag2 = args
@@ -127,7 +136,6 @@ def delete_note(args,notes: Notes):
     notes.delete_exist_note(args[0])
     return f'{GREEN}The note was deletad. {notes}'
 
-
 @input_error(add_birthday_error_messages)
 def add_birthday(args, book: AddressBook):
     name, birthday = args
@@ -143,29 +151,24 @@ def change_birthday(args, book: AddressBook):
     return f'{GREEN}Birthday changed.'
 
 
-@input_error(show_birthday_error_messages)
-def show_birthday(args, book: AddressBook):
-    if (len(args) != 1):
-        raise ValueError
-    return book.show_record_birthday(args[0])
-
 
 @input_error(show_all_birthdays_error_messages)
 def show_all_birthdays(args, book: AddressBook):
     days = args[0].strip()
     if len(args) != 1:
-       raise ValueError()
+        raise ValueError()
     if not days.isdigit():
-       raise ValidationError(invalid_per_days_error_message)  
+        raise ValidationError(invalid_per_days_error_message)
     per_days = int(days)
     if per_days < 1 or per_days > 365:
         raise ValidationError(invalid_per_days_error_message)
     if not book:
-        raise KeyError() 
+        raise KeyError
     birthdays = book.get_record_birthdays_per_week(per_days)
     return format_as_table(birthdays, 40) if birthdays else 'No birthdays for next {days} days.'
 
 
+
 @input_error([])
 def show_help():
-    return format_as_table(commands_description, 40)
+    return format_as_table(commands_description, 20)

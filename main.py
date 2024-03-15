@@ -1,7 +1,7 @@
 from src.commands import (
     add_contact,
     change_contact,
-    show_phone,
+    show_contact,
     show_all_contacts,
     parse_input,
     add_birthday,
@@ -67,14 +67,12 @@ def main():
             print(show_help())
         elif command == 'add-note':
             print(add_note(notes))
-        elif command == 'hello':
-            print('How can I help you?')
         elif command == 'add':
             print(add_contact(args, book))
         elif command == 'change':
             print(change_contact(args, book))
-        elif command == 'phone':
-            print(show_phone(args, book))
+        elif command == 'show-contact':
+            print(show_contact(args, book))
         elif command == 'contacts':
             print(show_all_contacts(book))
         elif command == 'add-birthday':

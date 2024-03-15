@@ -2,9 +2,10 @@ from collections import UserDict
 import pickle
 import os
 from src.models.note import Note
-from src.models.tag import Tag
-from src.models.title import Title
-
+from src.models.record import Record
+from src.errors.errors import EmptyNotesError
+from src.errors.error_messages import empty_notes_error_message
+from collections import defaultdict
 
 class Notes(UserDict):
 
@@ -35,31 +36,37 @@ class Notes(UserDict):
         self.data[note.id] = note
         Notes.note_id += 1
     
-    def change_existing_tag(self, id, old_tag, new_tag):
-        tag_id = int(id.strip())
-        for k, note in self.data.items():
-            if k == tag_id:
-                list_t = note.tags
-                i = list_t.index(Tag(old_tag))
-                list_t[i] = Tag(new_tag)
-                return note
+    def show_note(self, id: str) -> list:
+        note_id = Note.validate_and_get_id(id)
+        existing_note = self.data[note_id]
+        return [existing_note.to_dict()]
 
-    def sort_tag(self, tag1, tag2):
-        pass
+    def delete_note(self, id: str) -> None:
+        note_id = Note.validate_and_get_id(id)
+        del self.data[note_id]
 
-    def show_exist_note(self, id):
-        tag_id = int(id.strip())
-        for k, note in self.data.items():
-            if k == tag_id:
-                return note
+    def find_by_title(self, title: str) -> list:  # list of dictionaries(to_dict)
+        if len(self.data) == 0:
+            raise EmptyNotesError(empty_notes_error_message)
+        return [note.to_dict() for id, note in self.data.items()
+                if note.has_in_title(title)]
 
-    def delete_exist_note(self, id):
-        tag_id = int(id.strip())
-        for k in self.data.keys():
-            if k == tag_id:
-                 self.data.pop(tag_id)
-                 return self.data
-                
+    def find_by_content(self, content: str) -> list:  # list of dictionaries(to_dict)
+        if len(self.data) == 0:
+            raise EmptyNotesError(empty_notes_error_message)
+        return [note.to_dict() for id, note in self.data.items()
+                if note.has_in_content(content)]
+
+    def find_by_tags(self, tags: list) -> dict:
+        if len(self.data) == 0:
+            raise EmptyNotesError(empty_notes_error_message)
+        result = []
+        for tag in tags:
+            for note in self.data.values():
+                if note.has_tag(tag):
+                    result.append(self.convert_to_dict_by_tag(tag, note))
+        return result
+
 
     def get_notes(self) -> list:
         return [str(note) for id, note in self.data.items()]
@@ -73,3 +80,39 @@ class Notes(UserDict):
     def __rep__(self):
         return self.data
 
+    def change_title(self, note_id: str, new_title: str) -> None:
+        int_id = Note.validate_and_get_id(note_id)
+        existing_note = self.data.get(int_id)
+        if existing_note is None:
+            raise KeyError("Note with provided ID does not exist")
+        existing_note.change_title(new_title)
+
+    def change_content(self, note_id: str, new_content: str) -> None:
+        int_id = Note.validate_and_get_id(note_id)
+        existing_note = self.data.get(int_id)
+        if existing_note is None:
+            raise KeyError("Note with provided ID does not exist")
+        existing_note.change_content(new_content)
+
+    def add_tag(self, note_id: str, new_tag: str) -> None:
+        int_id = Note.validate_and_get_id(note_id)
+        existing_note = self.data.get(int_id)
+        if existing_note is None:
+            raise KeyError("Note with provided ID does not exist")
+        existing_note.add_tag(new_tag)
+
+    def change_tag(self, note_id: str, old_tag: str, new_tag: str) -> None:
+        int_id = Note.validate_and_get_id(note_id)
+        existing_note = self.data.get(int_id)
+        if existing_note is None:
+            raise KeyError("Note with provided ID does not exist")
+        existing_note.change_tag(old_tag, new_tag)
+
+    def convert_to_dict_by_tag(self, tag: str, note: Record):
+        return {
+            "Tag": tag.strip(),
+            "Id": note.id,
+            "Tags": ", ".join([str(tag) for tag in note.tags]),
+            "Title": str(note.title),
+            "Content": str(note.content)
+        }

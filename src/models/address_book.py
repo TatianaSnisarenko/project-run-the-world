@@ -34,7 +34,11 @@ class AddressBook(UserDict):
         existing_record = self.data[Name(name)]
         existing_record.edit_phone(phone)
 
-    def add_record_birthday(self, name: str, birthday: str) -> None:
+    def change_record_birthday(self, name: str, birthday: str) -> None:
+        existing_record = self.data[Name(name)]
+        existing_record.change_birthday(birthday)
+
+    def change_record_address(self, name: str, address: str) -> None:
         existing_record = self.data[Name(name)]
         existing_record.add_birthday(birthday)
     
@@ -42,21 +46,29 @@ class AddressBook(UserDict):
         existing_record = self.data[Name(name)]
         existing_record.change_birthday(birthday)
 
-    def show_record_phone(self, name: str) -> str:
+    def change_record_email(self, name: str, email: str) -> None:
         existing_record = self.data[Name(name)]
-        return str(existing_record.phone)
+        existing_record.change_email(email)
 
-    def show_record_birthday(self, name: str) -> str:
+    def change_record_name(self, old_name: str, new_name: str) -> None:
+        existing_record: Record = self.data[Name(old_name)]
+        existing_record.change_name(new_name)
+
+    def show_record(self, name: str) -> list:
         existing_record = self.data[Name(name)]
-        return str(existing_record.birthday) if existing_record.birthday else f'Birthday is not added for {name}'
+        return [existing_record.to_dict()]
 
-    def delete(self, name: str) -> None:
-        self.data.pop(Name(name), None)
+    def delete_record(self, name: str) -> None:
+        del self.data[Name(name)]
 
-    def get_record_birthdays_per_week(self,per_days:int) -> list:
+    def delete_phone(self, name: str, phone: str) -> None:
+        existing_record: Record = self.data[Name(name)]
+        existing_record.delete_phone(phone)
+
+    def get_record_birthdays_per_week(self, per_days: int) -> list:
         contact_birthdays = [{'name': str(name), 'birthday': record.birthday.birth_date}
                              for name, record in self.data.items() if record.birthday is not None]
-        return get_birthdays_per_week(contact_birthdays,per_days)
+        return get_birthdays_per_week(contact_birthdays, per_days)
 
     def get_record_contacts(self) -> list:
-        return [': '.join((str(name), str(record.phone))) for name, record in self.data.items()]
+        return [record.to_dict() for record in self.data.values()]
