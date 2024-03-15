@@ -1,8 +1,8 @@
-from src.models.name import Name
-from src.models.phone import Phone
-from src.models.birthday import Birthday
-from src.models.email import Email
-from src.models.address import Address
+from assistant.src.models.name import Name
+from assistant.src.models.phone import Phone
+from assistant.src.models.birthday import Birthday
+from assistant.src.models.email import Email
+from assistant.src.models.address import Address
 
 RED = "\33[91m"
 GREEN = "\033[32m"

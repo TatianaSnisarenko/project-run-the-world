@@ -1,8 +1,8 @@
 from datetime import datetime
 import re
-from src.models.field import Field
-from src.errors.errors import ValidationError
-from src.errors.error_messages import invalid_birthday_format_error_message
+from assistant.src.models.field import Field
+from assistant.src.errors.errors import ValidationError
+from assistant.src.errors.error_messages import invalid_birthday_format_error_message
 
 
 class Birthday(Field):
