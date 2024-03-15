@@ -6,7 +6,6 @@ from src.commands import (
     parse_input,
     add_birthday,
     change_birthday,
-    show_birthday,
     show_all_birthdays,
     add_note,
     show_all_notes,
@@ -47,7 +46,7 @@ def main():
     print('Welcome to the assistant bot!')
 
     session = PromptSession(completer=WordCompleter(
-        available_commands, ignore_case=True, sentence=True),lexer=PygmentsLexer(SqlLexer), style=style)
+        available_commands, ignore_case=True, sentence=True), lexer=PygmentsLexer(SqlLexer), style=style)
     while True:
         user_input = session.prompt('Enter a command: ')
         command, *args = parse_input(user_input)
@@ -72,12 +71,10 @@ def main():
             print(add_birthday(args, book))
         elif command == 'change-birthday':
             print(change_birthday(args, book))
-        elif command == 'show-birthday':
-            print(show_birthday(args, book))
         elif command == 'notes':
             print(show_all_notes(notes))
         elif command == 'birthdays':
-            print(show_all_birthdays(args,book))
+            print(show_all_birthdays(args, book))
         elif command == 'change-tag':
             print(change_tag(args, notes))
         elif command == 'find-by-title':

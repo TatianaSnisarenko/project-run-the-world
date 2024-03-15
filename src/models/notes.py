@@ -10,6 +10,7 @@ from collections import defaultdict
 RED = "\33[91m"
 GREEN = "\033[32m"
 
+
 class Notes(UserDict):
 
     note_id = 1
@@ -38,7 +39,7 @@ class Notes(UserDict):
             raise ValueError
         self.data[note.id] = note
         Notes.note_id += 1
-    
+
     def show_note(self, id: str) -> list:
         note_id = Note.validate_and_get_id(id)
         existing_note = self.data[note_id]
@@ -54,7 +55,8 @@ class Notes(UserDict):
         return [note.to_dict() for id, note in self.data.items()
                 if note.has_in_title(title)]
 
-    def find_record_content(self, content: str) -> list:  # list of dictionaries(to_dict)
+    # list of dictionaries(to_dict)
+    def find_record_content(self, content: str) -> list:
         if len(self.data) == 0:
             raise EmptyNotesError(empty_notes_error_message)
         return [note.to_dict() for id, note in self.data.items()
@@ -69,12 +71,6 @@ class Notes(UserDict):
                 if note.has_tag(tag):
                     result.append(self.convert_to_dict_by_tag(tag, note))
         return result
-
-
-    def show_note(self, id: str) -> list:
-        note_id = Note.validate_and_get_id(id)
-        existing_note = self.data[note_id]
-        return [existing_note.to_dict()]
 
     def delete_note(self, id: str) -> None:
         note_id = Note.validate_and_get_id(id)
@@ -107,10 +103,10 @@ class Notes(UserDict):
 
     def get_dict_notes(self) -> list:
         return [note.to_dict() for id, note in self.data.items()]
-    
+
     def __str__(self):
         return self.data
-    
+
     def __rep__(self):
         return self.data
 
@@ -150,7 +146,7 @@ class Notes(UserDict):
             "Title": str(note.title),
             "Content": str(note.content)
         }
-    
+
     def sort_record_tag(self, tag1, tag2):
         pass
 
