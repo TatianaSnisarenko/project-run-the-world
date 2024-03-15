@@ -3,6 +3,7 @@ from src.user_birthdays import get_birthdays_per_week
 import pickle
 import os
 from src.models.name import Name
+from src.models.email import Email
 from src.models.phone import Phone
 from src.models.record import Record
 from src.models.address import Address
@@ -24,8 +25,6 @@ class AddressBook(UserDict):
             return AddressBook()
 
     def create_record(self, name: str, phone: str, email: str, birthday: str, address: str ) -> None:
-         #address: str
-        # record = Record(name, phone, address, birthday)
         record = Record(name, phone, email ,birthday, address)
         self.add_record(record)
 
@@ -34,17 +33,21 @@ class AddressBook(UserDict):
             raise ValueError("Name cannot be empty.")
         self.data[record.name] = record
 
-    def change_record_phone(self, name: str, phone: str) -> None:
-        existing_record = self.data[Name(name)]
-        existing_record.edit_phone(phone)
+    def change_record_phone(self, name: str, new_phone: str) -> None:
+        existing_record: Record = self.data[Name(name)]
+        existing_record.change_phone(new_phone)
 
-    def change_record_address(self, name: str, address: str) -> None:
-        existing_record = self.data[Name(name)]
-        existing_record.edit_address(address)
+    def change_record_birthday(self, name: str, new_birthday: str) -> None:
+        existing_record: Record = self.data[Name(name)]
+        existing_record.change_birthday(new_birthday)
 
-    def add_record_birthday(self, name: str, birthday: str) -> None:
-        existing_record = self.data[Name(name)]
-        existing_record.add_birthday(birthday)
+    def change_record_address(self, name: str, new_address: str) -> None:
+        existing_record: Record = self.data[Name(name)]
+        existing_record.change_address(new_address)
+
+    def change_record_email(self, name: str, new_email: str) -> None:
+        existing_record: Record = self.data[Name(name)]
+        existing_record.change_email(new_email)
 
     def find_record_by_phone(self, phone: str) -> str:
         existing_record = None
@@ -79,7 +82,7 @@ class AddressBook(UserDict):
         existing_record = self.data[Name(name)]
         if existing_record:
             phones = ", ".join(str(phone) for phone in existing_record.phones) if existing_record.phones else "None"
-            return f"{name}: Phone - {phones}, Birthday - {existing_record.birthday}"
+            return f"{name}: Phone - {phones}, Birthday - {existing_record.birthday}, Email - {existing_record.email} ,Address - {existing_record.address}"
         else:
             return f'Contact with name {name} not found'
 

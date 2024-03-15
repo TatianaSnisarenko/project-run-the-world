@@ -14,10 +14,7 @@ class Record:
         self.address = Address(address) if address.strip() else None 
         self.phones = []
         self.phones.append(Phone(phone))
-# name
 
-    def change_name(self, new_name: str) -> None:
-        self.name = Name(new_name)
 # phone
 
     def change_phone(self, old_phone, new_phone):
@@ -40,18 +37,17 @@ class Record:
 
 # birthday
 
-    def change_birthday(self, birthday) -> None:
-        self.birthday = Birthday(birthday)
+    def change_birthday(self, new_birthday) -> None:
+        self.birthday = Birthday(new_birthday)
 
 # email
-
-    def change_email(self, email) -> None:
-        self.email = Email(email)
+    def change_email(self, new_email) -> None:
+        self.email = Email(new_email)
 
 # address
 
-    def change_address(self, address) -> None:
-        self.address = Address(address)
+    def change_address(self, new_address) -> None:
+        self.address = Address(new_address)
 
 # other
     def __eq__(self, other):

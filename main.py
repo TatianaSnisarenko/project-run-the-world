@@ -1,6 +1,10 @@
 from src.commands import (
     add_contact,
     change_contact,
+    change_email,
+    change_address,
+    change_birthday,
+    change_contact,
     show_phone,
     show_all_contacts,
     parse_input,
@@ -49,6 +53,14 @@ def main():
         elif command == 'add':
             print(add_contact(book))
         elif command == 'change':
+            print(change_contact(args, book))
+        elif command == 'change-email':
+            print(change_email(args, book))
+        elif command == 'change-address':
+            print(change_address(args, book))
+        elif command == 'change-birthday':
+            print(change_birthday(args, book))
+        elif command == 'change-phone':
             print(change_contact(args, book))
         elif command == 'phone':
             print(show_phone(args, book))

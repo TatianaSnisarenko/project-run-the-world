@@ -40,6 +40,10 @@ add_contact_error_messages = {
     'KeyError': 'Such name is already present, please, use "change" command instead.',
     'ValidationError': invalid_phone_number_error_message
 }
+change_address_error_messages = {
+    'FormatError': 'Invalid "change" format. Command "change" must have 3 arguments: <change Name new_address>.',
+    'KeyError': 'Such name is not found, please, use "add" command instead.'
+}
 
 change_contact_error_messages = {
     'FormatError': 'Invalid "change" format. Command "change" must have 3 arguments: <change Name new_phone_number>.',
@@ -52,6 +56,13 @@ change_birthday_error_messages = {
     'KeyError': 'Such name is not found, please, use "add" command instead.',
     'ValidationError': invalid_birthday_format_error_message
 }
+
+change_email_error_messages = {
+    'FormatError': 'Invalid "change-email" format. Command "change-email" must have 3 arguments: <change-email  Name  new_email>.',
+    'KeyError': 'Such name is not found, please, use "add" command instead.',
+    'ValidationError': invalid_email_error_message_template
+}
+
 
 show_phone_error_messages = {
     'FormatError': 'Invalid "phone" format. Command "phone" must have 2 arguments: <phone Name>.',

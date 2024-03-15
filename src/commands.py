@@ -9,7 +9,9 @@ from src.errors.error_messages import (
     show_all_birthdays_error_messages,
     add_note_error_messages,
     show_all_notes_error_messages,
-    change_birthday_error_messages
+    change_birthday_error_messages,
+    change_email_error_messages,
+    change_address_error_messages
 )
 from src.errors.error_decorator import input_error
 from src.models.address_book import AddressBook
@@ -66,12 +68,12 @@ def validate_email(email: str) -> str:
     except ValidationError as ve:
         raise ValueError(str(ve))
 
-@input_error(add_contact_error_messages)
+#@input_error(add_contact_error_messages)
 def add_contact(book: AddressBook):
     validated_name = ''
     validated_email = ''
     validated_birthday = ''
-    address_add = ''
+    validated_address = ''
 
     while True:
         name_add = input('Enter name: ')
@@ -128,7 +130,6 @@ def add_contact(book: AddressBook):
 
     book.create_record(validated_name, validated_phone, validated_email, validated_birthday, validated_address)
     return 'Contact added.'
-
 
 
 @input_error(change_contact_error_messages)
@@ -227,6 +228,22 @@ def change_birthday(args, book: AddressBook):
     name, birthday = args
     book.change_record_birthday(name, birthday)
     return 'Birthday changed.'
+
+@input_error(change_email_error_messages)
+def change_email(args, book: AddressBook):
+    if len(args) != 2:
+        raise ValueError("Invalid number of arguments")
+    name, new_email = args
+    book.change_record_email(name, new_email)
+    return f'Email for contact {name} changed to {new_email}'
+
+@input_error(change_address_error_messages)
+def change_address(args, book: AddressBook):
+    if len(args) != 2:
+        raise ValueError("Invalid number of arguments")
+    name, new_address = args
+    book.change_record_address(name, new_address)
+    return f'Address for contact {name} changed to {new_address}'
 
 
 @input_error(show_birthday_error_messages)
