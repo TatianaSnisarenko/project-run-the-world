@@ -24,8 +24,8 @@ class AddressBook(UserDict):
         else:
             return AddressBook()
 
-    def create_record(self, name: str, phone: str, email: str, birthday: str, address: str ) -> None:
-        record = Record(name, phone, email ,birthday, address)
+    def create_record(self, name: str, phone: str, email: str, birthday: str, address: str) -> None:
+        record = Record(name, phone, email, birthday, address)
         self.add_record(record)
 
     def add_record(self, record: Record) -> None:
@@ -36,7 +36,7 @@ class AddressBook(UserDict):
     def change_record_phone(self, name: str, new_phone: str) -> None:
         existing_record: Record = self.data[Name(name)]
         existing_record.change_phone(new_phone)
-    
+
     def add_record_birthday(self, name: str, birthday: str) -> None:
         existing_record = self.data[Name(name)]
         existing_record.change_birthday(birthday)
@@ -48,7 +48,7 @@ class AddressBook(UserDict):
     def change_record_address(self, name: str, new_address: str) -> None:
         existing_record: Record = self.data[Name(name)]
         existing_record.change_address(new_address)
-    
+
     def change_record_birthday(self, name: str, birthday: str) -> None:
         existing_record = self.data[Name(name)]
         existing_record.change_birthday(birthday)
@@ -68,32 +68,27 @@ class AddressBook(UserDict):
 
     def find_record_by_address(self, address: str) -> list:
         matching_records = []
-        for record in self.data.values(): 
+        for record in self.data.values():
             if str(record.address).strip() == address.strip():
                 matching_records.append(record.to_dict())
         return matching_records
 
-    def find_record_by_email(self, email: str) -> list: 
+    def find_record_by_email(self, email: str) -> list:
         matching_records = []
-        for record in self.data.values(): 
+        for record in self.data.values():
             if str(record.email).strip() == email.strip():
                 matching_records.append(record.to_dict())
         return matching_records
 
-    def find_record_by_birthday(self, birthday: str) -> list: 
+    def find_record_by_birthday(self, birthday: str) -> list:
         matching_records = []
-        for record in self.data.values(): 
+        for record in self.data.values():
             if str(record.birthday).strip() == birthday.strip():
                 matching_records.append(record.to_dict())
         return matching_records
 
     def delete(self, name: str) -> None:
         self.data.pop(Name(name), None)
-        
-    def get_record_birthdays_per_week(self) -> list:
-        contact_birthdays = [{'name': str(name), 'birthday': record.birthday.birth_date}
-                             for name, record in self.data.items() if record.birthday is not None]
-        return get_birthdays_per_week(contact_birthdays)
 
     def change_record_name(self, old_name: str, new_name: str) -> None:
         existing_record: Record = self.data[Name(old_name)]
@@ -109,7 +104,7 @@ class AddressBook(UserDict):
     def delete_phone(self, name: str, phone: str) -> None:
         existing_record: Record = self.data[Name(name)]
         existing_record.delete_phone(phone)
-    
+
     def show_record_birthday(self, name: str) -> str:
         existing_record = self.data[Name(name)]
         return str(existing_record.birthday) if existing_record.birthday else f'Birthday is not added for {name}'
@@ -120,4 +115,4 @@ class AddressBook(UserDict):
         return get_birthdays_per_week(contact_birthdays, per_days)
 
     def get_record_contacts(self) -> list:
-      return [record.to_dict() for record in self.data.values()]
+        return [record.to_dict() for record in self.data.values()]

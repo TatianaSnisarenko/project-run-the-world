@@ -53,6 +53,7 @@ style = Style.from_dict({
     'scrollbar.button': 'bg:#222222',
 })
 
+
 def main():
     book = AddressBook()
     book = book.read_from_file()
@@ -102,8 +103,6 @@ def main():
             print(show_contact(args, book))
         elif command == 'notes':
             print(show_all_notes(notes))
-        elif command == 'birthdays':
-            print(show_all_birthdays(book))
         elif command == 'find-by-phone':
             print(find_by_phone(args, book))
         elif command == 'find-by-email':
