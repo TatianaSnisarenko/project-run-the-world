@@ -2,7 +2,19 @@ import re
 from tabulate import tabulate
 
 
-def get_multiline_string(input_str, n):
+def get_multiline_string(input_str: str, n: int) -> str:
+    """Function that converts one line long
+        string into multilines string by inserting
+        new line separator after next end of word
+        after n sybmols
+
+    Args:
+        input_str (str): long sting to convert
+        n (int): desired min number of symbols on 1 line
+
+    Returns:
+        str: multiline version of long str
+    """
     if not isinstance(input_str, str):
         return input_str
     if len(input_str) <= n:
@@ -35,7 +47,17 @@ def get_multiline_string(input_str, n):
     return '\n'.join(lines)
 
 
-def format_as_table(data: list, cell_width: int):
+def format_as_table(data: list, cell_width: int) -> str:
+    """formats data to print as a table in cosole
+
+    Args:
+        data (list): list of dictionaries(key and values are strings), 
+                     keys - name of columns, values - values for cells columns
+        cell_width (int): desired min number of symbols for each value in 1 line
+
+    Returns:
+        str: string formatted as a table to print in console
+    """
     new_data = []
     for dictionary in data:
         new_dict = {}

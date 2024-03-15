@@ -38,22 +38,15 @@ class Record:
         else:
             raise ValueError('Phone number not found in the record')
 
-# birthday
-
     def change_birthday(self, birthday) -> None:
         self.birthday = Birthday(birthday)
-
-# email
 
     def change_email(self, email) -> None:
         self.email = Email(email)
 
-# address
-
     def change_address(self, address) -> None:
         self.address = Address(address)
 
-# other
     def __eq__(self, other):
         if isinstance(other, Record):
             return self.name == other.name and self.phones == other.phones and self.birthday == other.birthday and self.email == other.email and self.address == other.address
