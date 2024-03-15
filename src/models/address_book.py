@@ -48,10 +48,6 @@ class AddressBook(UserDict):
     def change_record_address(self, name: str, new_address: str) -> None:
         existing_record: Record = self.data[Name(name)]
         existing_record.change_address(new_address)
-    
-    def change_record_birthday(self, name: str, birthday: str) -> None:
-        existing_record = self.data[Name(name)]
-        existing_record.change_birthday(birthday)
 
     def change_record_email(self, name: str, new_email: str) -> None:
         existing_record: Record = self.data[Name(name)]
@@ -87,8 +83,10 @@ class AddressBook(UserDict):
                 matching_records.append(record.to_dict())
         return matching_records
 
-    def delete(self, name: str) -> None:
-        self.data.pop(Name(name), None)
+    def delete(self, name: str) -> bool:
+        removed_contact = self.data.pop(Name(name), None)
+        return removed_contact is not None
+
         
     def get_record_birthdays_per_week(self) -> list:
         contact_birthdays = [{'name': str(name), 'birthday': record.birthday.birth_date}
@@ -113,11 +111,6 @@ class AddressBook(UserDict):
     def show_record_birthday(self, name: str) -> str:
         existing_record = self.data[Name(name)]
         return str(existing_record.birthday) if existing_record.birthday else f'Birthday is not added for {name}'
-
-    def get_record_birthdays_per_week(self, per_days: int) -> list:
-        contact_birthdays = [{'name': str(name), 'birthday': record.birthday.birth_date}
-                             for name, record in self.data.items() if record.birthday is not None]
-        return get_birthdays_per_week(contact_birthdays, per_days)
 
     def get_record_contacts(self) -> list:
       return [record.to_dict() for record in self.data.values()]

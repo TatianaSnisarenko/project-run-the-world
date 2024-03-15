@@ -191,7 +191,7 @@ def add_contact(book: AddressBook):
     book.create_record(validated_name, validated_phone, validated_email, validated_birthday, validated_address)
     return f'{GREEN}Contact added.{RESET}'
 
-@input_error(change_contact_error_messages)
+#@input_error(change_contact_error_messages)
 def change_contact(args, book: AddressBook):
     name, phone = args
     book.change_record_phone(name, phone)
@@ -327,15 +327,6 @@ def change_birthday(args, book: AddressBook):
     book.change_record_birthday(name, birthday)
     return f'{GREEN}Birthday changed.{RESET}'
 
-
-@input_error(change_birthday_error_messages)
-def change_birthday(args, book: AddressBook):
-    if (len(args) != 2):
-        raise ValueError
-    name, birthday = args
-    book.change_record_birthday(name, birthday)
-    return f'{GREEN}Birthday changed.{RESET}'
-
 @input_error(change_email_error_messages)
 def change_email(args, book: AddressBook):
     if len(args) != 2:
@@ -385,10 +376,9 @@ def show_help():
 @input_error(delete_contact_error_messages)
 def delete_contact(args, book: AddressBook):
     name = args[0]
-    contacts = book.get_record_contacts()
-
-    if name in [contact.split(":")[0].strip() for contact in contacts]:
-        book.delete(name)
-        return f'Contact {name} deleted successfully.'
+    deleted = book.delete(name)
+    if deleted:
+        return f"Contact '{name}' deleted successfully."
     else:
-        return f'Contact {name} not found.'
+        return f"Contact '{name}' not found."
+

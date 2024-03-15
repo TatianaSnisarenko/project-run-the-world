@@ -19,16 +19,18 @@ class Record:
 
 # phone
 
-    def change_phone(self, old_phone, new_phone):
+    def change_phone(self, old_phone: str, new_phone: str) -> None:
         old_phone_obj = Phone(old_phone.strip())
         new_phone_obj = Phone(new_phone.strip())
         phone_found = False
         for i, p in enumerate(self.phones):
-            if str(self.phones[i]) == old_phone_obj:
-                self.phones[i] = Phone(new_phone_obj)
+            if p == old_phone_obj:
+                self.phones[i] = new_phone_obj
                 phone_found = True
+                break
         if not phone_found:
-            raise ValueError(f'{RED}Phone number not found in the record')
+            raise ValueError("Phone number not found in the record.")
+
 
     def delete_phone(self, phone: str):
         existing_phone = Phone(phone.strip())

@@ -90,8 +90,6 @@ def main():
             print(change_address(args, book))
         elif command == 'change-birthday':
             print(change_birthday(args, book))
-        elif command == 'change-phone':
-            print(change_contact(args, book))
         elif command == 'show-contact':
             print(show_contact(args, book))
         elif command == 'contacts':
@@ -102,8 +100,6 @@ def main():
             print(show_contact(args, book))
         elif command == 'notes':
             print(show_all_notes(notes))
-        elif command == 'birthdays':
-            print(show_all_birthdays(book))
         elif command == 'find-by-phone':
             print(find_by_phone(args, book))
         elif command == 'find-by-email':
