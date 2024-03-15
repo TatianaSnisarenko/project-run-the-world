@@ -67,7 +67,14 @@ show_contact_error_messages = {
 
 find_by_phone_error_messages = {
     'FormatError': 'Invalid "find-by-phone" format. Command "find-by-phone" must have 2 arguments: <find-by-phone Phone>.',
-    'KeyError': 'Such name is not found, please, try again.'
+    'KeyError': 'Such name is not found, please, try again.',
+    'ValidationError': invalid_phone_number_error_message,
+}
+
+find_by_birthday_error_messages =  {
+    'FormatError': 'Invalid "find-by-phone" format. Command "find-by-phone" must have 2 arguments: <find-by-phone Phone>.',
+    'KeyError': 'Such name is not found, please, try again.',
+    'ValidationError': invalid_birthday_format_error_message,
 }
 
 find_by_email_error_messages = {

@@ -49,40 +49,35 @@ class AddressBook(UserDict):
         existing_record: Record = self.data[Name(name)]
         existing_record.change_email(new_email)
 
-    def find_record_by_phone(self, phone: str) -> str:
-        existing_record = None
+    def find_record_by_phone(self, phone: str) -> list:
+        matching_records = []
         for record in self.data.values():
-            if record.phone == phone:
-                existing_record = record
-                break
+            for phone_number in record.phones:
+                if str(phone_number) == phone:
+                    matching_records.append(record.to_dict())
+                    break
+        return matching_records
 
-        if existing_record:
-            return f"{existing_record.name}: Phone - {existing_record.phone}, Birthday - {existing_record.birthday}"
-        else:
-            return f'Contact with phone {phone} not found'
+    def find_record_by_address(self, address: str) -> list:
+        matching_records = []
+        for record in self.data.values(): 
+            if str(record.address).strip() == address.strip():
+                matching_records.append(record.to_dict())
+        return matching_records
 
-    def find_record_by_address(self, address: str) -> str: 
-        existing_records = [record for record in self.data.values() if record.address == address]
-        if existing_records:
-            return '\n'.join([f"{record.name}: Phone - {record.phone}, Birthday - {record.birthday}, Address - {record.address}" for record in existing_records])
-        else:
-            return f'No contacts found with address {address}'
+    def find_record_by_email(self, email: str) -> list: 
+        matching_records = []
+        for record in self.data.values(): 
+            if str(record.email).strip() == email.strip():
+                matching_records.append(record.to_dict())
+        return matching_records
 
-
-    def find_record_by_email(self, email: str) -> str: 
-        existing_records = [record for record in self.data.values() if record.email == email]
-        if existing_records:
-            return '\n'.join([f"{record.name}: Phone - {record.phone}, Birthday - {record.birthday}, Email - {record.email}, Address - {record.address}" for record in existing_records])
-        else:
-            return f'No contacts found with email {email}'
-
-    def show_record_contact(self, name: str) -> str:
-        existing_record = self.data[Name(name)]
-        if existing_record:
-            phones = ", ".join(str(phone) for phone in existing_record.phones) if existing_record.phones else "None"
-            return f"{name}: Phone - {phones}, Birthday - {existing_record.birthday}, Email - {existing_record.email} ,Address - {existing_record.address}"
-        else:
-            return f'Contact with name {name} not found'
+    def find_record_by_birthday(self, birthday: str) -> list: 
+        matching_records = []
+        for record in self.data.values(): 
+            if str(record.birthday).strip() == birthday.strip():
+                matching_records.append(record.to_dict())
+        return matching_records
 
     def delete(self, name: str) -> None:
         self.data.pop(Name(name), None)
@@ -92,20 +87,11 @@ class AddressBook(UserDict):
                              for name, record in self.data.items() if record.birthday is not None]
         return get_birthdays_per_week(contact_birthdays)
 
-    def get_record_contacts(self) -> list:
-        contacts = [
-            f"{name}: Phone - {', '.join(str(phone) for phone in record.phones)}, Birthday - {record.birthday}, Email - {record.email}, Address - {record.address}"
-            if hasattr(record, 'phones') and record.phones else
-            f"{name}: Phone - None, Birthday - {record.birthday}"
-            for name, record in self.data.items()
-        ]
-        return contacts
-
     def change_record_name(self, old_name: str, new_name: str) -> None:
         existing_record: Record = self.data[Name(old_name)]
         existing_record.change_name(new_name)
 
-    def show_record(self, name: str) -> list:
+    def show_record(self, name: str) -> dict:
         existing_record = self.data[Name(name)]
         return [existing_record.to_dict()]
 
@@ -121,5 +107,5 @@ class AddressBook(UserDict):
                              for name, record in self.data.items() if record.birthday is not None]
         return get_birthdays_per_week(contact_birthdays, per_days)
 
-    #def get_record_contacts(self) -> list:
-     #   return [record.to_dict() for record in self.data.values()]
+    def get_record_contacts(self) -> list:
+      return [record.to_dict() for record in self.data.values()]

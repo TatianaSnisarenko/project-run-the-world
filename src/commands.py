@@ -17,7 +17,8 @@ from src.errors.error_messages import (
     find_by_phone_error_messages,
     find_by_email_error_messages,
     find_by_address_error_messages,
-    delete_contact_error_messages
+    delete_contact_error_messages,
+    find_by_birthday_error_messages
 )
 from src.errors.error_decorator import input_error
 from src.models.address_book import AddressBook
@@ -137,65 +138,47 @@ def add_contact(book: AddressBook):
     book.create_record(validated_name, validated_phone, validated_email, validated_birthday, validated_address)
     return 'Contact added.'
 
-
 @input_error(change_contact_error_messages)
 def change_contact(args, book: AddressBook):
     name, phone = args
     book.change_record_phone(name, phone)
     return 'Contact updated.'
 
-#@input_error(show_contact_error_messages)
-#def show_contact(args, book: AddressBook):
-#    name = args[0] 
-#    return book.show_record_contact(name)
+@input_error(find_by_birthday_error_messages)
+def find_by_brithday(args, book: AddressBook): 
+    birthday = args[0]
+    matching_records = book.find_record_by_birthday(birthday)
+    if not matching_records:
+        return 'No contact found with this birthday'
+    else:
+        return format_as_table(matching_records, cell_width=20)
 
 @input_error(find_by_phone_error_messages)
 def find_by_phone(args, book: AddressBook): 
     phone = args[0]
-    contacts = book.get_record_contacts()
-
-    phone_numbers = [contact.split("Phone - ")[1].split(",")[0].strip() for contact in contacts]
-    if phone in phone_numbers:
-        for contact in contacts:
-            if f"Phone - {phone}" in contact:
-                return f'Contact {phone} found successfully. {contact}'
-
-    return f'Contact {phone} not found.'
-
+    matching_records = book.find_record_by_phone(phone)
+    if not matching_records:
+        return 'No contact found with this phone number'
+    else:
+        return format_as_table(matching_records, cell_width=20)
+    
 @input_error(find_by_email_error_messages)
 def find_by_email(args, book: AddressBook):
     email = args[0]
-    contacts = book.get_record_contacts()
-    
-    found_contacts = []
-    for contact in contacts:
-        if "Email - " in contact:
-            emails = [email.strip() for email in contact.split("Email - ")[1].split(",")]
-            if email in emails:
-                found_contacts.append(contact)
-
-    if found_contacts:
-        return f'Contact {email} found successfully:\n' + '\n'.join(found_contacts)
+    matching_records = book.find_record_by_email(email)
+    if not matching_records:
+        return 'No contact found with this email'
     else:
-        return f'Contact {email} not found.'
+        return format_as_table(matching_records, cell_width=20)
 
 @input_error(find_by_address_error_messages)
 def find_by_address(args, book: AddressBook):
     address = args[0]
-    contacts = book.get_record_contacts()
-    
-    found_contacts = []
-    for contact in contacts:
-        if "Address - " in contact:
-            addresses = [addr.strip() for addr in contact.split("Address - ")[1].split(",")]
-            if address in addresses:
-                found_contacts.append(contact)
-
-    if found_contacts:
-        return f'Contact with address {address} found successfully:\n' + '\n'.join(found_contacts)
+    matching_records = book.find_record_by_address(address)
+    if not matching_records:
+        return 'No contact found with this address'
     else:
-        return f'Contact with address {address} not found.'
-
+        return format_as_table(matching_records, cell_width=20)
 
 @input_error(show_contact_error_messages)
 def show_contact(args, book: AddressBook):
@@ -203,19 +186,12 @@ def show_contact(args, book: AddressBook):
         raise ValueError
     return format_as_table(book.show_record(args[0]), 40)
 
-
 @input_error(show_all_error_messages)
-#def show_all_contacts(book: AddressBook):
-#    contacts = book.get_record_contacts()
-#    if not contacts:
-#        raise ValueError
-#    return format_as_table(contacts, 20)
 def show_all_contacts(book: AddressBook):
     contacts = book.get_record_contacts()
     if not contacts:
         raise ValueError
-    return '\n'.join(contacts)
-
+    return format_as_table(contacts, 20)
 
 @input_error(show_all_notes_error_messages)
 def show_all_notes(notes: Notes):
@@ -224,13 +200,11 @@ def show_all_notes(notes: Notes):
         raise ValueError
     return format_as_table(notes.get_dict_notes(), 40)
 
-
 @input_error(add_birthday_error_messages)
 def add_birthday(args, book: AddressBook):
     name, birthday = args
     book.add_record_birthday(name, birthday)
     return 'Birthday added.'
-
 
 @input_error(change_birthday_error_messages)
 def change_birthday(args, book: AddressBook):
@@ -281,7 +255,6 @@ def find_by_tags(args, notes: Notes):
         return format_as_table(result, 40)
     else:
         return f'There are no notes for such tags: [{', '.join(tags)}]'
-
 
 @input_error([])
 def show_help():

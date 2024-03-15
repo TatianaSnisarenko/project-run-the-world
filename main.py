@@ -10,6 +10,7 @@ from src.commands import (
     find_by_phone,
     find_by_email,
     find_by_address,
+    find_by_brithday,
     show_contact,
     show_contact,
     show_all_contacts,
@@ -63,9 +64,6 @@ def main():
             print(change_birthday(args, book))
         elif command == 'change-phone':
             print(change_contact(args, book))
-        elif command == 'phone':
-            pass
-            #print(show_phone(args, book))
         elif command == 'show-contact':
             print(show_contact(args, book))
         elif command == 'contacts':
@@ -84,10 +82,10 @@ def main():
             print(find_by_email(args, book))
         elif command == 'find-by-address':
             print(find_by_address(args, book))
+        elif command == 'find-by-birthday':
+            print(find_by_brithday(args, book))
         elif command == 'delete-contact':
             print(delete_contact(args, book))
-        elif command == 'change-birthday':
-            print(change_birthday(args, book))
         elif command == 'notes':
             print(show_all_notes(notes))
         elif command == 'birthdays':
