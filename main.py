@@ -10,13 +10,40 @@ from src.commands import (
     show_all_birthdays,
     add_note,
     show_all_notes,
-    show_help)
+    show_help,
+    change_tag,
+    find_by_title,
+    find_by_content,
+    sort_by_tag,
+    show_note,
+    delete_note)
 from src.errors.error_messages import generic_invalid_command_format_message
 from src.models.address_book import AddressBook
 from src.models.notes import Notes
 from src.constants import available_commands
 from prompt_toolkit.completion import WordCompleter
 from prompt_toolkit import PromptSession
+from prompt_toolkit.styles import Style
+from prompt_toolkit import PromptSession
+from prompt_toolkit.completion import WordCompleter
+from prompt_toolkit.lexers import PygmentsLexer
+from prompt_toolkit.styles import Style
+from pygments.lexers.sql import SqlLexer
+
+RED = "\33[91m"
+BLUE = "\33[94m"
+GREEN = "\033[32m"
+YELLOW = "\033[93m"
+PURPLE = '\033[0;35m' 
+CYAN = "\033[36m"
+END = "\033[0m"
+
+style = Style.from_dict({
+    'completion-menu.completion': 'bg:#008888 #ffffff',
+    'completion-menu.completion.current': 'bg:#00aaaa #000000',
+    'scrollbar.background': 'bg:#88aaaa',
+    'scrollbar.button': 'bg:#222222',
+})
 
 
 def main():
@@ -27,7 +54,7 @@ def main():
     print('Welcome to the assistant bot!')
 
     session = PromptSession(completer=WordCompleter(
-        available_commands, ignore_case=True, sentence=True))
+        available_commands, ignore_case=True, sentence=True),lexer=PygmentsLexer(SqlLexer), style=style)
     while True:
         user_input = session.prompt('Enter a command: ')
         command, *args = parse_input(user_input)
@@ -60,6 +87,18 @@ def main():
             print(show_all_notes(notes))
         elif command == 'birthdays':
             print(show_all_birthdays(args,book))
+        elif command == 'change-tag':
+            print(change_tag(args, notes))
+        elif command == 'find-by-title':
+            print(find_by_title(args, notes))
+        elif command == 'find-by-content':
+            print(find_by_content(args, notes))
+        elif command == 'sort-by-tag':
+            print(sort_by_tag(args, notes))
+        elif command == 'show-note':
+            print(show_note(args, notes))
+        elif command == 'delete-note':
+            print(delete_note(args, notes))
         else:
             print(generic_invalid_command_format_message)
 
