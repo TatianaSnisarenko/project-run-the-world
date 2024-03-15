@@ -2,14 +2,10 @@ from collections import UserDict
 import pickle
 import os
 from src.models.note import Note
-from src.models.tag import Tag
 from src.models.record import Record
 from src.errors.errors import EmptyNotesError
 from src.errors.error_messages import empty_notes_error_message
 from collections import defaultdict
-
-RED = "\33[91m"
-GREEN = "\033[32m"
 
 
 class Notes(UserDict):
@@ -42,45 +38,9 @@ class Notes(UserDict):
         Notes.note_id += 1
 
     def show_note(self, id: str) -> list:
-        '''
-        Method find note by ID
-        Args : self.data, ID
-        Returns : Note in dictionary
-        '''
         note_id = Note.validate_and_get_id(id)
         existing_note = self.data[note_id]
         return [existing_note.to_dict()]
-
-    def delete_note(self, id: str) -> None:
-        '''
-        Method delete note by ID
-        Args : self.data, ID
-        '''
-        note_id = Note.validate_and_get_id(id)
-        del self.data[note_id]
-
-    def find_record_title(self, title: str) -> list:  # list of dictionaries(to_dict)
-        if len(self.data) == 0:
-            raise EmptyNotesError(empty_notes_error_message)
-        return [note.to_dict() for id, note in self.data.items()
-                if note.has_in_title(title)]
-
-    # list of dictionaries(to_dict)
-    def find_record_content(self, content: str) -> list:
-        if len(self.data) == 0:
-            raise EmptyNotesError(empty_notes_error_message)
-        return [note.to_dict() for id, note in self.data.items()
-                if note.has_in_content(content)]
-
-    def find_record_tags(self, tags: list) -> dict:
-        if len(self.data) == 0:
-            raise EmptyNotesError(empty_notes_error_message)
-        result = []
-        for tag in tags:
-            for note in self.data.values():
-                if note.has_tag(tag):
-                    result.append(self.convert_to_dict_by_tag(tag, note))
-        return result
 
     def delete_note(self, id: str) -> None:
         note_id = Note.validate_and_get_id(id)
@@ -113,63 +73,6 @@ class Notes(UserDict):
 
     def get_dict_notes(self) -> list:
         return [note.to_dict() for id, note in self.data.items()]
-
-    def __str__(self):
-        return self.data
-
-    def __repr__(self):
-        return self.data
-
-    def change_title(self, note_id: str, new_title: str) -> None:
-        int_id = Note.validate_and_get_id(note_id)
-        existing_note = self.data.get(int_id)
-        if existing_note is None:
-            raise KeyError(f"{RED}Note with provided ID does not exist")
-        existing_note.change_title(new_title)
-
-    def change_content(self, note_id: str, new_content: str) -> None:
-        int_id = Note.validate_and_get_id(note_id)
-        existing_note = self.data.get(int_id)
-        if existing_note is None:
-            raise KeyError(f"{RED}Note with provided ID does not exist")
-        existing_note.change_content(new_content)
-
-    def add_tag(self, note_id: str, new_tag: str) -> None:
-        int_id = Note.validate_and_get_id(note_id)
-        existing_note = self.data.get(int_id)
-        if existing_note is None:
-            raise KeyError(f"{RED}Note with provided ID does not exist")
-        existing_note.add_tag(new_tag)
-
-    def change_tag(self, note_id: str, old_tag: str, new_tag: str) -> None:
-        int_id = Note.validate_and_get_id(note_id)
-        existing_note = self.data.get(int_id)
-        if existing_note is None:
-            raise KeyError(f"{RED}Note with provided ID does not exist")
-        existing_note.change_tag(old_tag, new_tag)
-
-    def convert_to_dict_by_tag(self, tag: str, note: Record):
-        return {
-            "Tag": tag.strip(),
-            "Id": note.id,
-            "Tags": ", ".join([str(tag) for tag in note.tags]),
-            "Title": str(note.title),
-            "Content": str(note.content)
-        }
-    
-    def sort_record_tag(self):
-        '''
-        Method sorts tags in notes
-        Args : self.data
-        Returns : list of sorted tags
-        '''
-        tags_list = [note.tags for note in self.data.values()]
-        uni_tags_list = []
-        for tag in tags_list:
-            uni_tags_list += tag
-        sorted_tags = sorted(uni_tags_list, key=lambda tag: tag.value, reverse=True)
-        return sorted_tags
-
 
     def change_title(self, note_id: str, new_title: str) -> None:
         int_id = Note.validate_and_get_id(note_id)

@@ -1,17 +1,17 @@
-from src.models.tag import Tag
-from src.models.title import Title
-from src.models.content import Content
-from src.errors.errors import ValidationError
-from src.errors.error_messages import invalid_note_id_format_error_message
-from src.errors.error_messages import tag_already_exists_error_message_template
-from src.errors.error_messages import tag_doenst_exist_error_message_template
+from assistant.src.models.tag import Tag
+from assistant.src.models.title import Title
+from assistant.src.models.content import Content
+from assistant.src.errors.errors import ValidationError
+from assistant.src.errors.error_messages import invalid_note_id_format_error_message
+from assistant.src.errors.error_messages import tag_already_exists_error_message_template
+from assistant.src.errors.error_messages import tag_doenst_exist_error_message_template
 
 
 class Note:
     def __init__(self, title: str = '', content: str = '', tags: list = [], id: int = None) -> None:
         self.title = Title(title)
         self.content = Content(content)
-        self.tags = [Tag(tag) for tag in tags]
+        self.tags = [Tag(tag) for tag in tags if tag]
         self.id = id
 
     def __eq__(self, other):
@@ -44,11 +44,11 @@ class Note:
         for index, t in enumerate(self.tags):
             if existing_tag == t:
                 self.tags[index] = Tag(new_tag.strip())
-    
+
     def has_tag(self, tag: str):
         return Tag(tag.strip()) in self.tags
-    
-    def has_in_title(self, line:str) -> bool:
+
+    def has_in_title(self, line: str) -> bool:
         return line.strip() in self.title.value
 
     def has_in_content(self, line: str) -> bool:
