@@ -11,7 +11,7 @@ class Record:
         self.name = Name(name)
         self.email = Email(email) if email.strip() else None
         self.birthday = Birthday(birthday) if birthday.strip() else None
-        self.address = Address(address) if address.strip() else None
+        self.address = Address(address) if address.strip() else None 
         self.phones = []
         self.phones.append(Phone(phone))
 # name
@@ -65,12 +65,10 @@ class Record:
 
     def __str__(self):
         birthday_str = f', birthday: {
-            self.birthday.value}' if self.birthday else ''
-        email_str = f', email: {
-            self.email.value}' if self.email else ''
+            self.birthday.value}' if self.birthday  else ''
         address_str = f', address: {
             self.address.value}' if self.address else ''
         phones_str = f', phones: {
             ", ".join(str(phone) for phone in self.phones)}' if self.phones else ''
 
-        return f'Contact name: {self.name.value}, ' + birthday_str + email_str + address_str + phones_str
+        return f'Contact name: {self.name.value}, ' + birthday_str  + address_str + phones_str

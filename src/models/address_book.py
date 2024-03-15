@@ -59,10 +59,21 @@ class AddressBook(UserDict):
             return f'Contact with phone {phone} not found'
 
     def find_record_by_address(self, address: str) -> str: 
-        pass
+        existing_records = [record for record in self.data.values() if record.address == address]
+        if existing_records:
+            return '\n'.join([f"{record.name}: Phone - {record.phone}, Birthday - {record.birthday}, Address - {record.address}" for record in existing_records])
+        else:
+            return f'No contacts found with address {address}'
+
 
     def find_record_by_email(self, email: str) -> str: 
-        pass
+        existing_records = [record for record in self.data.values() if record.email == email]
+        if existing_records:
+            return '\n'.join([f"{record.name}: Phone - {record.phone}, Birthday - {record.birthday}, Email - {record.email}, Address - {record.address}" for record in existing_records])
+        else:
+            return f'No contacts found with email {email}'
+
+
 
     def show_record_contact(self, name: str) -> str:
         existing_record = self.data[Name(name)]
@@ -80,7 +91,7 @@ class AddressBook(UserDict):
         existing_record = self.data[Name(name)]
         return str(existing_record.birthday) if existing_record.birthday else f'Birthday is not added for {name}'
 
-    def delete(self, name: str) -> str:
+    def delete(self, name: str) -> None:
         self.data.pop(Name(name), None)
         
     def get_record_birthdays_per_week(self) -> list:

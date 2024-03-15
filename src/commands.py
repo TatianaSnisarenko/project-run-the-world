@@ -43,19 +43,6 @@ def add_note(notes: Notes):
 
 
 @input_error(add_contact_error_messages)
-#def add_contact(book: AddressBook):
-    #name, phone, address = args
-  #  name_add = input('Enter name: ')
-   # phone_add = input('Enter phone: ')
-    #address_add = input('Enter address:')
-    #email_add = input('Enter email:')
-   # book.create_record(name_add, phone_add)
-   # return 'Contact added.'
-
-def validate_address(address: str) -> str:
-    if len(address.strip()) < 1:
-        raise ValueError("Address must be at least 1 character long.")
-    return address
 
 def validate_name(name: str) -> str:
     if len(name.strip()) < 1:
@@ -63,27 +50,22 @@ def validate_name(name: str) -> str:
     return name
 
 def validate_phone(phone: str) -> str:
-    try:
-        return Phone.validate_and_get(phone)
-    except ValidationError as ve:
-        raise ValueError(str(ve))
+    return Phone.validate_and_get(phone)
     
 def validate_birthday(birthday: str) -> str:
-    try:
-        validated_birthday = Birthday.validate_and_get_value(birthday)
-        return validated_birthday
-    except ValidationError as ve:
-        raise ValueError(str(ve))
+    validated_birthday = Birthday.validate_and_get_value(birthday)
+    return validated_birthday
 
 def validate_email(email: str) -> str:
-    try:
-        validated_birthday = Email.validate_and_get_email(email)
-        return validated_birthday
-    except ValidationError as ve:
-        raise ValueError(str(ve))
-
+    validated_birthday = Email.validate_and_get_email(email)
+    return validated_birthday
 
 def add_contact(book: AddressBook):
+    validated_name = ''
+    validated_email = ''
+    validated_birthday = ''
+    address_add = ''
+
     while True:
         name_add = input('Enter name: ')
         if not name_add.strip():
@@ -98,7 +80,7 @@ def add_contact(book: AddressBook):
     while True:
         phone_add = input('Enter phone: ')
         if not phone_add.strip():
-            print("Phone number can't be empty.")
+            print("Phone can't be empty.")
             continue
         try:
             validated_phone = validate_phone(phone_add)
@@ -109,37 +91,22 @@ def add_contact(book: AddressBook):
     while True:
         email_add = input('Enter email: ')
         if not email_add.strip():
-            print("Email can't be empty.")
-            continue
-        try:
-            validated_email= validate_email(email_add)
             break
-        except ValueError as ve:
-            print(ve)
-    
+        validated_email= validate_email(email_add)
+        break 
     while True:
         birthday_add = input('Enter birthday: ')
         if not birthday_add.strip():
-            print("Birthday can't be empty.")
-            continue
-        try:
-            validated_birthday = validate_birthday(birthday_add)
             break
-        except ValueError as ve:
-            print(ve)
+        validated_birthday = validate_birthday(birthday_add)
+        break
     while True:
-        address_add = input('Enter adress: ')
+        address_add = input('Enter address: ')
         if not address_add.strip():
-            print("Addresss can't be empty.")
-            continue
-        try:
-            validated_address = validate_address(address_add)
             break
-        except ValueError as ve:
-            print(ve)
 
     try:
-        book.create_record(validated_name, validated_phone, validated_email, validated_birthday, validated_address)
+        book.create_record(validated_name, validated_phone, validated_email, validated_birthday, address_add)
         return 'Contact added.'
     except ValueError as ve:
         return str(ve)
@@ -169,16 +136,39 @@ def find_by_phone(args, book: AddressBook):
     return f'Contact {phone} not found.'
 
 #@input_error(find_by_email_error_messages)
-def find_by_email(args, book: AddressBook): 
-    pass
-#    email = args[0]  
-#    return book.find_record_by_email(email)
+def find_by_email(args, book: AddressBook):
+    email = args[0]
+    contacts = book.get_record_contacts()
+    
+    found_contacts = []
+    for contact in contacts:
+        if "Email - " in contact:
+            emails = [email.strip() for email in contact.split("Email - ")[1].split(",")]
+            if email in emails:
+                found_contacts.append(contact)
+
+    if found_contacts:
+        return f'Contact {email} found successfully:\n' + '\n'.join(found_contacts)
+    else:
+        return f'Contact {email} not found.'
 
 #@input_error(find_by_address_error_messages)
-def find_by_address(args, book: AddressBook): 
-    pass
-#    address = args[0]  
-#    return book.find_record_by_address(address)
+def find_by_address(args, book: AddressBook):
+    address = args[0]
+    contacts = book.get_record_contacts()
+    
+    found_contacts = []
+    for contact in contacts:
+        if "Address - " in contact:
+            addresses = [addr.strip() for addr in contact.split("Address - ")[1].split(",")]
+            if address in addresses:
+                found_contacts.append(contact)
+
+    if found_contacts:
+        return f'Contact with address {address} found successfully:\n' + '\n'.join(found_contacts)
+    else:
+        return f'Contact with address {address} not found.'
+
 
 @input_error(show_phone_error_messages)
 def show_phone(args, book: AddressBook):

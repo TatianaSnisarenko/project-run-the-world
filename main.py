@@ -6,6 +6,8 @@ from src.commands import (
     parse_input,
     add_birthday,
     find_by_phone,
+    find_by_email,
+    find_by_address,
     show_birthday,
     show_contact,
     show_all_birthdays,
@@ -65,12 +67,10 @@ def main():
         elif command == 'find-by-phone':
             print(find_by_phone(args, book))
         elif command == 'find-by-email':
-            pass
-            #print(find_by_email(args, email))
+            print(find_by_email(args, book))
         elif command == 'find-by-address':
-            pass
-            #print(find_by_address(args, address))
-        elif command == 'delete':
+            print(find_by_address(args, book))
+        elif command == 'delete-contact':
             print(delete_contact(args, book))
             print(show_all_contacts(book))
         else:
