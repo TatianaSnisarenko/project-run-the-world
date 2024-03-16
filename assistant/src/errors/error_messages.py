@@ -1,4 +1,4 @@
-from assistant.src.errors.errors import ValidationError
+
 
 RED = "\33[91m"
 GREEN = "\033[32m"
@@ -121,8 +121,7 @@ Invalid "add-birthday" format. Command "add-birthday" must have 3 arguments: <ad
     'KeyError': (f'''{RED}
 You have no Power here.
 Such name is not found, please, use "add" command to add new contact first.
-                 {RESET}'''),
-    'ValidationError': invalid_birthday_format_error_message
+                 {RESET}''')
 }
 
 add_contact_error_messages = {
@@ -133,8 +132,7 @@ Invalid "add" format. Command "add" must have 3 arguments: <add Name phone_numbe
     'KeyError': (f'''{RED}
 You have no Power here.
 Such name is already present, please, use "change" command instead.
-                 {RESET}'''),
-    'ValidationError': invalid_phone_number_error_message
+                 {RESET}''')
 }
 change_address_error_messages = {
     'FormatError': (f'''{RED}
@@ -163,14 +161,17 @@ Invalid "change-phone" format. Command "change-phone" must have 3 arguments: <ch
     'KeyError': (f'''{RED}
 You have no Power here.
 Such name with such phone is not found, please, use "add" command instead.
-{RESET}'''),
-    'ValidationError': invalid_phone_number_error_message
+{RESET}''')
 }
 
 delete_phone_error_messages = {
     'FormatError': f'{RED}Invalid "delete-phone" format. Command "delete-phone" must have 3 arguments: <delete-phone Name phone>.{RESET}',
-    'KeyError': f'{RED}Such name with such phone is not found, please, check your input.{RESET}',
-    'ValidationError': invalid_phone_number_error_message
+    'KeyError': f'{RED}Such name with such phone is not found, please, check your input.{RESET}'
+}
+
+add_phone_error_messages = {
+    'FormatError': f'{RED}Invalid "add-phone" format. Command "add-phone" must have 3 arguments: <add-phone Name phone>.{RESET}',
+    'KeyError': f'{RED}Such name is not found, please, check your input.{RESET}'
 }
 
 change_birthday_error_messages = {
@@ -181,8 +182,7 @@ Invalid "change-birthday" format. Command "change-birthday" must have 3 argument
     'KeyError': (f'''{RED}
 You have no Power here.
 Such name is not found, please, use "add" command instead.
-{RESET}'''),
-    'ValidationError': invalid_birthday_format_error_message
+{RESET}''')
 }
 
 change_email_error_messages = {
@@ -193,8 +193,7 @@ Invalid "change-email" format. Command "change-email" must have 3 arguments: <ch
     'KeyError': (f'''{RED}
 You have no Power here.
 Such name is not found, please, use "add" command instead.
-{RESET}'''),
-    'ValidationError': invalid_email_error_message
+{RESET}''')
 }
 
 
@@ -263,8 +262,7 @@ Invalid "find-by-phone" format. Command "find-by-phone" must have 2 arguments: <
     'KeyError':  (f'''{RED}
 You have no Power here.
 Such name is not found, please, try again.
-{RESET}'''),
-    'ValidationError': invalid_phone_number_error_message,
+{RESET}''')
 }
 
 find_by_birthday_error_messages = {
@@ -275,8 +273,7 @@ Invalid "find-by-phone" format. Command "find-by-phone" must have 2 arguments: <
     'KeyError': (f'''{RED}
 You have no Power here.
 Such name is not found, please, try again.
-{RESET}'''),
-    'ValidationError': invalid_birthday_format_error_message,
+{RESET}''')
 }
 
 find_by_email_error_messages = {
@@ -327,8 +324,7 @@ Invalid "birthdays" format. Command "birthdays" must have 2 arguments: <birthday
     'KeyError': (f'''{RED}
 You have no Power here.
 Contacts are empty. Please, use "add" command to add new contacts first.
-{RESET}'''),
-    'ValidationError': invalid_per_days_error_message,
+{RESET}''')
 }
 
 parse_input_error_messages = {

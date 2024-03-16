@@ -3,7 +3,7 @@ from assistant.src.models.phone import Phone
 from assistant.src.models.birthday import Birthday
 from assistant.src.models.email import Email
 from assistant.src.models.address import Address
-
+from assistant.src.errors.errors import PhoneError
 RED = "\33[91m"
 GREEN = "\033[32m"
 RESET = "\033[0m"
@@ -20,8 +20,6 @@ class Record:
         self.phones = []
         self.phones.append(Phone(phone))
 
-# phone
-
     def change_phone(self, old_phone: str, new_phone: str) -> None:
         old_phone_obj = Phone(old_phone.strip())
         new_phone_obj = Phone(new_phone.strip())
@@ -33,9 +31,9 @@ class Record:
                 phone_found = True
                 break
         if not phone_found:
-            raise KeyError(f'''{RED}
+            raise PhoneError(f'''{RED}
 The wise speak only of what they know!
-Phone number not found in the record
+Phone number not found for the contact
                            {RESET}''')
 
     def delete_phone(self, phone: str):
@@ -43,29 +41,33 @@ Phone number not found in the record
         if existing_phone in self.phones:
             self.phones.remove(existing_phone)
         else:
-            raise ValueError(f'''{RED}
+            raise PhoneError(f'''{RED}
 The wise speak only of what they know!
-Phone number not found in the record
+Phone number not found for the contact
                              {RESET}''')
 
-    def add_birthday(self, birthday) -> None:
+    def add_birthday(self, birthday: str) -> None:
         self.birthday = Birthday(birthday)
 
-# birthday
+    def add_phone(self, phone: str) -> None:
+        phone_obj = Phone(phone)
+        if phone_obj in self.phones:
+            raise PhoneError(f'''{RED}
+The wise speak only of what they know!
+Phone number already present for the contact
+                             {RESET}''')
+        self.phones.append(phone_obj)
 
-    def change_birthday(self, new_birthday) -> None:
+    def change_birthday(self, new_birthday: str) -> None:
         self.birthday = Birthday(new_birthday)
 
-# email
-    def change_email(self, new_email) -> None:
+    def change_email(self, new_email: str) -> None:
         self.email = Email(new_email)
 
-# address
-
-    def change_address(self, new_address) -> None:
+    def change_address(self, new_address: str) -> None:
         self.address = Address(new_address)
 
-    def edit_phone(self, phone) -> None:
+    def edit_phone(self, phone: str) -> None:
         self.phone = Phone(phone)
 
     def __eq__(self, other):

@@ -1,4 +1,5 @@
 available_commands = [' add-contact (press enter)',
+                      ' add-phone <Name> <Phone>',
                       ' change <Name> <new_phone_number>',
                       ' delete-contact <Name>',
                       ' phone <Name>',
@@ -30,6 +31,7 @@ available_commands = [' add-contact (press enter)',
                       ' close',
                       ' delete-phone <Name> <Phone>',
                       'add-contact (press enter)',
+                      'add-phone <Name> <Phone>',
                       'change <Name> <new_phone_number>',
                       'change-email <Name> <New_Email>',
                       'change-phone <Name> <Old_Phone> <New_Phone>',
@@ -80,6 +82,10 @@ commands_description = [
     {"Format": "add-contact",
      "Action": "add new contact",
      "Example": "add-contact Gandalf 1234567890"},
+
+    {"Format": "add-phone",
+     "Action": "add phone for contact",
+     "Example": "add-phone Gandalf 2234567890"},
 
     {"Format": "delete-contact <Name>",  # +
      "Action": "delete the contact",
