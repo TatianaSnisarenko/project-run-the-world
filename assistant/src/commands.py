@@ -26,7 +26,9 @@ from assistant.src.errors.error_messages import (
     change_note_content_error_messages,
     add_tag_error_messages,
     sort_by_tags_error_messages,
-    delete_phone_error_messages
+    delete_phone_error_messages,
+    find_by_title_error_messages,
+    find_by_content_error_messages
 )
 from assistant.src.errors.error_decorator import input_error
 from assistant.src.models.address_book import AddressBook
@@ -66,7 +68,6 @@ def parse_input(user_input):
 
 @input_error(add_note_error_messages)
 def add_note(notes: Notes):
-
     """Adds a new note to the Notes object.
 
     Prompts the user to enter the title, content, and tags for the note.
@@ -79,12 +80,13 @@ def add_note(notes: Notes):
         str: A confirmation message indicating that the note has been added.
     """
     note_title = input("The jorney starts here. Enter title: ")
-    note_text = input('Write something wise, my dear friend. Enter note content: ')
+    note_text = input(
+        'Write something wise, my dear friend. Enter note content: ')
     tags = input('And one more. Enter tags separated by comma: ')
     note_tags = [tag.strip() for tag in tags.split(',')]
     notes.create_note(note_title, note_text, note_tags)
     return (f'''{GREEN}
-The world is changed. I feel it in the water. 
+The world is changed. I feel it in the water.
 I feel it in the earth. I smell it in the air.
 Note added.
                    {RESET}''')
@@ -108,7 +110,8 @@ def validate_name(name: str) -> str:
                     The error message indicates that the name must be at least 1 character long.
     """
     if len(name.strip()) < 1:
-        raise ValueError(f"{RED}Do not tempt me! Name must be at least 1 character long.{RESET}")
+        raise ValueError(
+            f"{RED}Do not tempt me! Name must be at least 1 character long.{RESET}")
     return name
 
 
@@ -209,7 +212,7 @@ def add_tag(args, notes: Notes):
     note_id, tag = args
     notes.add_tag(note_id, tag)
     return (f'''{GREEN}
-The world is changed. I feel it in the water. 
+The world is changed. I feel it in the water.
 I feel it in the earth. I smell it in the air.
 Tag added.
             {RESET}''')
@@ -243,7 +246,7 @@ def change_title(args, notes: Notes):
     new_title = input("Let's do it! Enter new title: ")
     notes.change_title(existing_note, new_title)
     return (f'''{GREEN}
-The world is changed. I feel it in the water. 
+The world is changed. I feel it in the water.
 I feel it in the earth. I smell it in the air.
 Note title changed.
             {RESET}''')
@@ -277,7 +280,7 @@ def change_content(args, notes: Notes):
     new_content = input('Hurry up, my dear! Enter new content: ')
     notes.change_content(existing_note, new_content)
     return (f'''{GREEN}
-The world is changed. I feel it in the water. 
+The world is changed. I feel it in the water.
 I feel it in the earth. I smell it in the air.
 Note content changed.
             {RESET}''')
@@ -368,7 +371,7 @@ Be carefull, my friend, Phone can't be empty.
     book.create_record(validated_name, validated_phone,
                        validated_email, validated_birthday, validated_address)
     return (f'''{GREEN}
-The world is changed. I feel it in the water. 
+The world is changed. I feel it in the water.
 I feel it in the earth. I smell it in the air.
 Contact added.
             {RESET}''')
@@ -397,7 +400,7 @@ def change_record_phone(args, book: AddressBook):
     name, old_phone, new_phone = args
     book.change_record_phone(name, old_phone, new_phone)
     return (f'''{GREEN}
-The world is changed. I feel it in the water. 
+The world is changed. I feel it in the water.
 I feel it in the earth. I smell it in the air.
 Contact updated.
             {RESET}''')
@@ -454,7 +457,7 @@ def find_by_brithday(args, book: AddressBook):
     matching_records = book.find_record_by_birthday(birthday)
     if not matching_records:
         return (f'''{YELLOW}
-The wise speak only of what they know! 
+The wise speak only of what they know!
 No contact found with this birthday.
                 {RESET}''')
     else:
@@ -485,7 +488,7 @@ def find_by_phone(args, book: AddressBook):
     matching_records = book.find_record_by_phone(phone)
     if not matching_records:
         return (f'''{YELLOW}
-The wise speak only of what they know! 
+The wise speak only of what they know!
 No contact found with this phone number.
                 {RESET}''')
     else:
@@ -516,7 +519,7 @@ def find_by_email(args, book: AddressBook):
     matching_records = book.find_record_by_email(email)
     if not matching_records:
         return (f'''{YELLOW}
-The wise speak only of what they know! 
+The wise speak only of what they know!
 Do not tempt me! No contact found with this email.
                 {RESET}''')
     else:
@@ -547,7 +550,7 @@ def find_by_address(args, book: AddressBook):
     matching_records = book.find_record_by_address(address)
     if not matching_records:
         return (f'''{YELLOW}
-The wise speak only of what they know! 
+The wise speak only of what they know!
 No contact found with this address.
                 {RESET}''')
     else:
@@ -649,13 +652,13 @@ def change_tag(args, notes: Notes):
     id, old_tag, new_tag = args
     changed_note = notes.change_tag(id, old_tag, new_tag)
     return (f'''{GREEN}
-The world is changed. I feel it in the water. 
+The world is changed. I feel it in the water.
 I feel it in the earth. I smell it in the air.
 Tag changed.
             {RESET}''')
 
 
-@input_error(add_note_error_messages)
+@input_error(find_by_title_error_messages)
 def find_by_title(args, notes: Notes):
     """Finds notes by their title.
 
@@ -678,12 +681,12 @@ def find_by_title(args, notes: Notes):
         return format_as_table(result, 40)
     else:
         return (f'''{YELLOW}
-What a pitty, my dear friend! 
+What a pitty, my dear friend!
 There are no notes for such title: [{title}].
                 {RESET}''')
 
 
-@input_error(add_note_error_messages)
+@input_error(find_by_content_error_messages)
 def find_by_content(args, notes: Notes):
     """Finds notes by their content.
 
@@ -706,7 +709,7 @@ def find_by_content(args, notes: Notes):
         return format_as_table(result, 40)
     else:
         return (f'''{YELLOW}
-What a pitty, my dear friend! 
+What a pitty, my dear friend!
 There are no notes for such content: [{text}].
                 {RESET}''')
 
@@ -735,7 +738,7 @@ def find_by_tags(args, notes: Notes):
         return format_as_table(result, 40)
     else:
         return (f'''{YELLOW}
-What a pitty, my dear friend! 
+What a pitty, my dear friend!
 There are no notes for such tags: [{', '.join(tags)}].
                 {RESET}''')
 
@@ -836,7 +839,7 @@ def add_birthday(args, book: AddressBook):
     name, birthday = args
     book.add_record_birthday(name, birthday)
     return (f'''{GREEN}
-The world is changed. I feel it in the water. 
+The world is changed. I feel it in the water.
 I feel it in the earth. I smell it in the air.
 Birthday added.
             {RESET}''')
@@ -867,7 +870,7 @@ def change_birthday(args, book: AddressBook):
     name, birthday = args
     book.change_record_birthday(name, birthday)
     return (f'''{GREEN}
-The world is changed. I feel it in the water. 
+The world is changed. I feel it in the water.
 I feel it in the earth. I smell it in the air.
 Birthday changed.
             {RESET}''')
@@ -895,7 +898,7 @@ def change_email(args, book: AddressBook):
     """
     if len(args) != 2:
         raise ValueError(f'''{RED}
-You shall not pass! 
+You shall not pass!
 Invalid number of arguments
                          {RESET}''')
     name, new_email = args
@@ -928,7 +931,7 @@ def change_address(args, book: AddressBook):
     """
     if len(args) != 2:
         raise ValueError(f'''{RED}
-You shall not pass! 
+You shall not pass!
 Invalid number of arguments.
                          {RESET}''')
     name, new_address = args
@@ -974,7 +977,7 @@ def show_all_birthdays(args, book: AddressBook):
         raise KeyError
     birthdays = book.get_record_birthdays_per_week(per_days)
     return format_as_table(birthdays, 40) if birthdays else (f'''{YELLOW}
-What a pity, my dear friend! 
+What a pity, my dear friend!
 No birthdays for next {days} days.
     {RESET}''')
 
@@ -1012,6 +1015,6 @@ Contact '{name}' deleted successfully.
 {RESET}''')
     else:
         return (f'''{YELLOW}
-What a pitty, my dear friend! 
+What a pitty, my dear friend!
 Contact '{name}' not found.
 {RESET}''')

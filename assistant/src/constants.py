@@ -28,7 +28,7 @@ available_commands = [' add-contact (press enter)',
                       ' notes',
                       ' exit',
                       ' close',
-                      ' delete-phone <Name> <Phone>'
+                      ' delete-phone <Name> <Phone>',
                       'add-contact (press enter)',
                       'change <Name> <new_phone_number>',
                       'change-email <Name> <New_Email>',
