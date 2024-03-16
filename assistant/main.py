@@ -32,7 +32,8 @@ from assistant.src.commands import (
     delete_note,
     change_content,
     change_title,
-    add_tag)
+    add_tag,
+    delete_phone)
 from assistant.src.errors.error_messages import generic_invalid_command_format_message
 from assistant.src.models.address_book import AddressBook
 from assistant.src.models.notes import Notes
@@ -113,6 +114,8 @@ def main():
             print(find_by_brithday(args, book))
         elif command == 'delete-contact':
             print(delete_contact(args, book))
+        elif command == 'delete-phone':
+            print(delete_phone(args, book))
         elif command == 'notes':
             print(show_all_notes(notes))
         elif command == 'birthdays':

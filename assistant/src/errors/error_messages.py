@@ -86,6 +86,12 @@ change_phone_error_messages = {
     'ValidationError': invalid_phone_number_error_message
 }
 
+delete_phone_error_messages = {
+    'FormatError': f'{RED}Invalid "delete-phone" format. Command "delete-phone" must have 3 arguments: <delete-phone Name phone>.{RESET}',
+    'KeyError': f'{RED}Such name with such phone is not found, please, check your input.{RESET}',
+    'ValidationError': invalid_phone_number_error_message
+}
+
 change_birthday_error_messages = {
     'FormatError': f'{RED}Invalid "change-birthday" format. Command "change-birthday" must have 3 arguments: <change-birthday Namenew_birthday>.{RESET}',
     'KeyError': f'{RED}Such name is not found, please, use "add" command instead.{RESET}',
@@ -183,11 +189,6 @@ change_content_error_messages = {
 add_tag_error_messages = {
     'FormatError': f'{RED}Invalid "add-tag" format. Command "add-tag" must have 3 arguments: <add-tag ID Tag_value>.{RESET}',
     'KeyError': note_doesnt_exist_error_message
-}
-
-delete_phone_error_messages = {
-    'FormatError': f'{RED}Phone number not found in the record{RESET}',
-    'KeyError': f'{RED}Such name is not found, please, try again{RESET}'
 }
 
 delete_note_error_messages = {

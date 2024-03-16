@@ -28,6 +28,7 @@ available_commands = [' add-contact (press enter)',
                       ' notes',
                       ' exit',
                       ' close',
+                      ' delete-phone <Name> <Phone>'
                       'add-contact (press enter)',
                       'change <Name> <new_phone_number>',
                       'change-email <Name> <New_Email>',
@@ -66,7 +67,8 @@ available_commands = [' add-contact (press enter)',
                       'find-by-tag <tag1>,<tag2>,...',
                       'change-title <ID>',
                       'change-content <ID>',
-                      'add-tag <ID> <tag_value>'
+                      'add-tag <ID> <tag_value>',
+                      'delete-phone <Name> <Phone>'
                       ]
 
 commands_description = [

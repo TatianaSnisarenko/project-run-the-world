@@ -95,7 +95,7 @@ class AddressBook(UserDict):
         existing_record = self.data[Name(name)]
         return [existing_record.to_dict()]
 
-    def delete_phone(self, name: str, phone: str) -> None:
+    def delete_record_phone(self, name: str, phone: str) -> None:
         existing_record: Record = self.data[Name(name)]
         existing_record.delete_phone(phone)
 
