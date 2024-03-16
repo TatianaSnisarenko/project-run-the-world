@@ -123,7 +123,7 @@ def change_content(args, notes: Notes):
         raise ValueError
     note_id = args[0]
     existing_note = notes.validate_and_get_note(note_id)
-    new_content = input('Hary up, my dear! Enter new content: ')
+    new_content = input('Hurry up, my dear! Enter new content: ')
     notes.change_content(existing_note, new_content)
     return (f'''{GREEN}The world is changed. I feel it in the water. 
     I feel it in the earth. I smell it in the air.
