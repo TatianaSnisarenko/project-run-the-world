@@ -75,7 +75,7 @@ commands_description = [
      "Action": "say Gandalf bye",
      "Example": "close"},
 
-    {"Format": "add-contact <Name, other>",#+
+    {"Format": "add-contact",#+
      "Action": "add new contact",
      "Example": "add-contact Gandalf 1234567890"},
 
@@ -84,99 +84,99 @@ commands_description = [
      "Example": "delete-contact Smaug"},
 
      {"Format": "contacts",#+
-    "Action": "look the contacts",
+    "Action": "show the contacts",
     "Example": "contacts"},
 
     {"Format": "show-contact <Name>",#+
-    "Action": "look the contact",
+    "Action": "show the contact",
     "Example": "show-contact Gimli"},
 
-    {"Format": "add-note <title> <text> <tags>",#+
-     "Action": "add note with tegs",
-    "Example": "add-note Memo Win Balrog monsters"},
+    {"Format": "add-note <note>",#+
+     "Action": "add new note",
+    "Example": "add-note"},
 
     {"Format": "notes",#+
-     "Action": "look the notes list",
+     "Action": "show the notes list",
     "Example": "notes"},
 
     {"Format": "change-phone <Name> <old> <new>", #+
-    "Action": "change phone",
+    "Action": "update phone for contact",
     "Example": "change-phone Arwen 0736756464 0988888888"},
 
     {"Format": "add-birthday <Name> <DD.MM.YYYY>",#+
-    "Action": "add birthday",
+    "Action": "add birthday for contact",
     "Example": "add-birthday Gandalf 01.01.1903"},
 
     {"Format": "birthdays <per_days>",#+
-     "Action": "look birthdays for the period",
+     "Action": "show birthdays for the period",
     "Example": "birthdays 7"}, 
 
     {"Format": "change-birthday <Name> <new_date>",#+
-    "Action": "change friends birthday",
+    "Action": "update contact's birthday",
     "Example": "change-birthday Gandalf 24.09.1903"},
 
-    {"Format": "change-email <Name> <new_email>",#+
-     "Action": "change email",
-     "Example": "change-email Frodo fred@zlot.ua"},
+    {"Format": "change-email",#+
+     "Action": "change email for contact",
+     "Example": "change-email Frodo"},
 
-    {"Format": "change-address <Name> <new_address>", #+
-     "Action": "change address",
-     "Example": "change-address Frodo Gondolin"},
+    {"Format": "change-address", #+
+     "Action": "change address for contact",
+     "Example": "change-address Gandalf"},
 
-    {"Format": "change-title <ID> <new_title>", #+
+    {"Format": "change-title", #+
      "Action": "change notes title ",
-     "Example": "change-title 1 Plan"},
+     "Example": "change-title 1"},
 
     {"Format": "add-tag <ID> <tag>", #+
-     "Action": "add the tag ",
+     "Action": "add tag for note",
      "Example": "add-tag 2 orcs"},
 
     {"Format": "change-tag <ID> <old_tag> <new_tag>", #+
-     "Action": "change the tag ",
+     "Action": "replace old tag with new one",
      "Example": "change-tag 2 orcs goblins"},
 
     {"Format": "change-content <ID> <new_content>",#+ 
-     "Action": "change the notes text ",
+     "Action": "change the note's text ",
      "Example": "change-content 1 Kill Sauron"},
 
     {"Format": "find-by-phone <Phone>",#+
-    "Action": "find the phone",
+    "Action": "find contact by phone",
     "Example": "find-by-phone 0665556666"},
 
     {"Format": "find-by-email <email>",
-     "Action": "find email",
+     "Action": "find contact by email",
      "Example": "find-by-email frodo@bag.ua"},#+
 
     {"Format": "find-by-address <address>", 
-     "Action": "find by address",
+     "Action": "find contact by address",
      "Example": "find-by-address Hobitland"},#+
 
     {"Format": "find-by-birthday <DD.MM.YYYY>",
-    "Action": "find by friends birthday",
+    "Action": "find contact by birthday",
     "Example": "find-by-birthday 01.05.1905"}, #+
 
     {"Format": "find-by-title <title>", #+
-     "Action": "find by notes title ",
+     "Action": "find note by title",
      "Example": "find-by-title Memo"},
 
     {"Format": "find-by-tag <tag>", #+
-     "Action": "find by tag ",
+     "Action": "find note by tag",
      "Example": "find-by-tag orcs"},
 
     {"Format": "find-by-content <text>",#+ 
-     "Action": "find the notes text ",
+     "Action": "find note by content",
      "Example": "find-by-content Kill Sauron"},
 
     {"Format": "sort-by-tag", #+
-     "Action": "sort by tag",
+     "Action": "sort notes by tags",
      "Example": "sort-by-tag"},
 
     {"Format": "show-note <ID>",#+
-     "Action": "look the note",
+     "Action": "show the note by id",
     "Example": "show-note 2"},
 
-    {"Format": "delete-note <note>",#+
-     "Action": "look the note",
-    "Example": "delete-note Kill Sauron"},
+    {"Format": "delete-note",#+
+     "Action": "delete note by Id",
+    "Example": "delete-note 1"},
 
 ]
