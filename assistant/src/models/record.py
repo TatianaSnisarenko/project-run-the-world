@@ -6,6 +6,7 @@ from assistant.src.models.address import Address
 
 RED = "\33[91m"
 GREEN = "\033[32m"
+RESET = "\033[0m"
 
 # Клас для зберігання інформації про контакт, включаючи ім'я та список телефонів.
 
@@ -32,14 +33,20 @@ class Record:
                 phone_found = True
                 break
         if not phone_found:
-            raise KeyError
+            raise KeyError(f'''{RED}
+The wise speak only of what they know!
+Phone number not found in the record
+                           {RESET}''')
 
     def delete_phone(self, phone: str):
         existing_phone = Phone(phone.strip())
         if existing_phone in self.phones:
             self.phones.remove(existing_phone)
         else:
-            raise ValueError
+            raise ValueError(f'''{RED}
+The wise speak only of what they know!
+Phone number not found in the record
+                             {RESET}''')
 
     def add_birthday(self, birthday) -> None:
         self.birthday = Birthday(birthday)
