@@ -72,10 +72,10 @@ available_commands = [' add-contact (press enter)',
 commands_description = [
 
     {"Format": "close",
-     "Action": "say Gandalf bye",
+     "Action": "close my eyes",
      "Example": "close"},
 
-    {"Format": "add-contact",#+
+    {"Format": "add-contact",
      "Action": "add new contact",
      "Example": "add-contact Gandalf 1234567890"},
 
