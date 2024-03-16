@@ -72,7 +72,7 @@ available_commands = [' add-contact (press enter)',
 commands_description = [
 
     {"Format": "close",
-     "Action": "close my eyes",
+     "Action": "our secrets are safe with me",
      "Example": "close"},
 
     {"Format": "add-contact",
