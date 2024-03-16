@@ -70,7 +70,7 @@ Phone number already present for the contact
     def edit_phone(self, phone: str) -> None:
         self.phone = Phone(phone)
 
-    def __eq__(self, other: str):
+    def __eq__(self, other):
         if isinstance(other, Record):
             return self.name == other.name and self.phones == other.phones and self.birthday == other.birthday and self.email == other.email and self.address == other.address
         return False
