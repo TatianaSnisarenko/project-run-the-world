@@ -960,7 +960,7 @@ def show_help():
     Returns:
         str: A formatted table displaying help information for available commands.
     """
-    return format_as_table(commands_description, 20)
+    return format_as_table(commands_description, 30)
 
 
 @input_error(delete_contact_error_messages)

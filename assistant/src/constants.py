@@ -70,40 +70,113 @@ available_commands = [' add-contact (press enter)',
                       ]
 
 commands_description = [
-    {"Command": "add - to add new contact",
-     "Format": "add",
-     "Example": "add Ann 1236547890",
-     },
-    {"Command": "change-name",
-     "Format": "change <old_name> <new_name>",
-     "Example": "change Ann Luci"
-     },
-    {"Command": "close - to close assistant",
-     "Format": "close",
-     "Example": "close"
-     }
-    # },
-    #  {"Command": "phone",
-    #  "Format": "phone <Name>",
-    #  "Example": "phone Ann",
-    #  "Result": "phone output by name"},
-    #  {"Command": "contacts",
-    #  "Format": "contacts",
-    #  "Example": "contacts",
-    #  "Result": "contact list"},
-    #  {"Command": "add-birthday",
-    #  "Format": "add-birthday <Name>",
-    #  "Example": "add-birthday Ann",
-    #  "Result": "add date of birth"},
-    #  {"Command": "show-birthday",
-    #  "Format": "show-birthday <in how many days>",
-    #  "Example": "show-birthday 7"
-    #  },
-    #  {"Command": "notes",
-    #  "Format": "notes <title> <text>",
-    #  "Example": "notes <Reminder> <How to be beautiful. Apply the cream to the face every night.>"},
-    #  {"Command": "birthday",
-    #  "Format": "birthday <Name>",
-    #  "Example": "birthday <Ann>"},
+
+    {"Format": "close",
+     "Action": "our secrets are safe with me",
+     "Example": "close"},
+
+    {"Format": "add-contact",
+     "Action": "add new contact",
+     "Example": "add-contact Gandalf 1234567890"},
+
+    {"Format": "delete-contact <Name>",#+
+     "Action": "delete the contact",
+     "Example": "delete-contact Smaug"},
+
+     {"Format": "contacts",#+
+    "Action": "show the contacts",
+    "Example": "contacts"},
+
+    {"Format": "show-contact <Name>",#+
+    "Action": "show the contact",
+    "Example": "show-contact Gimli"},
+
+    {"Format": "add-note <note>",#+
+     "Action": "add new note",
+    "Example": "add-note"},
+
+    {"Format": "notes",#+
+     "Action": "show the notes list",
+    "Example": "notes"},
+
+    {"Format": "change-phone <Name> <old> <new>", #+
+    "Action": "update phone for contact",
+    "Example": "change-phone Arwen 0736756464 0988888888"},
+
+    {"Format": "add-birthday <Name> <DD.MM.YYYY>",#+
+    "Action": "add birthday for contact",
+    "Example": "add-birthday Gandalf 01.01.1903"},
+
+    {"Format": "birthdays <per_days>",#+
+     "Action": "show birthdays for the period",
+    "Example": "birthdays 7"}, 
+
+    {"Format": "change-birthday <Name> <new_date>",#+
+    "Action": "update contact's birthday",
+    "Example": "change-birthday Gandalf 24.09.1903"},
+
+    {"Format": "change-email",#+
+     "Action": "change email for contact",
+     "Example": "change-email Frodo"},
+
+    {"Format": "change-address", #+
+     "Action": "change address for contact",
+     "Example": "change-address Gandalf"},
+
+    {"Format": "change-title", #+
+     "Action": "change notes title ",
+     "Example": "change-title 1"},
+
+    {"Format": "add-tag <ID> <tag>", #+
+     "Action": "add tag for note",
+     "Example": "add-tag 2 orcs"},
+
+    {"Format": "change-tag <ID> <old_tag> <new_tag>", #+
+     "Action": "replace old tag with new one",
+     "Example": "change-tag 2 orcs goblins"},
+
+    {"Format": "change-content <ID> <new_content>",#+ 
+     "Action": "change the note's text ",
+     "Example": "change-content 1 Kill Sauron"},
+
+    {"Format": "find-by-phone <Phone>",#+
+    "Action": "find contact by phone",
+    "Example": "find-by-phone 0665556666"},
+
+    {"Format": "find-by-email <email>",
+     "Action": "find contact by email",
+     "Example": "find-by-email frodo@bag.ua"},#+
+
+    {"Format": "find-by-address <address>", 
+     "Action": "find contact by address",
+     "Example": "find-by-address Hobitland"},#+
+
+    {"Format": "find-by-birthday <DD.MM.YYYY>",
+    "Action": "find contact by birthday",
+    "Example": "find-by-birthday 01.05.1905"}, #+
+
+    {"Format": "find-by-title <title>", #+
+     "Action": "find note by title",
+     "Example": "find-by-title Memo"},
+
+    {"Format": "find-by-tag <tag>", #+
+     "Action": "find note by tag",
+     "Example": "find-by-tag orcs"},
+
+    {"Format": "find-by-content <text>",#+ 
+     "Action": "find note by content",
+     "Example": "find-by-content Kill Sauron"},
+
+    {"Format": "sort-by-tag", #+
+     "Action": "sort notes by tags",
+     "Example": "sort-by-tag"},
+
+    {"Format": "show-note <ID>",#+
+     "Action": "show the note by id",
+    "Example": "show-note 2"},
+
+    {"Format": "delete-note",#+
+     "Action": "delete note by Id",
+    "Example": "delete-note 1"},
 
 ]
