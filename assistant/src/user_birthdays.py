@@ -10,6 +10,13 @@ def get_birthdays_per_week(users, per_days):
 
 
 def get_birthdays_per_week_from_date(users, from_date, per_days):
+    '''
+    Function return birthdays filtered by number of days, from today till input numer of days.
+
+    Args: integer: number of days
+    
+    Returns: list of dictionaries
+    '''
     date = from_date.date()
 
     result = defaultdict(list)

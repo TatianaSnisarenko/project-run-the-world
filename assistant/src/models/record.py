@@ -61,6 +61,9 @@ class Record:
     def edit_phone(self, phone) -> None:
         self.phone = Phone(phone)
 
+    def edit_phone(self, phone) -> None:
+        self.phone = Phone(phone)
+
     def __eq__(self, other):
         if isinstance(other, Record):
             return self.name == other.name and self.phones == other.phones and self.birthday == other.birthday and self.email == other.email and self.address == other.address
@@ -71,13 +74,10 @@ class Record:
         return hash((self.name, tuple(self.phones), self.birthday, self.address, self.email))
 
     def __str__(self):
-        birthday_str = f', birthday: {
-            self.birthday.value}' if self.birthday else ''
+        birthday_str = f', birthday: {self.birthday.value}' if self.birthday else ''
         email_str = f', email: {self.email.value}' if self.email else ''
-        address_str = f', address: {
-            self.address.value}' if self.address else ''
-        phones_str = f', phones: {
-            ", ".join(str(phone) for phone in self.phones)}' if self.phones else ''
+        address_str = f', address: {self.address.value}' if self.address else ''
+        phones_str = f', phones: {", ".join(str(phone) for phone in self.phones)}' if self.phones else ''
 
         return f'Contact name: {self.name.value}, ' + birthday_str + email_str + address_str + phones_str
 
