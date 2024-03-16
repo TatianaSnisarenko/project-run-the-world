@@ -103,10 +103,6 @@ class AddressBook(UserDict):
         existing_record: Record = self.data[Name(name)]
         existing_record.delete_phone(phone)
 
-    def show_record_birthday(self, name: str) -> str:
-        existing_record = self.data[Name(name)]
-        return str(existing_record.birthday) if existing_record.birthday else f'Birthday is not added for {name}'
-
     def get_record_contacts(self) -> list:
         return [record.to_dict() for record in self.data.values()]
 

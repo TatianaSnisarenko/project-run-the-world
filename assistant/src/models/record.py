@@ -83,18 +83,25 @@ Phone number already present for the contact
         birthday_str = (
             f', birthday: {self.birthday.value}' if self.birthday else '')
         email_str = (
-            f', email: {self.email.value}' if self.email else '')
+            f', email: {self.email.value}' if self.email and self.email.value else '')
         address_str = (
-            f', address: {self.address.value}' if self.address else '')
+            f', address: {self.address.value}' if self.address and self.address.value else '')
         phones_str = (
             f', phones: {", ".join(str(phone) for phone in self.phones)}' if self.phones else '')
         return f'Contact name: {self.name.value}, ' + birthday_str + email_str + address_str + phones_str
 
     def to_dict(self) -> dict:
+        phones = ", ".join([str(phone)
+                           for phone in self.phones]) if self.phones else '---'
+        email = str(self.email) if self.email and self.email.value else '---'
+        birthday = str(
+            self.birthday) if self.birthday and self.birthday.value else '---'
+        address = str(
+            self.address) if self.address and self.address.value else '---'
         return {
             "Name": self.name.value,
-            "Phones": ", ".join([str(phone) for phone in self.phones]),
-            "Email": str(self.email),
-            "Birthday": str(self.birthday),
-            "Address": str(self.address)
+            "Phones": phones,
+            "Email": email,
+            "Birthday": birthday,
+            "Address": address
         }
