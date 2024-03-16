@@ -24,7 +24,8 @@ from assistant.src.errors.error_messages import (
     show_note_error_messages,
     change_note_title_error_messages,
     change_note_content_error_messages,
-    add_tag_error_messages
+    add_tag_error_messages,
+    sort_by_tags_error_messages
 )
 from assistant.src.errors.error_decorator import input_error
 from assistant.src.models.address_book import AddressBook
@@ -599,7 +600,7 @@ def find_by_title(args, notes: Notes):
 
     """
     title = args[0]
-    result = notes.find_record_title(title)
+    result = notes.find_record_by_title(title)
     if result:
         return format_as_table(result, 40)
     else:
@@ -624,7 +625,7 @@ def find_by_content(args, notes: Notes):
 
     """
     text = args[0]
-    result = notes.find_record_content(text)
+    result = notes.find_record_by_content(text)
     if result:
         return format_as_table(result, 40)
     else:
@@ -648,50 +649,34 @@ def find_by_tags(args, notes: Notes):
         str: A formatted table displaying the notes containing the specified tags,
         or a message indicating that no notes were found with the specified tags.
 
-    """"""Finds notes by their tags.
-
-    This function searches for notes based on the presence of specified tags.
-    It takes two arguments: a list of tags to search for, and the Notes instance.
-    The list of tags is extracted from the input arguments and split by commas.
-    Then, it calls the `find_record_tags` method of the Notes instance to perform the search.
-
-    Args:
-        args (list): A list containing tags separated by commas.
-        notes (Notes): An instance of the Notes class managing notes.
-
-    Returns:
-        str: A formatted table displaying the notes containing the specified tags,
-        or a message indicating that no notes were found with the specified tags.
-
     """
     tags = [tag.strip() for arg in args for tag in arg.split(',')]
-    result = notes.find_record_tags(tags)
+    result = notes.find_record_by_tags(tags)
     if result:
         return format_as_table(result, 40)
     else:
         return f"{YELLOW}There are no notes for such tags: [{', '.join(tags)}]{RESET}"
 
 
-@input_error(add_note_error_messages)
-def sort_by_tag(args, notes: Notes):
+@input_error(sort_by_tags_error_messages)
+def sort_by_tag(notes: Notes):
     """Sorts notes by tags.
 
-    This function sorts notes based on two specified tags.
-    It takes two arguments: tag1 and tag2, representing the tags to sort by,
-    and the Notes instance managing the notes.
-    It then calls the `sort_record_tag` method of the Notes instance to perform the sorting.
+    This function displays notes sorted by tags in alphabetic order.
+    It takes one argument: Notes instance managing the notes
 
     Args:
-        args (list): A list containing two tags to sort by.
         notes (Notes): An instance of the Notes class managing notes.
 
     Returns:
         str: A formatted table displaying the sorted notes based on the specified tags.
 
     """
-    tag1, tag2 = args
-    result = notes.sort_record_tag(tag1, tag2)
-    return format_as_table(result, 40)
+    result = notes.sort_records_by_tags()
+    if result:
+        return format_as_table(result, 40)
+    else:
+        return f"{YELLOW}There are no notes for such tags: [{', '.join(tags)}]{RESET}"
 
 
 @input_error(show_note_error_messages)
@@ -794,6 +779,7 @@ def change_birthday(args, book: AddressBook):
     book.change_record_birthday(name, birthday)
     return f'{GREEN}Birthday changed.{RESET}'
 
+
 @input_error(change_email_error_messages)
 def change_email(args, book: AddressBook):
     """Changes the email address of a contact.
@@ -884,6 +870,7 @@ def show_all_birthdays(args, book: AddressBook):
     birthdays = book.get_record_birthdays_per_week(per_days)
     return format_as_table(birthdays, 40) if birthdays else 'No birthdays for next {days} days.'
 
+
 @input_error([])
 def show_help():
     """Displays help information for available commands.
@@ -909,7 +896,7 @@ def delete_contact(args, book: AddressBook):
         str: A message indicating whether the contact was deleted successfully or not.
     """
     name = args[0]
-    deleted = book.delete(name)
+    deleted = book.delete_record(name)
     if deleted:
         return f"Contact '{name}' deleted successfully."
     else:

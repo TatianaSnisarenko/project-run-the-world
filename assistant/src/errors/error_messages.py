@@ -4,30 +4,36 @@ RED = "\33[91m"
 GREEN = "\033[32m"
 RESET = "\033[0m"
 
-generic_error_message = f'{RED}Something went wrong, please try again.{RESET}'
-invalid_phone_number_error_message = f'{
-    RED}Invalid phone number: must be 10 digits value.{RESET}'
-invalid_birthday_format_error_message = f'{
-    RED}Invalid birthday format: must be <DD.MM.YYYY>.{RESET}'
-invalid_name_format_error_message = f'{
-    RED}Invalid name format: name must not be empty.{RESET}'
-invalid_note_id_format_error_message = f'{
-    RED}Invalid note id: id must be a valid number.{RESET}'
-tag_already_exists_error_message_template = 'Such tag: [{tag}] is already present for the note with id: [{id}]'
-tag_doenst_exist_error_message_template = 'Such tag: [{tag}] is not found for the note with id: [{id}]'
-note_doesnt_exist_error_message = f'{
-    RED}Note with provided ID does not exist{RESET}'
-invalid_email_error_message_template = 'Not a valid email provided: [{email}]. Please try again'
-invalid_per_days_error_message = 'Invalid value: must be only numbers from 1 to 365'
-empty_notes_error_message = 'Notes are empty. Please, use "add-note" command to add new notes.'
-
-empty_notes_error_message = f'{
-    RED}Notes are empty, please add new notes first{RESET}'
-invalid_email_error_message_template = 'Not a valid email provided: [{email}]. Please try again'
-invalid_per_days_error_message = f'{
-    RED}Invalid value: must be only numbers from 1 to 365{RESET}'
-empty_notes_error_message = f'{
-    RED}Notes are empty. Please, use "add-note" command to add new notes.{RESET}'
+generic_error_message = (
+    f'{RED}Something went wrong, please try again.{RESET}')
+invalid_phone_number_error_message = (
+    f'{RED}Invalid phone number: must be 10 digits value.{RESET}')
+invalid_birthday_format_error_message = (
+    f'{RED}Invalid birthday format: must be <DD.MM.YYYY>.{RESET}')
+invalid_name_format_error_message = (
+    f'{RED}Invalid name format: name must not be empty.{RESET}')
+invalid_note_id_format_error_message = (
+    f'{RED}Invalid note id: id must be a valid number.{RESET}')
+tag_already_exists_error_message = (
+    f'{RED}Such tag: is already present for the note with provided id {RESET}')
+tag_doenst_exist_error_message = (
+    f'{RED}Such tag is not found for the note with provided id{RESET}')
+note_doesnt_exist_error_message = (
+    f'{RED}Note with provided ID does not exist{RESET}')
+invalid_per_days_error_message = (
+    f'{RED}Invalid value: must be only numbers from 1 to 365{RESET}')
+empty_notes_error_message = (
+    f'{RED}Notes are empty. Please, use "add-note" command to add new notes.')
+phone_note_found_error_message = (
+    f'{RED}Phone number not found in the record{RESET}')
+empty_notes_error_message = (
+    f'{RED}Notes are empty, please add new notes first{RESET}')
+invalid_email_error_message = (
+    f'{RED}Not a valid email provided. Please try again{RESET}')
+invalid_per_days_error_message = (
+    f'{RED}Invalid value: must be only numbers from 1 to 365{RESET}')
+empty_notes_error_message = (
+    f'{RED}Notes are empty. Please, use "add-note" command to add new notes.{RESET}')
 
 generic_invalid_command_format_message = f'''{RED}Invalid "command" format.
 Please use <help> to display
@@ -89,7 +95,7 @@ change_birthday_error_messages = {
 change_email_error_messages = {
     'FormatError': 'Invalid "change-email" format. Command "change-email" must have 3 arguments: <change-email  Name  new_email>.',
     'KeyError': 'Such name is not found, please, use "add" command instead.',
-    'ValidationError': invalid_email_error_message_template
+    'ValidationError': invalid_email_error_message
 }
 
 
@@ -107,6 +113,9 @@ show_phone_error_messages = {
     'KeyError': f'{RED}Such name is not found, please, try again.{RESET}'
 }
 
+sort_by_tags_error_messages = {
+    'FormatError': f'{RED}Invalid "sort-by-tag" format. Command "sort-by-tag" must have 1 arguments: <find-by-tag>.{RESET}',
+}
 
 find_by_tags_error_messages = {
     'FormatError': f'{RED}Invalid "find-by-tag" format. Command "find-by-tag" must have not less then 2 arguments: <find-by-tag tag1,tag2,tag3>.{RESET}',

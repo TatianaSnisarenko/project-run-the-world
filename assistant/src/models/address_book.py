@@ -83,7 +83,7 @@ class AddressBook(UserDict):
                 matching_records.append(record.to_dict())
         return matching_records
 
-    def delete(self, name: str) -> bool:
+    def delete_record(self, name: str) -> bool:
         removed_contact = self.data.pop(Name(name), None)
         return removed_contact is not None
 
@@ -94,9 +94,6 @@ class AddressBook(UserDict):
     def show_record(self, name: str) -> dict:
         existing_record = self.data[Name(name)]
         return [existing_record.to_dict()]
-
-    def delete_record(self, name: str) -> None:
-        del self.data[Name(name)]
 
     def delete_phone(self, name: str, phone: str) -> None:
         existing_record: Record = self.data[Name(name)]

@@ -39,7 +39,7 @@ class Record:
         if existing_phone in self.phones:
             self.phones.remove(existing_phone)
         else:
-            raise ValueError(f'{RED}Phone number not found in the record')
+            raise ValueError(f'{RED}Phone number not found in the record{RESET}')
 
     def add_birthday(self, birthday) -> None:
         self.birthday = Birthday(birthday)

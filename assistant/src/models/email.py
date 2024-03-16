@@ -1,6 +1,6 @@
 from assistant.src.models.field import Field
 from assistant.src.errors.errors import ValidationError
-from assistant.src.errors.error_messages import invalid_email_error_message_template
+from assistant.src.errors.error_messages import invalid_email_error_message
 import re
 
 
@@ -25,4 +25,4 @@ class Email(Field):
             return valid_email
         else:
             raise ValidationError(
-                invalid_email_error_message_template.format(email=email))
+                invalid_email_error_message)
