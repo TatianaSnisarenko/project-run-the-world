@@ -21,18 +21,24 @@ The language is that of Mordor, which I will not utter here.
 Invalid name format: name must not be empty.
  {RESET}''')
 invalid_note_id_format_error_message = (f'''{RED}
- The language is that of Mordor, which I will not utter here.
+The language is that of Mordor, which I will not utter here.
 Invalid note id: id must be a valid number.
 {RESET}''')
-tag_already_exists_error_message_template = 'Such tag: [{tag}] is already present for the note with id: [{id}]'
-tag_doenst_exist_error_message_template = 'Such tag: [{tag}] is not found for the note with id: [{id}]'
+tag_already_exists_error_message_template = (f'''{RED}
+Such tag: is already present for the note with id.
+{RESET}''')
+tag_doenst_exist_error_message_template = (f'''{RED}
+Such tag: is not found for the note with id.
+{RESET}''')
 note_doesnt_exist_error_message = (f'''{RED}
 You have no Power here. 
 Note with provided ID does not exist.
 {RESET}''')
-invalid_email_error_message_template = 'Not a valid email provided: [{email}]. Please try again'
+invalid_email_error_message_template = (f'''{RED}
+Not a valid email provided. Please try again
+                                        {RESET}''')
 invalid_per_days_error_message = (f'''{RED}
- The language is that of Mordor, which I will not utter here.
+The language is that of Mordor, which I will not utter here.
 Invalid value: must be only numbers from 1 to 365.
  {RESET}''')
 empty_notes_error_message = (f'''{RED}
@@ -44,9 +50,10 @@ empty_notes_error_message = (f'''{RED}
 You have no Power here. 
 Notes are empty, please add new notes first
 {RESET}''')
-invalid_email_error_message_template = '''
+invalid_email_error_message_template = (f'''{RED}
 You have no Power here. 
-Not a valid email provided: [{email}]. Please try again'''
+Not a valid email provided. Please try again
+                                        {RESET}''')
 invalid_per_days_error_message = (f'''{RED}
 The language is that of Mordor, which I will not utter here.
 Invalid value: must be only numbers from 1 to 365.
@@ -57,14 +64,17 @@ Notes are empty. Please, use "add-note" command to add new notes.
  {RESET}''')
 
 generic_invalid_command_format_message = (f'''{RED}
- My dear friend, be carefull!
+My dear friend, be carefull!
 You've enterd command in invalid format.
 Please use <help> to display all available commands 
 I've prepeared for you
                                           {RESET}''')
 
 add_note_error_messages = {
-    'FormatError': f'{RED}Such note is already present, please, use "change_note" command instead.{RESET}',
+    'FormatError': (f'''{RED}
+You have no Power here. 
+Such note is already present, please, use "change_note" command instead.
+                    {RESET}'''),
     'KeyError': (f'''{RED}
 You have no Power here. 
 Such note is already present, please, use "change-note" command instead.

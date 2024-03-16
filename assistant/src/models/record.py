@@ -33,16 +33,20 @@ class Record:
                 phone_found = True
                 break
         if not phone_found:
-            raise KeyError(f'''{RED}The wise speak only of what they know! 
-                           Phone number not found in the record{RESET}''')
+            raise KeyError(f'''{RED}
+The wise speak only of what they know! 
+Phone number not found in the record
+                           {RESET}''')
 
     def delete_phone(self, phone: str):
         existing_phone = Phone(phone.strip())
         if existing_phone in self.phones:
             self.phones.remove(existing_phone)
         else:
-            raise ValueError(f'''{RED}The wise speak only of what they know!  
-                             Phone number not found in the record{RESET}''')
+            raise ValueError(f'''{RED}
+The wise speak only of what they know!  
+Phone number not found in the record
+                             {RESET}''')
 
     def add_birthday(self, birthday) -> None:
         self.birthday = Birthday(birthday)

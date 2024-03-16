@@ -81,7 +81,11 @@ def add_note(notes: Notes):
     tags = input('And one more. Enter tags separated by comma: ')
     note_tags = [tag.strip() for tag in tags.split(',')]
     notes.create_note(note_title, note_text, note_tags)
-    return f'{GREEN}Note added.{RESET}'
+    return (f'''{GREEN}
+The world is changed. I feel it in the water. 
+I feel it in the earth. I smell it in the air.
+Note added.
+                   {RESET}''')
 
 
 def validate_name(name: str) -> str:
@@ -202,9 +206,11 @@ def add_tag(args, notes: Notes):
         raise ValueError
     note_id, tag = args
     notes.add_tag(note_id, tag)
-    return (f'''{GREEN}The world is changed. I feel it in the water. 
-    I feel it in the earth. I smell it in the air.
-    Tag added.{RESET}''')
+    return (f'''{GREEN}
+The world is changed. I feel it in the water. 
+I feel it in the earth. I smell it in the air.
+Tag added.
+            {RESET}''')
 
 
 @input_error(change_note_title_error_messages)
@@ -234,9 +240,11 @@ def change_title(args, notes: Notes):
     existing_note = notes.validate_and_get_note(note_id)
     new_title = input("Let's do it! Enter new title: ")
     notes.change_title(existing_note, new_title)
-    return (f'''{GREEN}The world is changed. I feel it in the water. 
-    I feel it in the earth. I smell it in the air.
-    Note title changed.{RESET}''')
+    return (f'''{GREEN}
+The world is changed. I feel it in the water. 
+I feel it in the earth. I smell it in the air.
+Note title changed.
+            {RESET}''')
 
 
 @input_error(change_note_content_error_messages)
@@ -266,9 +274,11 @@ def change_content(args, notes: Notes):
     existing_note = notes.validate_and_get_note(note_id)
     new_content = input('Hurry up, my dear! Enter new content: ')
     notes.change_content(existing_note, new_content)
-    return (f'''{GREEN}The world is changed. I feel it in the water. 
-    I feel it in the earth. I smell it in the air.
-    Note content changed.{RESET}''')
+    return (f'''{GREEN}
+The world is changed. I feel it in the water. 
+I feel it in the earth. I smell it in the air.
+Note content changed.
+            {RESET}''')
 
 
 @input_error(add_contact_error_messages)
@@ -299,7 +309,9 @@ def add_contact(book: AddressBook):
     while True:
         name_add = input('Now enter name, my friend: ')
         if not name_add.strip():
-            print(f"{YELLOW}Be carefull, my friend, Name can't be empty.{RESET}")
+            print(f'''{YELLOW}
+Be carefull, my friend, Name can't be empty.
+                  {RESET}''')
             continue
         try:
             validated_name = validate_name(name_add)
@@ -310,7 +322,9 @@ def add_contact(book: AddressBook):
     while True:
         phone_add = input('Enter phone, my friend: ')
         if not phone_add.strip():
-            print(f"{YELLOW}Be carefull, my friend, Phone can't be empty.{RESET}")
+            print(f'''{YELLOW}
+Be carefull, my friend, Phone can't be empty.
+                  {RESET}''')
             continue
         else:
             try:
@@ -662,9 +676,9 @@ def find_by_content(args, notes: Notes):
     if result:
         return format_as_table(result, 40)
     else:
-        return (f'''
-{YELLOW}What a pitty, my dear friend! 
- There are no notes for such content: [{text}].
+        return (f'''{YELLOW}
+What a pitty, my dear friend! 
+There are no notes for such content: [{text}].
                 {RESET}''')
 
 
