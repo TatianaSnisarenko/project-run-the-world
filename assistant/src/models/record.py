@@ -6,6 +6,7 @@ from assistant.src.models.address import Address
 
 RED = "\33[91m"
 GREEN = "\033[32m"
+RESET = "\033[0m"
 
 # Клас для зберігання інформації про контакт, включаючи ім'я та список телефонів.
 
@@ -32,14 +33,20 @@ class Record:
                 phone_found = True
                 break
         if not phone_found:
-            raise KeyError(f'{RED}Phone number not found in the record')
+            raise KeyError(f'''{RED}
+The wise speak only of what they know! 
+Phone number not found in the record
+                           {RESET}''')
 
     def delete_phone(self, phone: str):
         existing_phone = Phone(phone.strip())
         if existing_phone in self.phones:
             self.phones.remove(existing_phone)
         else:
-            raise ValueError(f'{RED}Phone number not found in the record')
+            raise ValueError(f'''{RED}
+The wise speak only of what they know!  
+Phone number not found in the record
+                             {RESET}''')
 
     def add_birthday(self, birthday) -> None:
         self.birthday = Birthday(birthday)
@@ -71,13 +78,10 @@ class Record:
         return hash((self.name, tuple(self.phones), self.birthday, self.address, self.email))
 
     def __str__(self):
-        birthday_str = f', birthday: {
-            self.birthday.value}' if self.birthday else ''
+        birthday_str = f', birthday: {self.birthday.value}' if self.birthday else ''
         email_str = f', email: {self.email.value}' if self.email else ''
-        address_str = f', address: {
-            self.address.value}' if self.address else ''
-        phones_str = f', phones: {
-            ", ".join(str(phone) for phone in self.phones)}' if self.phones else ''
+        address_str = f', address: {self.address.value}' if self.address else ''
+        phones_str = f', phones: {", ".join(str(phone) for phone in self.phones)}' if self.phones else ''
 
         return f'Contact name: {self.name.value}, ' + birthday_str + email_str + address_str + phones_str
 

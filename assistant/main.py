@@ -45,31 +45,33 @@ from prompt_toolkit.completion import WordCompleter
 from prompt_toolkit.lexers import PygmentsLexer
 from prompt_toolkit.styles import Style
 from pygments.lexers.sql import SqlLexer
+from assistant.src.theme.enter_decorator import enter_decorator_func
+from assistant.src.theme.exit_decorator import exit_decorator_func
+
 
 style = Style.from_dict({
-    'completion-menu.completion': 'bg:#008888 #ffffff',
-    'completion-menu.completion.current': 'bg:#00aaaa #000000',
-    'scrollbar.background': 'bg:#88aaaa',
+    'completion-menu.completion': 'bg:#006f9a #ffffff',
+    'completion-menu.completion.current': 'bg:#008bc1 #000000',
+    'scrollbar.background': 'bg:#4ba6c9',
     'scrollbar.button': 'bg:#222222',
 })
 
-
+@enter_decorator_func
 def main():
     book = AddressBook()
     book = book.read_from_file()
     notes = Notes()
     notes = notes.read_from_file()
-    print('\nHello! My name is Gandalf. I am assistant bot!\nEnter <help> and see what I can do\n')
 
     session = PromptSession(completer=WordCompleter(
         available_commands, ignore_case=True, sentence=True), lexer=PygmentsLexer(SqlLexer), style=style)
     while True:
-        user_input = session.prompt('Enter a command: ')
+        user_input = session.prompt('The Precious is yours, do command, my friend: ')
         command, *args = parse_input(user_input)
         if command in ['close', 'exit']:
             book.save_to_file()
             notes.save_to_file()
-            print('Good bye!')
+            exit_decorator_func()
             break
         elif command == 'help':
             print(show_help())
