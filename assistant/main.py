@@ -59,7 +59,7 @@ def main():
     book = book.read_from_file()
     notes = Notes()
     notes = notes.read_from_file()
-    print('Welcome to the assistant bot!')
+    print('\nHello! My name is Gandalf. I am assistant bot!\nEnter <help> and see what I can do\n')
 
     session = PromptSession(completer=WordCompleter(
         available_commands, ignore_case=True, sentence=True), lexer=PygmentsLexer(SqlLexer), style=style)
