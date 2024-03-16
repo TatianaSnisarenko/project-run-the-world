@@ -4,3 +4,6 @@ class ValidationError(Exception):
 
 class EmptyNotesError(Exception):
     pass
+
+class PhoneError(Exception):
+    pass

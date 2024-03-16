@@ -28,7 +28,8 @@ from assistant.src.errors.error_messages import (
     sort_by_tags_error_messages,
     delete_phone_error_messages,
     find_by_title_error_messages,
-    find_by_content_error_messages
+    find_by_content_error_messages,
+    add_phone_error_messages
 )
 from assistant.src.errors.error_decorator import input_error
 from assistant.src.models.address_book import AddressBook
@@ -430,6 +431,33 @@ def delete_phone(args, book: AddressBook):
         raise ValueError
     name, phone = args
     book.delete_record_phone(name, phone)
+    return f'{GREEN}Contact updated.{RESET}'
+
+
+@input_error(add_phone_error_messages)
+def add_phone(args, book: AddressBook):
+    """Ads the phone number to a contact in the address book.
+
+    This function takes two arguments: name, phone_number.
+    It verifies that two arguments are provided. Then, it calls the `change_record_phone`
+    method of the AddressBook class to add the phone number for the specified contact.
+
+    Args:
+        args (list): A list containing two elements: name and phone number.
+        book (AddressBook): An instance of the AddressBook class managing contacts.
+
+    Returns:
+        str: A message indicating that the contact has been successfully updated.
+
+    Raises:
+        ValueError: If the number of arguments provided is not two.
+        KeyError: If the phone for such Name is present
+        ValidationError: If the phone is not a valid number
+    """
+    if (len(args) != 2):
+        raise ValueError
+    name, phone = args
+    book.add_record_phone(name, phone)
     return f'{GREEN}Contact updated.{RESET}'
 
 
