@@ -24,7 +24,11 @@ from assistant.src.errors.error_messages import (
     show_note_error_messages,
     change_note_title_error_messages,
     change_note_content_error_messages,
-    add_tag_error_messages
+    add_tag_error_messages,
+    sort_by_tags_error_messages,
+    delete_phone_error_messages,
+    find_by_title_error_messages,
+    find_by_content_error_messages
 )
 from assistant.src.errors.error_decorator import input_error
 from assistant.src.models.address_book import AddressBook
@@ -64,7 +68,6 @@ def parse_input(user_input):
 
 @input_error(add_note_error_messages)
 def add_note(notes: Notes):
-
     """Adds a new note to the Notes object.
 
     Prompts the user to enter the title, content, and tags for the note.
@@ -77,12 +80,13 @@ def add_note(notes: Notes):
         str: A confirmation message indicating that the note has been added.
     """
     note_title = input("The jorney starts here. Enter title: ")
-    note_text = input('Write something wise, my dear friend. Enter note content: ')
+    note_text = input(
+        'Write something wise, my dear friend. Enter note content: ')
     tags = input('And one more. Enter tags separated by comma: ')
     note_tags = [tag.strip() for tag in tags.split(',')]
     notes.create_note(note_title, note_text, note_tags)
     return (f'''{GREEN}
-The world is changed. I feel it in the water. 
+The world is changed. I feel it in the water.
 I feel it in the earth. I smell it in the air.
 Note added.
                    {RESET}''')
@@ -106,7 +110,8 @@ def validate_name(name: str) -> str:
                     The error message indicates that the name must be at least 1 character long.
     """
     if len(name.strip()) < 1:
-        raise ValueError(f"{RED}Do not tempt me! Name must be at least 1 character long.{RESET}")
+        raise ValueError(
+            f"{RED}Do not tempt me! Name must be at least 1 character long.{RESET}")
     return name
 
 
@@ -207,7 +212,7 @@ def add_tag(args, notes: Notes):
     note_id, tag = args
     notes.add_tag(note_id, tag)
     return (f'''{GREEN}
-The world is changed. I feel it in the water. 
+The world is changed. I feel it in the water.
 I feel it in the earth. I smell it in the air.
 Tag added.
             {RESET}''')
@@ -241,7 +246,7 @@ def change_title(args, notes: Notes):
     new_title = input("Let's do it! Enter new title: ")
     notes.change_title(existing_note, new_title)
     return (f'''{GREEN}
-The world is changed. I feel it in the water. 
+The world is changed. I feel it in the water.
 I feel it in the earth. I smell it in the air.
 Note title changed.
             {RESET}''')
@@ -275,7 +280,7 @@ def change_content(args, notes: Notes):
     new_content = input('Hurry up, my dear! Enter new content: ')
     notes.change_content(existing_note, new_content)
     return (f'''{GREEN}
-The world is changed. I feel it in the water. 
+The world is changed. I feel it in the water.
 I feel it in the earth. I smell it in the air.
 Note content changed.
             {RESET}''')
@@ -366,7 +371,7 @@ Be carefull, my friend, Phone can't be empty.
     book.create_record(validated_name, validated_phone,
                        validated_email, validated_birthday, validated_address)
     return (f'''{GREEN}
-The world is changed. I feel it in the water. 
+The world is changed. I feel it in the water.
 I feel it in the earth. I smell it in the air.
 Contact added.
             {RESET}''')
@@ -395,10 +400,37 @@ def change_record_phone(args, book: AddressBook):
     name, old_phone, new_phone = args
     book.change_record_phone(name, old_phone, new_phone)
     return (f'''{GREEN}
-The world is changed. I feel it in the water. 
+The world is changed. I feel it in the water.
 I feel it in the earth. I smell it in the air.
 Contact updated.
             {RESET}''')
+
+
+@input_error(delete_phone_error_messages)
+def delete_phone(args, book: AddressBook):
+    """Deletes the phone number of a contact in the address book.
+
+    This function takes two arguments: name, phone_number.
+    It verifies that two arguments are provided. Then, it calls the `change_record_phone`
+    method of the AddressBook class to update the phone number of the specified contact.
+
+    Args:
+        args (list): A list containing two elements: name and phone number.
+        book (AddressBook): An instance of the AddressBook class managing contacts.
+
+    Returns:
+        str: A message indicating that the contact has been successfully updated.
+
+    Raises:
+        ValueError: If the number of arguments provided is not two.
+        KeyError: If the phone for such Name is not present
+        ValidationError: If the phone is not a valid number
+    """
+    if (len(args) != 2):
+        raise ValueError
+    name, phone = args
+    book.delete_record_phone(name, phone)
+    return f'{GREEN}Contact updated.{RESET}'
 
 
 @input_error(find_by_birthday_error_messages)
@@ -425,7 +457,7 @@ def find_by_brithday(args, book: AddressBook):
     matching_records = book.find_record_by_birthday(birthday)
     if not matching_records:
         return (f'''{YELLOW}
-The wise speak only of what they know! 
+The wise speak only of what they know!
 No contact found with this birthday.
                 {RESET}''')
     else:
@@ -456,7 +488,7 @@ def find_by_phone(args, book: AddressBook):
     matching_records = book.find_record_by_phone(phone)
     if not matching_records:
         return (f'''{YELLOW}
-The wise speak only of what they know! 
+The wise speak only of what they know!
 No contact found with this phone number.
                 {RESET}''')
     else:
@@ -487,7 +519,7 @@ def find_by_email(args, book: AddressBook):
     matching_records = book.find_record_by_email(email)
     if not matching_records:
         return (f'''{YELLOW}
-The wise speak only of what they know! 
+The wise speak only of what they know!
 Do not tempt me! No contact found with this email.
                 {RESET}''')
     else:
@@ -518,7 +550,7 @@ def find_by_address(args, book: AddressBook):
     matching_records = book.find_record_by_address(address)
     if not matching_records:
         return (f'''{YELLOW}
-The wise speak only of what they know! 
+The wise speak only of what they know!
 No contact found with this address.
                 {RESET}''')
     else:
@@ -620,13 +652,13 @@ def change_tag(args, notes: Notes):
     id, old_tag, new_tag = args
     changed_note = notes.change_tag(id, old_tag, new_tag)
     return (f'''{GREEN}
-The world is changed. I feel it in the water. 
+The world is changed. I feel it in the water.
 I feel it in the earth. I smell it in the air.
 Tag changed.
             {RESET}''')
 
 
-@input_error(add_note_error_messages)
+@input_error(find_by_title_error_messages)
 def find_by_title(args, notes: Notes):
     """Finds notes by their title.
 
@@ -644,17 +676,17 @@ def find_by_title(args, notes: Notes):
 
     """
     title = args[0]
-    result = notes.find_record_title(title)
+    result = notes.find_record_by_title(title)
     if result:
         return format_as_table(result, 40)
     else:
         return (f'''{YELLOW}
-What a pitty, my dear friend! 
+What a pitty, my dear friend!
 There are no notes for such title: [{title}].
                 {RESET}''')
 
 
-@input_error(add_note_error_messages)
+@input_error(find_by_content_error_messages)
 def find_by_content(args, notes: Notes):
     """Finds notes by their content.
 
@@ -672,12 +704,12 @@ def find_by_content(args, notes: Notes):
 
     """
     text = args[0]
-    result = notes.find_record_content(text)
+    result = notes.find_record_by_content(text)
     if result:
         return format_as_table(result, 40)
     else:
         return (f'''{YELLOW}
-What a pitty, my dear friend! 
+What a pitty, my dear friend!
 There are no notes for such content: [{text}].
                 {RESET}''')
 
@@ -699,53 +731,37 @@ def find_by_tags(args, notes: Notes):
         str: A formatted table displaying the notes containing the specified tags,
         or a message indicating that no notes were found with the specified tags.
 
-    """"""Finds notes by their tags.
-
-    This function searches for notes based on the presence of specified tags.
-    It takes two arguments: a list of tags to search for, and the Notes instance.
-    The list of tags is extracted from the input arguments and split by commas.
-    Then, it calls the `find_record_tags` method of the Notes instance to perform the search.
-
-    Args:
-        args (list): A list containing tags separated by commas.
-        notes (Notes): An instance of the Notes class managing notes.
-
-    Returns:
-        str: A formatted table displaying the notes containing the specified tags,
-        or a message indicating that no notes were found with the specified tags.
-
     """
     tags = [tag.strip() for arg in args for tag in arg.split(',')]
-    result = notes.find_record_tags(tags)
+    result = notes.find_record_by_tags(tags)
     if result:
         return format_as_table(result, 40)
     else:
         return (f'''{YELLOW}
-What a pitty, my dear friend! 
+What a pitty, my dear friend!
 There are no notes for such tags: [{', '.join(tags)}].
                 {RESET}''')
 
 
-@input_error(add_note_error_messages)
-def sort_by_tag(args, notes: Notes):
+@input_error(sort_by_tags_error_messages)
+def sort_by_tag(notes: Notes):
     """Sorts notes by tags.
 
-    This function sorts notes based on two specified tags.
-    It takes two arguments: tag1 and tag2, representing the tags to sort by,
-    and the Notes instance managing the notes.
-    It then calls the `sort_record_tag` method of the Notes instance to perform the sorting.
+    This function displays notes sorted by tags in alphabetic order.
+    It takes one argument: Notes instance managing the notes
 
     Args:
-        args (list): A list containing two tags to sort by.
         notes (Notes): An instance of the Notes class managing notes.
 
     Returns:
         str: A formatted table displaying the sorted notes based on the specified tags.
 
     """
-    tag1, tag2 = args
-    result = notes.sort_record_tag(tag1, tag2)
-    return format_as_table(result, 40)
+    result = notes.sort_records_by_tags()
+    if result:
+        return format_as_table(result, 40)
+    else:
+        return f"{YELLOW}There are no notes for such tags: [{', '.join(tags)}]{RESET}"
 
 
 @input_error(show_note_error_messages)
@@ -823,7 +839,7 @@ def add_birthday(args, book: AddressBook):
     name, birthday = args
     book.add_record_birthday(name, birthday)
     return (f'''{GREEN}
-The world is changed. I feel it in the water. 
+The world is changed. I feel it in the water.
 I feel it in the earth. I smell it in the air.
 Birthday added.
             {RESET}''')
@@ -854,10 +870,11 @@ def change_birthday(args, book: AddressBook):
     name, birthday = args
     book.change_record_birthday(name, birthday)
     return (f'''{GREEN}
-The world is changed. I feel it in the water. 
+The world is changed. I feel it in the water.
 I feel it in the earth. I smell it in the air.
 Birthday changed.
             {RESET}''')
+
 
 @input_error(change_email_error_messages)
 def change_email(args, book: AddressBook):
@@ -881,7 +898,7 @@ def change_email(args, book: AddressBook):
     """
     if len(args) != 2:
         raise ValueError(f'''{RED}
-You shall not pass! 
+You shall not pass!
 Invalid number of arguments
                          {RESET}''')
     name, new_email = args
@@ -914,7 +931,7 @@ def change_address(args, book: AddressBook):
     """
     if len(args) != 2:
         raise ValueError(f'''{RED}
-You shall not pass! 
+You shall not pass!
 Invalid number of arguments.
                          {RESET}''')
     name, new_address = args
@@ -960,9 +977,10 @@ def show_all_birthdays(args, book: AddressBook):
         raise KeyError
     birthdays = book.get_record_birthdays_per_week(per_days)
     return format_as_table(birthdays, 40) if birthdays else (f'''{YELLOW}
-What a pity, my dear friend! 
+What a pity, my dear friend!
 No birthdays for next {days} days.
     {RESET}''')
+
 
 @input_error([])
 def show_help():
@@ -989,7 +1007,7 @@ def delete_contact(args, book: AddressBook):
         str: A message indicating whether the contact was deleted successfully or not.
     """
     name = args[0]
-    deleted = book.delete(name)
+    deleted = book.delete_record(name)
     if deleted:
         return (f'''{GREEN}
 Death is just another path - one that we all must take.
@@ -997,6 +1015,6 @@ Contact '{name}' deleted successfully.
 {RESET}''')
     else:
         return (f'''{YELLOW}
-What a pitty, my dear friend! 
+What a pitty, my dear friend!
 Contact '{name}' not found.
 {RESET}''')

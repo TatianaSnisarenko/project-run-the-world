@@ -3,8 +3,8 @@ from assistant.src.models.title import Title
 from assistant.src.models.content import Content
 from assistant.src.errors.errors import ValidationError
 from assistant.src.errors.error_messages import invalid_note_id_format_error_message
-from assistant.src.errors.error_messages import tag_already_exists_error_message_template
-from assistant.src.errors.error_messages import tag_doenst_exist_error_message_template
+from assistant.src.errors.error_messages import tag_already_exists_error_message
+from assistant.src.errors.error_messages import tag_doenst_exist_error_message
 
 
 class Note:
@@ -33,14 +33,14 @@ class Note:
         new_tag = Tag(tag.strip())
         if new_tag in self.tags:
             raise ValidationError(
-                tag_already_exists_error_message_template.format(tag=new_tag.value, id=self.id))
+                tag_already_exists_error_message)
         self.tags.append(new_tag)
 
     def change_tag(self, old_tag: str, new_tag: str) -> None:
         existing_tag = Tag(old_tag.strip())
         if existing_tag not in self.tags:
             raise ValidationError(
-                tag_doenst_exist_error_message_template.format(tag=existing_tag.value, id=self.id))
+                tag_doenst_exist_error_message)
         for index, t in enumerate(self.tags):
             if existing_tag == t:
                 self.tags[index] = Tag(new_tag.strip())

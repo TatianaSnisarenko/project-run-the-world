@@ -42,26 +42,25 @@ class Notes(UserDict):
         existing_note = self.data[note_id]
         return [existing_note.to_dict()]
 
-    def delete_note(self, id: str) -> None:
-        note_id = Note.validate_and_get_id(id)
-        del self.data[note_id]
-
-    def find_record_title(self, title: str) -> list:  # list of dictionaries(to_dict)
+# list of dictionaries(to_dict)
+    def find_record_by_title(self, title: str) -> list:
         if len(self.data) == 0:
             raise EmptyNotesError(empty_notes_error_message)
         return [note.to_dict() for id, note in self.data.items()
                 if note.has_in_title(title)]
 
     # list of dictionaries(to_dict)
-    def find_record_content(self, content: str) -> list:
+    def find_record_by_content(self, content: str) -> list:
         if len(self.data) == 0:
             raise EmptyNotesError(empty_notes_error_message)
         return [note.to_dict() for id, note in self.data.items()
                 if note.has_in_content(content)]
 
-    def find_record_tags(self, tags: list) -> dict:
+    def find_record_by_tags(self, tags: list) -> dict:
         if len(self.data) == 0:
             raise EmptyNotesError(empty_notes_error_message)
+        if not tags:
+            raise ValueError
         result = []
         for tag in tags:
             for note in self.data.values():
@@ -84,16 +83,6 @@ class Notes(UserDict):
             raise EmptyNotesError(empty_notes_error_message)
         return [note.to_dict() for id, note in self.data.items()
                 if note.has_in_content(content)]
-
-    def find_by_tags(self, tags: list) -> dict:
-        if len(self.data) == 0:
-            raise EmptyNotesError(empty_notes_error_message)
-        result = []
-        for tag in tags:
-            for note in self.data.values():
-                if note.has_tag(tag):
-                    result.append(self.convert_to_dict_by_tag(tag, note))
-        return result
 
     def get_notes(self) -> list:
         return [str(note) for id, note in self.data.items()]
@@ -143,15 +132,10 @@ class Notes(UserDict):
             "Content": str(note.content)
         }
 
-    def sort_record_tag(self, tag1, tag2):
-        pass
-
-    def add_tag(self, note_id: str, new_tag: str) -> None:
-        int_id = Note.validate_and_get_id(note_id)
-        existing_note = self.data.get(int_id)
-        if existing_note is None:
-            raise KeyError(note_doesnt_exist_error_message)
-        existing_note.add_tag(new_tag)
+    def sort_records_by_tags(self) -> dict:
+        tags = {tag.value for id, note in self.data.items()
+                for tag in note.tags}
+        return sorted(self.find_record_by_tags(tags), key=lambda x: x['Tag'])
 
     def change_tag(self, note_id: str, old_tag: str, new_tag: str) -> None:
         int_id = Note.validate_and_get_id(note_id)
