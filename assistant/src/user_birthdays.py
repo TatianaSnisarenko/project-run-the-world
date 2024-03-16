@@ -3,11 +3,12 @@ from collections import defaultdict
 from calendar import isleap
 
 
-def get_birthdays_per_week(users, per_days):
+def get_birthdays_per_week(users: list, per_days: int) -> tuple:
     """Returns a tuple containing upcoming birthdays of users within a specified number of days.
 
     Args:
-        users (list): A list of users for whom to retrieve birthdays.
+        users (list) : list of dictionaries that contain name:str and birthday: datetime
+        example: [{'name': 'Gandalf', 'birthday': record.birthday.birth_date}]
         per_days (int): The number of days within which to search for upcoming birthdays.
 
     Returns:
@@ -18,7 +19,7 @@ def get_birthdays_per_week(users, per_days):
     return get_birthdays_per_week_from_date(users, datetime.today(), per_days)
 
 
-def get_birthdays_per_week_from_date(users, from_date, per_days):
+def get_birthdays_per_week_from_date(users: list, from_date: datetime, per_days: int) -> tuple:
     """Returns upcoming birthdays of users within a specified number of days from a given date.
 
     Args:
@@ -63,7 +64,7 @@ def get_birthdays_per_week_from_date(users, from_date, per_days):
     return formatted_l
 
 
-def show_birthdays_per_week_from_date(users_birthdays):
+def show_birthdays_per_week_from_date(users_birthdays: tuple) -> None:
     """Prints the upcoming birthdays of users within a week from a given date.
 
     Args:
@@ -73,7 +74,7 @@ def show_birthdays_per_week_from_date(users_birthdays):
         print(value)
 
 
-def get_date(year, month, day):
+def get_date(year: int, month: int, day: int) -> datetime.date:
     """Returns a date object for the given year, month, and day.
 
     If the given year is not a leap year and the month is February with a day of 29, the day is adjusted to 1st of March.
