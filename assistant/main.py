@@ -57,6 +57,7 @@ style = Style.from_dict({
     'scrollbar.button': 'bg:#222222',
 })
 
+
 @enter_decorator_func
 def main():
     book = AddressBook()
@@ -67,7 +68,8 @@ def main():
     session = PromptSession(completer=WordCompleter(
         available_commands, ignore_case=True, sentence=True), lexer=PygmentsLexer(SqlLexer), style=style)
     while True:
-        user_input = session.prompt('The Precious is yours, do command, my friend: ')
+        user_input = session.prompt(
+            'The Precious is yours, do command, my friend: ')
         command, *args = parse_input(user_input)
         if command in ['close', 'exit']:
             book.save_to_file()
@@ -131,7 +133,7 @@ def main():
         elif command == 'find-by-content':
             print(find_by_content(args, notes))
         elif command == 'sort-by-tag':
-            print(sort_by_tag(args, notes))
+            print(sort_by_tag(notes))
         elif command == 'show-note':
             print(show_note(args, notes))
         elif command == 'delete-note':
