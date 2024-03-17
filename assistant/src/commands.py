@@ -226,7 +226,7 @@ Be carefull, my friend, Name can't be empty.
         try:
             validated_name = Name.validate_and_get_value(name_add)
             break
-        except ValueError as ve:
+        except ValidationError as ve:
             print(ve)
 
     while True:
@@ -234,7 +234,7 @@ Be carefull, my friend, Name can't be empty.
         try:
             validated_phone = Phone.validate_and_get(phone_add)
             break
-        except ValueError as ve:
+        except ValidationError as ve:
             print(ve)
 
     while True:
@@ -242,9 +242,9 @@ Be carefull, my friend, Name can't be empty.
         if not email_add.strip():
             break
         try:
-            validated_email = Phone.validate_and_get(email_add)
+            validated_email = Email.validate_and_get_value(email_add)
             break
-        except ValueError as ve:
+        except ValidationError as ve:
             print(ve)
 
     while True:
@@ -254,18 +254,15 @@ Be carefull, my friend, Name can't be empty.
         try:
             validated_birthday = Birthday.validate_and_get_value(birthday_add)
             break
-        except ValueError as ve:
+        except ValidationError as ve:
             print(ve)
 
     while True:
         address_add = input('Enter address, my friend: ')
         if not address_add.strip():
             break
-        try:
-            validated_address = address_add
-            break
-        except ValueError as ve:
-            print(ve)
+        validated_address = address_add
+        break
 
     book.create_record(validated_name, validated_phone,
                        validated_email, validated_birthday, validated_address)
