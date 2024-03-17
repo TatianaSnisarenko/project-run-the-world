@@ -6,7 +6,7 @@ import re
 
 class Email(Field):
     def __init__(self, email: str):
-        super().__init__(self.validate_and_get_email(email))
+        super().__init__(self.validate_and_get_value(email))
 
     def __eq__(self, other):
         if isinstance(other, Email):
@@ -17,7 +17,7 @@ class Email(Field):
         return hash(self.value)
 
     @staticmethod
-    def validate_and_get_email(email: str) -> str:
+    def validate_and_get_value(email: str) -> str:
         email_pattern = re.compile(
             r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$')
         valid_email = email.strip()

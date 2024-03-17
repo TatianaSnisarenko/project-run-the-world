@@ -36,6 +36,7 @@ from assistant.src.models.address_book import AddressBook
 from assistant.src.models.address import Address
 from assistant.src.models.notes import Notes
 from assistant.src.models.phone import Phone
+from assistant.src.models.name import Name
 from assistant.src.models.email import Email
 from assistant.src.models.birthday import Birthday
 from assistant.src.models.note import Note
@@ -91,103 +92,6 @@ The world is changed. I feel it in the water.
 I feel it in the earth. I smell it in the air.
 Note added.
                    {RESET}''')
-
-
-def validate_name(name: str) -> str:
-    """Validates the input name string.
-
-    Checks if the input name string is at least 1 character long.
-    If the name is valid, it returns the name string without any modification.
-    If the name is invalid, it raises a ValueError with an appropriate message.
-
-    Args:
-        name (str): The input name string to be validated.
-
-    Returns:
-        str: The validated name string.
-
-    Raises:
-        ValueError: If the name is empty or contains only whitespace characters.
-                    The error message indicates that the name must be at least 1 character long.
-    """
-    if len(name.strip()) < 1:
-        raise ValueError(
-            f"{RED}Do not tempt me! Name must be at least 1 character long.{RESET}")
-    return name
-
-
-def validate_phone(phone: str) -> str:
-    """Validates the input phone number string.
-
-    Attempts to validate the input phone number string using the Phone class's
-    validate_and_get method. If the validation succeeds, it returns the validated
-    phone number string. If the validation fails and raises a ValidationError,
-    it raises a ValueError with the error message from the ValidationError.
-
-    Args:
-        phone (str): The input phone number string to be validated.
-
-    Returns:
-        str: The validated phone number string.
-
-    Raises:
-        ValueError: If the input phone number validation fails due to a ValidationError.
-                    The error message is obtained from the ValidationError.
-    """
-    try:
-        return Phone.validate_and_get(phone)
-    except ValidationError as ve:
-        raise ValueError(str(ve))
-
-
-def validate_birthday(birthday: str) -> str:
-    """Validates the input birthday string.
-
-    Attempts to validate the input birthday string using the Birthday class's
-    validate_and_get_value method. If the validation succeeds, it returns the validated
-    birthday string. If the validation fails and raises a ValidationError,
-    it raises a ValueError with the error message from the ValidationError.
-
-    Args:
-        birthday (str): The input birthday string to be validated.
-
-    Returns:
-        str: The validated birthday string.
-
-    Raises:
-        ValueError: If the input birthday validation fails due to a ValidationError.
-                    The error message is obtained from the ValidationError.
-    """
-    try:
-        validated_birthday = Birthday.validate_and_get_value(birthday)
-        return validated_birthday
-    except ValidationError as ve:
-        raise ValueError(str(ve))
-
-
-def validate_email(email: str) -> str:
-    """Validates the input email string.
-
-    Attempts to validate the input email string using the Email class's
-    validate_and_get_email method. If the validation succeeds, it returns the validated
-    email string. If the validation fails and raises a ValidationError,
-    it raises a ValueError with the error message from the ValidationError.
-
-    Args:
-        email (str): The input email string to be validated.
-
-    Returns:
-        str: The validated email string.
-
-    Raises:
-        ValueError: If the input email validation fails due to a ValidationError.
-                    The error message is obtained from the ValidationError.
-    """
-    try:
-        validated_birthday = Email.validate_and_get_email(email)
-        return validated_birthday
-    except ValidationError as ve:
-        raise ValueError(str(ve))
 
 
 @input_error(add_tag_error_messages)
@@ -314,39 +218,30 @@ def add_contact(book: AddressBook):
 
     while True:
         name_add = input('Now enter name, my friend: ')
-        if not name_add.strip():
-            print(f'''{YELLOW}
-Be carefull, my friend, Name can't be empty.
-                  {RESET}''')
-            continue
         try:
-            validated_name = validate_name(name_add)
+            validated_name = Name.validate_and_get_value(name_add)
+            if book.is_record_present_for_name(validated_name):
+                raise KeyError
             break
-        except ValueError as ve:
+        except ValidationError as ve:
             print(ve)
 
     while True:
         phone_add = input('Enter phone, my friend: ')
-        if not phone_add.strip():
-            print(f'''{YELLOW}
-Be carefull, my friend, Phone can't be empty.
-                  {RESET}''')
-            continue
-        else:
-            try:
-                validated_phone = validate_phone(phone_add)
-                break
-            except ValueError as ve:
-                print(ve)
+        try:
+            validated_phone = Phone.validate_and_get(phone_add)
+            break
+        except ValidationError as ve:
+            print(ve)
 
     while True:
         email_add = input('Enter email, my friend: ')
         if not email_add.strip():
             break
         try:
-            validated_email = validate_email(email_add)
+            validated_email = Email.validate_and_get_value(email_add)
             break
-        except ValueError as ve:
+        except ValidationError as ve:
             print(ve)
 
     while True:
@@ -354,20 +249,17 @@ Be carefull, my friend, Phone can't be empty.
         if not birthday_add.strip():
             break
         try:
-            validated_birthday = validate_birthday(birthday_add)
+            validated_birthday = Birthday.validate_and_get_value(birthday_add)
             break
-        except ValueError as ve:
+        except ValidationError as ve:
             print(ve)
 
     while True:
         address_add = input('Enter address, my friend: ')
         if not address_add.strip():
             break
-        try:
-            validated_address = address_add
-            break
-        except ValueError as ve:
-            print(ve)
+        validated_address = address_add
+        break
 
     book.create_record(validated_name, validated_phone,
                        validated_email, validated_birthday, validated_address)

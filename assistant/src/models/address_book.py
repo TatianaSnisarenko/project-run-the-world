@@ -49,6 +49,10 @@ class AddressBook(UserDict):
         existing_record: Record = self.data[Name(name)]
         existing_record.change_address(new_address)
 
+    def is_record_present_for_name(self, name: str) -> None:
+        key_strings = [str(key) for key in self.data.keys()]
+        return name.strip() in key_strings
+
     def change_record_birthday(self, name: str, birthday: str) -> None:
         existing_record = self.data[Name(name)]
         existing_record.change_birthday(birthday)
