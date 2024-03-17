@@ -24,17 +24,23 @@ from assistant.src.errors.error_messages import (
     show_note_error_messages,
     change_note_title_error_messages,
     change_note_content_error_messages,
-    add_tag_error_messages
+    add_tag_error_messages,
+    sort_by_tags_error_messages,
+    delete_phone_error_messages,
+    find_by_title_error_messages,
+    find_by_content_error_messages,
+    add_phone_error_messages
 )
 from assistant.src.errors.error_decorator import input_error
 from assistant.src.models.address_book import AddressBook
 from assistant.src.models.address import Address
 from assistant.src.models.notes import Notes
 from assistant.src.models.phone import Phone
+from assistant.src.models.name import Name
 from assistant.src.models.email import Email
 from assistant.src.models.birthday import Birthday
 from assistant.src.models.note import Note
-from assistant.src.errors.errors import ValidationError
+from assistant.src.errors.errors import ValidationError, BreakError
 from assistant.src.functions import format_as_table
 from assistant.src.constants import commands_description
 from assistant.src.errors.errors import ValidationError
@@ -287,6 +293,14 @@ I feel it in the earth. I smell it in the air.{RESET}
             {RESET}''')
 
 
+def check_break(input: str):
+    input_lower = input.strip().lower() if input else ''
+    if input_lower == 'b' or input_lower == 'break':
+        raise BreakError(f'''{YELLOW}
+Take notice! You interrupted command using 'break' command.
+            {RESET}''')
+
+
 @input_error(add_contact_error_messages)
 def add_contact(book: AddressBook):
     """Adds a new contact to the address book.
@@ -314,62 +328,53 @@ def add_contact(book: AddressBook):
 
     while True:
         name_add = input(f'{CYAN}Now enter name, my friend: {RESET}')
-        if not name_add.strip():
-            print(f'''{YELLOW}
-Be carefull, my friend!{RESET}{BYELLOW}
-Name can't be empty.
-                  {RESET}''')
-            continue
+        check_break(name_add)
         try:
-            validated_name = validate_name(name_add)
+            validated_name = Name.validate_and_get_value(name_add)
+            if book.is_record_present_for_name(validated_name):
+                raise KeyError
             break
-        except ValueError as ve:
+        except ValidationError as ve:
             print(ve)
 
     while True:
         phone_add = input(f'{CYAN}Enter phone, my friend: {RESET}')
-        if not phone_add.strip():
-            print(f'''{YELLOW}
-Be carefull, my friend! {RESET}{BYELLOW}
-Phone can't be empty.
-                  {RESET}''')
-            continue
-        else:
-            try:
-                validated_phone = validate_phone(phone_add)
-                break
-            except ValueError as ve:
-                print(ve)
+        check_break(phone_add)
+        try:
+            validated_phone = Phone.validate_and_get(phone_add)
+            break
+        except ValidationError as ve:
+            print(ve)
 
     while True:
         email_add = input(f'{CYAN}Enter email, my friend: {RESET}')
+        check_break(email_add)
         if not email_add.strip():
             break
         try:
-            validated_email = validate_email(email_add)
+            validated_email = Email.validate_and_get_value(email_add)
             break
-        except ValueError as ve:
+        except ValidationError as ve:
             print(ve)
 
     while True:
         birthday_add = input(f'{CYAN}Enter birthday, my friend: {RESET}')
+        check_break(birthday_add)
         if not birthday_add.strip():
             break
         try:
-            validated_birthday = validate_birthday(birthday_add)
+            validated_birthday = Birthday.validate_and_get_value(birthday_add)
             break
-        except ValueError as ve:
+        except ValidationError as ve:
             print(ve)
 
     while True:
         address_add = input(f'{CYAN}Enter address, my friend: {RESET}')
+        check_break(address_add)
         if not address_add.strip():
             break
-        try:
-            validated_address = address_add
-            break
-        except ValueError as ve:
-            print(ve)
+        validated_address = address_add
+        break
 
     book.create_record(validated_name, validated_phone,
                        validated_email, validated_birthday, validated_address)
@@ -407,6 +412,60 @@ The world is changed. I feel it in the water.
 I feel it in the earth. I smell it in the air.{RESET}
 {BGREEN}Contact updated.
             {RESET}''')
+
+
+@input_error(delete_phone_error_messages)
+def delete_phone(args, book: AddressBook):
+    """Deletes the phone number of a contact in the address book.
+
+    This function takes two arguments: name, phone_number.
+    It verifies that two arguments are provided. Then, it calls the `change_record_phone`
+    method of the AddressBook class to update the phone number of the specified contact.
+
+    Args:
+        args (list): A list containing two elements: name and phone number.
+        book (AddressBook): An instance of the AddressBook class managing contacts.
+
+    Returns:
+        str: A message indicating that the contact has been successfully updated.
+
+    Raises:
+        ValueError: If the number of arguments provided is not two.
+        KeyError: If the phone for such Name is not present
+        ValidationError: If the phone is not a valid number
+    """
+    if (len(args) != 2):
+        raise ValueError
+    name, phone = args
+    book.delete_record_phone(name, phone)
+    return f'{GREEN}Contact updated.{RESET}'
+
+
+@input_error(add_phone_error_messages)
+def add_phone(args, book: AddressBook):
+    """Ads the phone number to a contact in the address book.
+
+    This function takes two arguments: name, phone_number.
+    It verifies that two arguments are provided. Then, it calls the `change_record_phone`
+    method of the AddressBook class to add the phone number for the specified contact.
+
+    Args:
+        args (list): A list containing two elements: name and phone number.
+        book (AddressBook): An instance of the AddressBook class managing contacts.
+
+    Returns:
+        str: A message indicating that the contact has been successfully updated.
+
+    Raises:
+        ValueError: If the number of arguments provided is not two.
+        KeyError: If the phone for such Name is present
+        ValidationError: If the phone is not a valid number
+    """
+    if (len(args) != 2):
+        raise ValueError
+    name, phone = args
+    book.add_record_phone(name, phone)
+    return f'{GREEN}Contact updated.{RESET}'
 
 
 @input_error(find_by_birthday_error_messages)
@@ -634,7 +693,7 @@ I feel it in the earth. I smell it in the air.{RESET}
             {RESET}''')
 
 
-@input_error(add_note_error_messages)
+@input_error(find_by_title_error_messages)
 def find_by_title(args, notes: Notes):
     """Finds notes by their title.
 
@@ -652,7 +711,7 @@ def find_by_title(args, notes: Notes):
 
     """
     title = args[0]
-    result = notes.find_record_title(title)
+    result = notes.find_record_by_title(title)
     if result:
         return format_as_table(result, 40)
     else:
@@ -662,7 +721,7 @@ There are no notes for such title: [{title}].
                 {RESET}''')
 
 
-@input_error(add_note_error_messages)
+@input_error(find_by_content_error_messages)
 def find_by_content(args, notes: Notes):
     """Finds notes by their content.
 
@@ -680,7 +739,7 @@ def find_by_content(args, notes: Notes):
 
     """
     text = args[0]
-    result = notes.find_record_content(text)
+    result = notes.find_record_by_content(text)
     if result:
         return format_as_table(result, 40)
     else:
@@ -707,24 +766,9 @@ def find_by_tags(args, notes: Notes):
         str: A formatted table displaying the notes containing the specified tags,
         or a message indicating that no notes were found with the specified tags.
 
-    """"""Finds notes by their tags.
-
-    This function searches for notes based on the presence of specified tags.
-    It takes two arguments: a list of tags to search for, and the Notes instance.
-    The list of tags is extracted from the input arguments and split by commas.
-    Then, it calls the `find_record_tags` method of the Notes instance to perform the search.
-
-    Args:
-        args (list): A list containing tags separated by commas.
-        notes (Notes): An instance of the Notes class managing notes.
-
-    Returns:
-        str: A formatted table displaying the notes containing the specified tags,
-        or a message indicating that no notes were found with the specified tags.
-
     """
     tags = [tag.strip() for arg in args for tag in arg.split(',')]
-    result = notes.find_record_tags(tags)
+    result = notes.find_record_by_tags(tags)
     if result:
         return format_as_table(result, 40)
     else:
@@ -734,26 +778,25 @@ There are no notes for such tags: [{', '.join(tags)}].
                 {RESET}''')
 
 
-@input_error(add_note_error_messages)
-def sort_by_tag(args, notes: Notes):
+@input_error(sort_by_tags_error_messages)
+def sort_by_tag(notes: Notes):
     """Sorts notes by tags.
 
-    This function sorts notes based on two specified tags.
-    It takes two arguments: tag1 and tag2, representing the tags to sort by,
-    and the Notes instance managing the notes.
-    It then calls the `sort_record_tag` method of the Notes instance to perform the sorting.
+    This function displays notes sorted by tags in alphabetic order.
+    It takes one argument: Notes instance managing the notes
 
     Args:
-        args (list): A list containing two tags to sort by.
         notes (Notes): An instance of the Notes class managing notes.
 
     Returns:
         str: A formatted table displaying the sorted notes based on the specified tags.
 
     """
-    tag1, tag2 = args
-    result = notes.sort_record_tag(tag1, tag2)
-    return format_as_table(result, 40)
+    result = notes.sort_records_by_tags()
+    if result:
+        return format_as_table(result, 40)
+    else:
+        return f"{YELLOW}There are no notes for such tags: [{', '.join(tags)}]{RESET}"
 
 
 @input_error(show_note_error_messages)
@@ -997,7 +1040,7 @@ def delete_contact(args, book: AddressBook):
         str: A message indicating whether the contact was deleted successfully or not.
     """
     name = args[0]
-    deleted = book.delete(name)
+    deleted = book.delete_record(name)
     if deleted:
         return (f'''{GREEN}
 Death is just another path - one that we all must take.{RESET}

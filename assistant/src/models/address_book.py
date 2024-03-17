@@ -41,9 +41,17 @@ class AddressBook(UserDict):
         existing_record = self.data[Name(name)]
         existing_record.change_birthday(birthday)
 
+    def add_record_phone(self, name: str, phone: str) -> None:
+        existing_record: Record = self.data[Name(name)]
+        existing_record.add_phone(phone)
+
     def change_record_address(self, name: str, new_address: str) -> None:
         existing_record: Record = self.data[Name(name)]
         existing_record.change_address(new_address)
+
+    def is_record_present_for_name(self, name: str) -> None:
+        key_strings = [str(key) for key in self.data.keys()]
+        return name.strip() in key_strings
 
     def change_record_birthday(self, name: str, birthday: str) -> None:
         existing_record = self.data[Name(name)]
@@ -83,7 +91,7 @@ class AddressBook(UserDict):
                 matching_records.append(record.to_dict())
         return matching_records
 
-    def delete(self, name: str) -> bool:
+    def delete_record(self, name: str) -> bool:
         removed_contact = self.data.pop(Name(name), None)
         return removed_contact is not None
 
@@ -95,16 +103,9 @@ class AddressBook(UserDict):
         existing_record = self.data[Name(name)]
         return [existing_record.to_dict()]
 
-    def delete_record(self, name: str) -> None:
-        del self.data[Name(name)]
-
-    def delete_phone(self, name: str, phone: str) -> None:
+    def delete_record_phone(self, name: str, phone: str) -> None:
         existing_record: Record = self.data[Name(name)]
         existing_record.delete_phone(phone)
-
-    def show_record_birthday(self, name: str) -> str:
-        existing_record = self.data[Name(name)]
-        return str(existing_record.birthday) if existing_record.birthday else f'Birthday is not added for {name}'
 
     def get_record_contacts(self) -> list:
         return [record.to_dict() for record in self.data.values()]

@@ -1,4 +1,4 @@
-from assistant.src.errors.errors import ValidationError
+
 
 RED = "\33[31m"
 BRED = '\033[1;38;5;196m'
@@ -25,11 +25,11 @@ invalid_note_id_format_error_message = (f'''{RED}
 The language is that of Mordor, which I will not utter here.{RESET}
 {BRED}Invalid note id: id must be a valid number.
 {RESET}''')
-tag_already_exists_error_message_template = (f'''{RED}
+tag_already_exists_error_message = (f'''{RED}
 You have no Power here. {RESET}                                             
 {BRED}Such tag: is already present for the note with id.
 {RESET}''')
-tag_doenst_exist_error_message_template = (f'''{RED}
+tag_doenst_exist_error_message = (f'''{RED}
 You have no Power here. {RESET}
 {BRED}Such tag: is not found for the note with id.
 {RESET}''')
@@ -126,8 +126,7 @@ The language is that of Mordor, which I will not utter here.{RESET}
     'KeyError': (f'''{RED}
 You have no Power here. {RESET}
 {BRED}Such name is not found, please, use "add" command to add new contact first.
-                 {RESET}'''),
-    'ValidationError': invalid_birthday_format_error_message
+                 {RESET}''')
 }
 
 add_contact_error_messages = {
@@ -138,8 +137,7 @@ The language is that of Mordor, which I will not utter here.{RESET}
     'KeyError': (f'''{RED}
 You have no Power here. {RESET}
 {BRED}Such name is already present, please, use "change" command instead.
-                 {RESET}'''),
-    'ValidationError': invalid_phone_number_error_message
+                 {RESET}''')
 }
 change_address_error_messages = {
     'FormatError': (f'''{RED}
@@ -168,8 +166,17 @@ The language is that of Mordor, which I will not utter here.{RESET}
     'KeyError': (f'''{RED}
 You have no Power here. {RESET}
 {BRED}Such name with such phone is not found, please, use "add" command instead.
-                 {RESET}'''),
-    'ValidationError': invalid_phone_number_error_message
+                 {RESET}''')
+}
+
+delete_phone_error_messages = {
+    'FormatError': f'{RED}Invalid "delete-phone" format. Command "delete-phone" must have 3 arguments: <delete-phone Name phone>.{RESET}',
+    'KeyError': f'{RED}Such name with such phone is not found, please, check your input.{RESET}'
+}
+
+add_phone_error_messages = {
+    'FormatError': f'{RED}Invalid "add-phone" format. Command "add-phone" must have 3 arguments: <add-phone Name phone>.{RESET}',
+    'KeyError': f'{RED}Such name is not found, please, check your input.{RESET}'
 }
 
 change_birthday_error_messages = {
@@ -180,8 +187,7 @@ The language is that of Mordor, which I will not utter here.{RESET}
     'KeyError': (f'''{RED}
 You have no Power here. {RESET}
 {BRED}Such name is not found, please, use "add" command instead.
-                 {RESET}'''),
-    'ValidationError': invalid_birthday_format_error_message
+                 {RESET}''')
 }
 
 change_email_error_messages = {
@@ -192,8 +198,7 @@ The language is that of Mordor, which I will not utter here.{RESET}
     'KeyError': (f'''{RED}
 You have no Power here. {RESET}
 {BRED}Such name is not found, please, use "add" command instead.
-                 {RESET}'''),
-    'ValidationError': invalid_email_error_message_template
+                 {RESET}''')
 }
 
 
@@ -226,12 +231,32 @@ You have no Power here. {RESET}
                  {RESET}''')
 }
 
+sort_by_tags_error_messages = {
+    'FormatError': (f'''{RED}
+The language is that of Mordor, which I will not utter here.
+Invalid "sort-by-tag" format. Command "sort-by-tag" must have 1 arguments: <find-by-tag>.
+{RESET}'''),
+}
 
 find_by_tags_error_messages = {
-    'FormatError': (f'''{RED}
+        'FormatError': (f'''{RED}
 The language is that of Mordor, which I will not utter here.{RESET}
 {BRED}Invalid "find-by-tag" format. Command "find-by-tag" must have not less then 2 arguments: <find-by-tag tag1,tag2,tag3>.
-                    {RESET}'''),
+                    {RESET}''')
+}
+
+find_by_title_error_messages = {
+    'FormatError': (f'''{RED}
+The language is that of Mordor, which I will not utter here.
+Invalid "find-by-title" format. Command "find-by-title" must have 2 arguments: <find-by-title title>.
+{RESET}'''),
+}
+
+find_by_content_error_messages = {
+    'FormatError': (f'''{RED}
+The language is that of Mordor, which I will not utter here.
+Invalid "find-by-content" format. Command "find-by-content" must have 2 arguments: <find-by-content content>.
+{RESET}'''),
 }
 
 find_by_phone_error_messages = {
@@ -242,8 +267,7 @@ The language is that of Mordor, which I will not utter here.{RESET}
     'KeyError':  (f'''{RED}
 You have no Power here. {RESET}
 {BRED}Such name is not found, please, try again.
-                  {RESET}'''),
-    'ValidationError': invalid_phone_number_error_message,
+                  {RESET}''')
 }
 
 find_by_birthday_error_messages = {
@@ -254,8 +278,7 @@ The language is that of Mordor, which I will not utter here.{RESET}
     'KeyError': (f'''{RED}
 You have no Power here. {RESET}
 {BRED}Such name is not found, please, try again.
-                 {RESET}'''),
-    'ValidationError': invalid_birthday_format_error_message,
+                 {RESET}''')
 }
 
 find_by_email_error_messages = {
@@ -308,8 +331,7 @@ The language is that of Mordor, which I will not utter here.{RESET}
     'KeyError': (f'''{RED}
 You have no Power here. {RESET}
 {BRED}Contacts are empty. Please, use "add" command to add new contacts first.
-                 {RESET}'''),
-    'ValidationError': invalid_per_days_error_message,
+                 {RESET}''')
 }
 
 parse_input_error_messages = {
