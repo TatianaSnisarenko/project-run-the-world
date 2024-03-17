@@ -1,4 +1,4 @@
-from assistant.src.errors.errors import ValidationError, EmptyNotesError, PhoneError
+from assistant.src.errors.errors import ValidationError, EmptyNotesError, PhoneError, BreakError
 from assistant.src.errors.error_messages import generic_error_message
 
 
@@ -17,7 +17,10 @@ def input_error(error_messages):
                 return str(e)
             except PhoneError as e:
                 return str(e)
+            except BreakError as e:
+                return str(e)
             except Exception as e:
+                print(e)
                 return generic_error_message
         return inner
     return decorator

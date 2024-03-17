@@ -78,7 +78,7 @@ commands_description = [
      "Example": "close"},
 
     {"Format": "add-contact",
-     "Action": "add new contact",
+     "Action": "add new contact, use 'b' to interrupt",
      "Example": "add-contact Gandalf 1234567890"},
 
     {"Format": "add-phone",
@@ -102,7 +102,7 @@ commands_description = [
      "Example": "show-contact Gimli"},
 
     {"Format": "add-note <note>",  # +
-     "Action": "add new note",
+     "Action": "add new note, use 'b' to interrupt",
      "Example": "add-note"},
 
     {"Format": "notes",  # +

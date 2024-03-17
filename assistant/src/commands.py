@@ -40,7 +40,7 @@ from assistant.src.models.name import Name
 from assistant.src.models.email import Email
 from assistant.src.models.birthday import Birthday
 from assistant.src.models.note import Note
-from assistant.src.errors.errors import ValidationError
+from assistant.src.errors.errors import ValidationError, BreakError
 from assistant.src.functions import format_as_table
 from assistant.src.constants import commands_description
 from assistant.src.errors.errors import ValidationError
@@ -82,9 +82,12 @@ def add_note(notes: Notes):
         str: A confirmation message indicating that the note has been added.
     """
     note_title = input("The jorney starts here. Enter title: ")
+    check_break(note_title)
     note_text = input(
         'Write something wise, my dear friend. Enter note content: ')
+    check_break(note_text)
     tags = input('And one more. Enter tags separated by comma: ')
+    check_break(tags)
     note_tags = [tag.strip() for tag in tags.split(',')]
     notes.create_note(note_title, note_text, note_tags)
     return (f'''{GREEN}
@@ -191,6 +194,14 @@ Note content changed.
             {RESET}''')
 
 
+def check_break(input: str):
+    input_lower = input.strip().lower() if input else ''
+    if input_lower == 'b' or input_lower == 'break':
+        raise BreakError(f'''{YELLOW}
+Take notice! You interrupted command using 'break' command.
+            {RESET}''')
+
+
 @input_error(add_contact_error_messages)
 def add_contact(book: AddressBook):
     """Adds a new contact to the address book.
@@ -218,6 +229,7 @@ def add_contact(book: AddressBook):
 
     while True:
         name_add = input('Now enter name, my friend: ')
+        check_break(name_add)
         try:
             validated_name = Name.validate_and_get_value(name_add)
             if book.is_record_present_for_name(validated_name):
@@ -228,6 +240,7 @@ def add_contact(book: AddressBook):
 
     while True:
         phone_add = input('Enter phone, my friend: ')
+        check_break(phone_add)
         try:
             validated_phone = Phone.validate_and_get(phone_add)
             break
@@ -236,6 +249,7 @@ def add_contact(book: AddressBook):
 
     while True:
         email_add = input('Enter email, my friend: ')
+        check_break(email_add)
         if not email_add.strip():
             break
         try:
@@ -246,6 +260,7 @@ def add_contact(book: AddressBook):
 
     while True:
         birthday_add = input('Enter birthday, my friend: ')
+        check_break(birthday_add)
         if not birthday_add.strip():
             break
         try:
@@ -256,6 +271,7 @@ def add_contact(book: AddressBook):
 
     while True:
         address_add = input('Enter address, my friend: ')
+        check_break(address_add)
         if not address_add.strip():
             break
         validated_address = address_add
