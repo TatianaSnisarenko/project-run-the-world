@@ -50,13 +50,23 @@ from pygments.lexers.sql import SqlLexer
 from assistant.src.theme.enter_decorator import enter_decorator_func
 from assistant.src.theme.exit_decorator import exit_decorator_func
 
+CYAN = "\033[36m"
+RESET = "\033[0m"
+
 
 style = Style.from_dict({
     'completion-menu.completion': 'bg:#006f9a #ffffff',
     'completion-menu.completion.current': 'bg:#008bc1 #000000',
     'scrollbar.background': 'bg:#4ba6c9',
     'scrollbar.button': 'bg:#222222',
+    'prompt': 'ansicyan',
+    'input': '',
 })
+
+prompt_style = Style.from_dict({
+        'prompt': 'ansicyan',
+        'input': '',
+    })
 
 
 @enter_decorator_func
@@ -69,8 +79,8 @@ def main():
     session = PromptSession(completer=WordCompleter(
         available_commands, ignore_case=True, sentence=True), lexer=PygmentsLexer(SqlLexer), style=style)
     while True:
-        user_input = session.prompt(
-            'The Precious is yours, do command, my friend: ')
+        prompt_text = 'The Precious is yours, do command, my friend:  '
+        user_input = session.prompt(prompt_text, style=style)
         command, *args = parse_input(user_input)
         if command in ['close', 'exit']:
             book.save_to_file()

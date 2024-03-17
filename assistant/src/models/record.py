@@ -4,7 +4,9 @@ from assistant.src.models.birthday import Birthday
 from assistant.src.models.email import Email
 from assistant.src.models.address import Address
 from assistant.src.errors.errors import PhoneError
-RED = "\33[91m"
+
+RED = "\33[31m"
+BRED = '\033[1;38;5;196m'
 GREEN = "\033[32m"
 RESET = "\033[0m"
 
@@ -32,8 +34,8 @@ class Record:
                 break
         if not phone_found:
             raise PhoneError(f'''{RED}
-The wise speak only of what they know!
-Phone number not found for the contact
+The wise speak only of what they know!{RESET} {BRED}
+Phone number not for the contact.
                            {RESET}''')
 
     def delete_phone(self, phone: str):
@@ -42,8 +44,8 @@ Phone number not found for the contact
             self.phones.remove(existing_phone)
         else:
             raise PhoneError(f'''{RED}
-The wise speak only of what they know!
-Phone number not found for the contact
+The wise speak only of what they know! {RESET} {BRED} 
+Phone number not for the contact.
                              {RESET}''')
 
     def add_birthday(self, birthday: str) -> None:
