@@ -87,113 +87,19 @@ def add_note(notes: Notes):
         str: A confirmation message indicating that the note has been added.
     """
     note_title = input(f"{CYAN}The jorney starts here. Enter title: {RESET}")
+    check_break(note_title)
     note_text = input(f'{CYAN}Write something wise, my dear friend. Enter note content: {RESET}')
+    check_break(note_text)
     tags = input(f'{CYAN}And one more. Enter tags separated by comma: {RESET}')
+    check_break(tags)
     note_tags = [tag.strip() for tag in tags.split(',')]
+    notes.create_note(note_title, note_text, note_tags)
     notes.create_note(note_title, note_text, note_tags)
     return (f'''{GREEN}
 The world is changed. I feel it in the water. 
 I feel it in the earth. I smell it in the air.{RESET}
 {BGREEN}Note added.
                    {RESET}''')
-
-
-def validate_name(name: str) -> str:
-    """Validates the input name string.
-
-    Checks if the input name string is at least 1 character long.
-    If the name is valid, it returns the name string without any modification.
-    If the name is invalid, it raises a ValueError with an appropriate message.
-
-    Args:
-        name (str): The input name string to be validated.
-
-    Returns:
-        str: The validated name string.
-
-    Raises:
-        ValueError: If the name is empty or contains only whitespace characters.
-                    The error message indicates that the name must be at least 1 character long.
-    """
-    if len(name.strip()) < 1:
-        raise ValueError(f'''
-{RED}Do not tempt me!{RESET}
-{BRED}Name must be at least 1 character long.{RESET}''')
-    return name
-
-
-def validate_phone(phone: str) -> str:
-    """Validates the input phone number string.
-
-    Attempts to validate the input phone number string using the Phone class's
-    validate_and_get method. If the validation succeeds, it returns the validated
-    phone number string. If the validation fails and raises a ValidationError,
-    it raises a ValueError with the error message from the ValidationError.
-
-    Args:
-        phone (str): The input phone number string to be validated.
-
-    Returns:
-        str: The validated phone number string.
-
-    Raises:
-        ValueError: If the input phone number validation fails due to a ValidationError.
-                    The error message is obtained from the ValidationError.
-    """
-    try:
-        return Phone.validate_and_get(phone)
-    except ValidationError as ve:
-        raise ValueError(str(ve))
-
-
-def validate_birthday(birthday: str) -> str:
-    """Validates the input birthday string.
-
-    Attempts to validate the input birthday string using the Birthday class's
-    validate_and_get_value method. If the validation succeeds, it returns the validated
-    birthday string. If the validation fails and raises a ValidationError,
-    it raises a ValueError with the error message from the ValidationError.
-
-    Args:
-        birthday (str): The input birthday string to be validated.
-
-    Returns:
-        str: The validated birthday string.
-
-    Raises:
-        ValueError: If the input birthday validation fails due to a ValidationError.
-                    The error message is obtained from the ValidationError.
-    """
-    try:
-        validated_birthday = Birthday.validate_and_get_value(birthday)
-        return validated_birthday
-    except ValidationError as ve:
-        raise ValueError(str(ve))
-
-
-def validate_email(email: str) -> str:
-    """Validates the input email string.
-
-    Attempts to validate the input email string using the Email class's
-    validate_and_get_email method. If the validation succeeds, it returns the validated
-    email string. If the validation fails and raises a ValidationError,
-    it raises a ValueError with the error message from the ValidationError.
-
-    Args:
-        email (str): The input email string to be validated.
-
-    Returns:
-        str: The validated email string.
-
-    Raises:
-        ValueError: If the input email validation fails due to a ValidationError.
-                    The error message is obtained from the ValidationError.
-    """
-    try:
-        validated_birthday = Email.validate_and_get_email(email)
-        return validated_birthday
-    except ValidationError as ve:
-        raise ValueError(str(ve))
 
 
 @input_error(add_tag_error_messages)

@@ -35,7 +35,7 @@ class Record:
         if not phone_found:
             raise PhoneError(f'''{RED}
 The wise speak only of what they know!{RESET} {BRED}
-Phone number not found in the record
+Phone number not for the contact.
                            {RESET}''')
 
     def delete_phone(self, phone: str):
@@ -45,7 +45,7 @@ Phone number not found in the record
         else:
             raise PhoneError(f'''{RED}
 The wise speak only of what they know! {RESET} {BRED} 
-Phone number not found in the record
+Phone number not for the contact.
                              {RESET}''')
 
     def add_birthday(self, birthday: str) -> None:
