@@ -137,11 +137,11 @@ Such name is already present, please, use "change" command instead.
 change_address_error_messages = {
     'FormatError': (f'''{RED}
 The language is that of Mordor, which I will not utter here.
-Invalid "change" format. Command "change" must have 3 arguments: <change Name new_address>.
+Invalid "change-address" format. Command "change-address" must have 2 arguments: <change Name>.
 {RESET}'''),
     'KeyError': (f'''{RED}
 You have no Power here.
-Such name is not found, please, use "add" command instead.
+Contact for provided name is not found, please, use "add" command instead.
 {RESET}''')
 }
 

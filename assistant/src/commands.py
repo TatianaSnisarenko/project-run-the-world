@@ -850,12 +850,12 @@ def change_address(args, book: AddressBook):
     """Changes the address of a contact.
 
     This function changes the address of the contact specified by their name.
-    It takes two arguments: args, a list containing the name and new address,
+    It takes 2 argument: the name of contact
     and book, an instance of the AddressBook class managing contacts.
     It then calls the `change_record_address` method of the AddressBook instance to update the address.
 
     Args:
-        args (list): A list containing the name and new address.
+        args (list): A list containing the name of contact.
         book (AddressBook): An instance of the AddressBook class managing contacts.
 
     Returns:
@@ -863,14 +863,15 @@ def change_address(args, book: AddressBook):
 
     Raises:
         ValueError: If the number of arguments is not equal to 2.
+        KeyError: If contact is not present for provided name
 
     """
-    if len(args) != 2:
-        raise ValueError(f'''{RED}
-You shall not pass!
-Invalid number of arguments.
-                         {RESET}''')
-    name, new_address = args
+    if len(args) != 1:
+        raise ValueError
+    name = args[0]
+    if not book.is_record_present_for_name(name):
+        raise KeyError
+    new_address = input("Let's do it! Enter new address: ")
     book.change_record_address(name, new_address)
     return (f'''{GREEN}
 My dear friend, now I can tell:
