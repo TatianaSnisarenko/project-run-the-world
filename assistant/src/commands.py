@@ -218,13 +218,10 @@ def add_contact(book: AddressBook):
 
     while True:
         name_add = input('Now enter name, my friend: ')
-        if not name_add.strip():
-            print(f'''{YELLOW}
-Be carefull, my friend, Name can't be empty.
-                  {RESET}''')
-            continue
         try:
             validated_name = Name.validate_and_get_value(name_add)
+            if book.is_record_present_for_name(validated_name):
+                raise KeyError
             break
         except ValidationError as ve:
             print(ve)
