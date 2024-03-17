@@ -2,32 +2,39 @@
 
 ## Description
 
-Our **Assistant Bot** is a user-friendly console bot that you can use to conveniently **manage your contacts** by adding their name, phone, address, email, and birthday. All the data can be modified or deleted at any time. The bot will help you to **remember the birthdays** of your loved ones, colleagues, and acquaintances and even prepare for these dates in advance: simply enter the number of days, and the bot will show you all the birthdays during the period you entered (starting from now). You can also **save your notes** in the bot and find them by title, content, or tag.
+Our **Assistant Bot** is a user-friendly console bot that you can use to conveniently **manage your contacts** by adding their name, phone, address, email, and birthday. All the data can be modified or deleted at any time. The bot will help you to **remember the birthdays** of your loved ones, colleagues, and acquaintances and even prepare for these dates in advance: simply enter command _birthdays_ with the number of days, and the bot will show you all the birthdays during the period you entered (starting from now). You can also **save your notes** in the bot and find them by title, content, or tag.
 
 ## Commands
 
-**Let's look at the main functionality of our bot:**
-
-**Contact** - you can add or delete a contact, and you will also be able to see a list of all the contacts in your address book. What is more, a contact with all info can be found by phone, email, address, or birthday.
-
-**Name** - you can change it.
-
-**Phone** - the contact's phone number can be changed or deleted, and you can also find the contact's phone by name.
-
-**Email** - it can be added, changed, or deleted.
-
-**Address** - it can be added, changed, or deleted.
-
-**Birthday** - you can add or change your contact's birthday, find the birthday by name, or see the contacts' birthdays for a certain period of time.
-
-**Note** - you can add a note and see the list of all your notes.
-
-**Title** - you can change the title of your note.
-
-**Tag** - it can be added, changed, or deleted.
-
-**Content** - you can modify it.
-
+| **Command**                         | **Action**                    | **Example**                              |
+| ----------------------------------- | ----------------------------- | ---------------------------------------- |
+| close                               | our secrets are safe with me  | close                                    |
+| add-contact                         | add new contact               | add-contact Gandalf 1234567890           |
+| delete-contact <Name>               | delete the contact            | delete-contact Smaug                     |
+| contacts                            | show the contacts             | contacts                                 |
+| show-contact <Name>                 | show the contact              | show-contact Gimli                       |
+| add-note <note>                     | add new note                  | add-note                                 |
+| notes                               | show the notes list           | notes                                    |
+| change-phone <Name> <old> <new>     | update phone for contact      | change-phone Arwen 0736756464 0988888888 |
+| add-birthday <Name> <DD.MM.YYYY>    | add birthday for contact      | add-birthday Gandalf 01.01.1903          |
+| birthdays <per_days>                | show birthdays for the period | birthdays 7                              |
+| change-birthday <Name> <new_date>   | update contact's birthday     | change-birthday Gandalf 24.09.1903       |
+| change-email                        | change email for contact      | change-email Frodo                       |
+| change-address                      | change address for contact    | change-address Gandalf                   |
+| change-title                        | change notes title            | change-title 1                           |
+| add-tag <ID> <tag>                  | add tag for note              | add-tag 2 orcs                           |
+| change-tag <ID> <old_tag> <new_tag> | replace old tag with new one  | change-tag 2 orcs goblins                |
+| change-content <ID> <new_content>   | change the note's text        | change-content 1 Kill Sauron             |
+| find-by-phone <Phone>               | find contact by phone         | find-by-phone 0665556666                 |
+| find-by-email <email>               | find contact by email         | find-by-email frodo@bag.ua               |
+| find-by-address <address>           | find contact by address       | find-by-address Hobitland                |
+| find-by-birthday <DD.MM.YYYY>       | find contact by birthday      | find-by-birthday 01.05.1905              |
+| find-by-title <some_title>          | find contact by title         | find-by-address Memo                     |
+| find-by-tag <tag>                   | find note by tag              | find-by-tag orcs                         |
+| find-by-content <text>              | find note by content          | find-by-content Kill Sauron              |
+| sort-by-tag                         | sort notes by tags            | sort-by-tag                              |
+| show-note <ID>                      | show the note by id           | show-note 2                              |
+| delete-note                         | delete note by Id             | delete-note 1                            |
 
 ## Steps to start the project using main:
 
@@ -49,36 +56,38 @@ Our **Assistant Bot** is a user-friendly console bot that you can use to conveni
 
 ## Steps to start the project from terminal:
 
-1.  Run command in terminal:
+1. Run command in terminal:
 
-    Windows
+   Windows
 
-```
-pip install setuptools
-```
+   ```
+   pip install setuptools
+   ```
 
-Mac
+   Mac
 
-```
-pip3 install setuptools
-```
+   ```
+   pip3 install setuptools
+   ```
 
 2. Move to folder that contains setup.py and run command in terminal:
 
    Windows
 
-```
-pip install .
-```
+   ```
+   pip install .
+   ```
 
-Mac
+   Mac
 
-```
-pip3 install .
-```
+   ```
+   pip3 install .
+   ```
 
 3. Use start command to run assistant in terminal:
 
-```
-run_bot
-```
+   Windows, Mac
+
+   ```
+   run_bot
+   ```
