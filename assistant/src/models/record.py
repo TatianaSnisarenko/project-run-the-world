@@ -4,7 +4,8 @@ from assistant.src.models.birthday import Birthday
 from assistant.src.models.email import Email
 from assistant.src.models.address import Address
 
-RED = "\33[91m"
+RED = "\33[31m"
+BRED = '\033[1;38;5;196m'
 GREEN = "\033[32m"
 RESET = "\033[0m"
 
@@ -34,7 +35,7 @@ class Record:
                 break
         if not phone_found:
             raise KeyError(f'''{RED}
-The wise speak only of what they know! 
+The wise speak only of what they know!{RESET} {BRED}
 Phone number not found in the record
                            {RESET}''')
 
@@ -44,7 +45,7 @@ Phone number not found in the record
             self.phones.remove(existing_phone)
         else:
             raise ValueError(f'''{RED}
-The wise speak only of what they know!  
+The wise speak only of what they know! {RESET} {BRED} 
 Phone number not found in the record
                              {RESET}''')
 
