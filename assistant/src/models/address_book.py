@@ -73,7 +73,7 @@ class AddressBook(UserDict):
     def find_record_by_address(self, address: str) -> list:
         matching_records = []
         for record in self.data.values():
-            if str(record.address).strip() == address.strip():
+            if (record.has_in_address(address)):
                 matching_records.append(record.to_dict())
         return matching_records
 

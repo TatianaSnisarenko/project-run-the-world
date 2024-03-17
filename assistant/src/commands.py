@@ -246,7 +246,7 @@ def add_contact(book: AddressBook):
         phone_add = input(f'{CYAN}Enter phone, my friend: {RESET}')
         check_break(phone_add)
         try:
-            validated_phone = Phone.validate_and_get(phone_add)
+            validated_phone = Phone.validate_and_get_value(phone_add)
             break
         except ValidationError as ve:
             print(ve)
@@ -343,7 +343,11 @@ def delete_phone(args, book: AddressBook):
         raise ValueError
     name, phone = args
     book.delete_record_phone(name, phone)
-    return f'{GREEN}Contact updated.{RESET}'
+    return (f'''{GREEN}
+The world is changed. I feel it in the water.
+I feel it in the earth. I smell it in the air.{RESET}
+{BGREEN}Phone deleted for contact.
+            {RESET}''')
 
 
 @input_error(add_phone_error_messages)
@@ -370,7 +374,11 @@ def add_phone(args, book: AddressBook):
         raise ValueError
     name, phone = args
     book.add_record_phone(name, phone)
-    return f'{GREEN}Contact updated.{RESET}'
+    return (f'''{GREEN}
+The world is changed. I feel it in the water.
+I feel it in the earth. I smell it in the air.{RESET}
+{BGREEN}Phone added for contact.
+            {RESET}''')
 
 
 @input_error(find_by_birthday_error_messages)
@@ -394,7 +402,8 @@ def find_by_brithday(args, book: AddressBook):
 
     """
     birthday = args[0]
-    matching_records = book.find_record_by_birthday(birthday)
+    validated_value = Birthday.validate_and_get_value(birthday)
+    matching_records = book.find_record_by_birthday(validated_value)
     if not matching_records:
         return (f'''{YELLOW}
 The wise speak only of what they know!{RESET}{BYELLOW}
@@ -424,7 +433,7 @@ def find_by_phone(args, book: AddressBook):
              or a message indicating that no contact was found.
 
     """
-    phone = args[0]
+    phone = Phone.validate_and_get_value(args[0])
     matching_records = book.find_record_by_phone(phone)
     if not matching_records:
         return (f'''{YELLOW}
@@ -455,7 +464,7 @@ def find_by_email(args, book: AddressBook):
              or a message indicating that no contact was found.
 
     """
-    email = args[0]
+    email = Email.validate_and_get_value(args[0])
     matching_records = book.find_record_by_email(email)
     if not matching_records:
         return (f'''{YELLOW}
@@ -854,12 +863,12 @@ def change_address(args, book: AddressBook):
     """Changes the address of a contact.
 
     This function changes the address of the contact specified by their name.
-    It takes two arguments: args, a list containing the name and new address,
+    It takes 2 argument: the name of contact
     and book, an instance of the AddressBook class managing contacts.
     It then calls the `change_record_address` method of the AddressBook instance to update the address.
 
     Args:
-        args (list): A list containing the name and new address.
+        args (list): A list containing the name of contact.
         book (AddressBook): An instance of the AddressBook class managing contacts.
 
     Returns:
@@ -867,14 +876,15 @@ def change_address(args, book: AddressBook):
 
     Raises:
         ValueError: If the number of arguments is not equal to 2.
+        KeyError: If contact is not present for provided name
 
     """
-    if len(args) != 2:
-        raise ValueError(f'''{RED}
-You shall not pass! {RESET}
-{BRED}Invalid number of arguments.
-                         {RESET}''')
-    name, new_address = args
+    if len(args) != 1:
+        raise ValueError
+    name = args[0]
+    if not book.is_record_present_for_name(name):
+        raise KeyError
+    new_address = input("Let's do it! Enter new address: ")
     book.change_record_address(name, new_address)
     return (f'''{GREEN}
 My dear friend, now I can tell:{RESET}

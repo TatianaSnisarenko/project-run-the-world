@@ -35,7 +35,7 @@ class Record:
         if not phone_found:
             raise PhoneError(f'''{RED}
 The wise speak only of what they know!{RESET} {BRED}
-Phone number not for the contact.
+Phone number not found for the contact.
                            {RESET}''')
 
     def delete_phone(self, phone: str):
@@ -44,8 +44,8 @@ Phone number not for the contact.
             self.phones.remove(existing_phone)
         else:
             raise PhoneError(f'''{RED}
-The wise speak only of what they know! {RESET} {BRED} 
-Phone number not for the contact.
+The wise speak only of what they know! {RESET} {BRED}
+Phone number not found for the contact.
                              {RESET}''')
 
     def add_birthday(self, birthday: str) -> None:
@@ -56,7 +56,7 @@ Phone number not for the contact.
         if phone_obj in self.phones:
             raise PhoneError(f'''{RED}
 The wise speak only of what they know!
-Phone number already present for the contact
+{BRED}Phone number already present for the contact
                              {RESET}''')
         self.phones.append(phone_obj)
 
@@ -71,6 +71,9 @@ Phone number already present for the contact
 
     def edit_phone(self, phone: str) -> None:
         self.phone = Phone(phone)
+
+    def has_in_address(self, line: str) -> bool:
+        return line.strip() in str(self.address)
 
     def __eq__(self, other):
         if isinstance(other, Record):

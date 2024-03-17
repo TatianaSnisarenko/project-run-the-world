@@ -65,68 +65,68 @@ The language is that of Mordor, which I will not utter here.{RESET}
 empty_notes_error_message = (f'''{RED}
 You have no Power here. {RESET}
 {BRED}Notes are empty. Please, use "add-note" command to add new notes.
- {RESET}''')
+{RESET}''')
 
 generic_invalid_command_format_message = (f'''{RED}
 My dear friend, be carefull!
 You've enterd command in invalid format.{RESET}
 {BRED}Please use <help> to display all available commands{RESET}
 {RED}I've prepeared for you
-                                          {RESET}''')
+{RESET}''')
 
 add_note_error_messages = {
     'FormatError': (f'''{RED}
 You have no Power here. {RESET}
 {BRED}Such note is already present, please, use "change" command instead.
-                    {RESET}'''),
+{RESET}'''),
     'KeyError': (f'''{RED}
 You have no Power here. {RESET}
 {BRED}Such note is already present, please, use "change-note" command instead.
-                 {RESET}''')
+{RESET}''')
 }
 
 change_note_title_error_messages = {
     'FormatError': (f'''{RED}
 The language is that of Mordor, which I will not utter here.{RESET}
 {BRED}Invalid "change-title" format. Command "change-title" must have 2 arguments: <change-title ID>.
-                 {RESET}'''),
+{RESET}'''),
     'KeyError': (f'''{RED}
 You have no Power here. {RESET}
 {BRED}Such note is apsent, please, use "add-note" command instead.
-                 {RESET}''')
+{RESET}''')
 }
 
 change_note_content_error_messages = {
     'FormatError': (f'''{RED}
 The language is that of Mordor, which I will not utter here.{RESET}
 {BRED}Invalid "change-content" format. Command "change-content" must have 2 arguments: <change-content ID>.
-                {RESET}'''),
+{RESET}'''),
     'KeyError': (f'''{RED}
 You have no Power here. {RESET}
 {BRED}Such note is apsent, please, use "add-note" command instead.
-                 {RESET}''')
+{RESET}''')
 }
 
 show_note_error_messages = {
     'FormatError': (f'''{RED}
 The language is that of Mordor, which I will not utter here.{RESET}
 {BRED}Invalid "show-note" format. Command "show-note" must have 2 arguments: <show-note ID>.
-                    {RESET}'''),
+{RESET}'''),
     'KeyError': (f'''{RED}
 You have no Power here. {RESET}
 {BRED}Such note with provided ID does not exist.
-                 {RESET}''')
+{RESET}''')
 }
 
 add_birthday_error_messages = {
     'FormatError': (f'''{RED}
 The language is that of Mordor, which I will not utter here.{RESET}
 {BRED}Invalid "add-birthday" format. Command "add-birthday" must have 3 arguments: <add-birthday Name DD.MM.YYYY>.
-                    {RESET}'''),
+{RESET}'''),
     'KeyError': (f'''{RED}
 You have no Power here. {RESET}
 {BRED}Such name is not found, please, use "add" command to add new contact first.
-                 {RESET}''')
+{RESET}''')
 }
 
 add_contact_error_messages = {
@@ -143,11 +143,11 @@ change_address_error_messages = {
     'FormatError': (f'''{RED}
 The language is that of Mordor, which I will not utter here.{RESET}
 {BRED}Invalid "change" format. Command "change" must have 3 arguments: <change Name new_address>.
-                    {RESET}'''),
+{RESET}'''),
     'KeyError': (f'''{RED}
 You have no Power here. {RESET}
 {BRED}Such name is not found, please, use "add" command instead.
-                 {RESET}''')
+{RESET}''')
 }
 
 add_tag_error_messages = {
@@ -170,35 +170,47 @@ You have no Power here. {RESET}
 }
 
 delete_phone_error_messages = {
-    'FormatError': f'{RED}Invalid "delete-phone" format. Command "delete-phone" must have 3 arguments: <delete-phone Name phone>.{RESET}',
-    'KeyError': f'{RED}Such name with such phone is not found, please, check your input.{RESET}'
+    'FormatError': f'''{RED}
+The language is that of Mordor, which I will not utter here.{RESET}
+{BRED}Invalid "delete-phone" format. Command "delete-phone" must have 3 arguments: <delete-phone Name phone>.
+{RESET}''',
+    'KeyError': f'''{RED}
+You have no Power here. {RESET}
+{BRED}Such name with such phone is not found, please, check your input.
+{RESET}'''
 }
 
 add_phone_error_messages = {
-    'FormatError': f'{RED}Invalid "add-phone" format. Command "add-phone" must have 3 arguments: <add-phone Name phone>.{RESET}',
-    'KeyError': f'{RED}Such name is not found, please, check your input.{RESET}'
+    'FormatError': f'''{RED}
+The language is that of Mordor, which I will not utter here.{RESET}
+{BRED}Invalid "add-phone" format. Command "add-phone" must have 3 arguments: <add-phone Name phone>.
+{RESET}''',
+    'KeyError': f'''{RED}
+You have no Power here. {RESET}
+{BRED}Such name is not found, please, check your input.
+{RESET}'''
 }
 
 change_birthday_error_messages = {
     'FormatError': (f'''{RED}
 The language is that of Mordor, which I will not utter here.{RESET}
 {BRED}Invalid "change-birthday" format. Command "change-birthday" must have 3 arguments: <change-birthday Namenew_birthday>.
-                    {RESET}'''),
+{RESET}'''),
     'KeyError': (f'''{RED}
 You have no Power here. {RESET}
 {BRED}Such name is not found, please, use "add" command instead.
-                 {RESET}''')
+{RESET}''')
 }
 
 change_email_error_messages = {
     'FormatError': (f'''{RED}
 The language is that of Mordor, which I will not utter here.{RESET}
 {BRED}Invalid "change-email" format. Command "change-email" must have 3 arguments: <change-email  Name  new_email>.
-                    {RESET}'''),
+{RESET}'''),
     'KeyError': (f'''{RED}
 You have no Power here. {RESET}
 {BRED}Such name is not found, please, use "add" command instead.
-                 {RESET}''')
+{RESET}''')
 }
 
 

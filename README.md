@@ -8,7 +8,8 @@ Our **Assistant Bot** is a user-friendly console bot that you can use to conveni
 
 | **Command**                         | **Action**                            | **Example**                              |
 | ----------------------------------- | ------------------------------------- | ---------------------------------------- |
-| close                               | our secrets are safe with me          | close                                    |
+| close                               | save my secrets and exit              | close                                    |
+| exit                                | save my secrets and exit              | exit                                     |
 | add-contact                         | add new contact, use 'b' to interrupt | add-contact Gandalf 1234567890           |
 | delete-contact <Name>               | delete the contact                    | delete-contact Smaug                     |
 | contacts                            | show the contacts                     | contacts                                 |
