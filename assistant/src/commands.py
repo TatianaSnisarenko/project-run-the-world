@@ -242,7 +242,7 @@ def add_contact(book: AddressBook):
         phone_add = input('Enter phone, my friend: ')
         check_break(phone_add)
         try:
-            validated_phone = Phone.validate_and_get(phone_add)
+            validated_phone = Phone.validate_and_get_value(phone_add)
             break
         except ValidationError as ve:
             print(ve)
@@ -390,7 +390,8 @@ def find_by_brithday(args, book: AddressBook):
 
     """
     birthday = args[0]
-    matching_records = book.find_record_by_birthday(birthday)
+    validated_value = Birthday.validate_and_get_value(birthday)
+    matching_records = book.find_record_by_birthday(validated_value)
     if not matching_records:
         return (f'''{YELLOW}
 The wise speak only of what they know!
@@ -420,7 +421,7 @@ def find_by_phone(args, book: AddressBook):
              or a message indicating that no contact was found.
 
     """
-    phone = args[0]
+    phone = Phone.validate_and_get_value(args[0])
     matching_records = book.find_record_by_phone(phone)
     if not matching_records:
         return (f'''{YELLOW}
@@ -451,7 +452,7 @@ def find_by_email(args, book: AddressBook):
              or a message indicating that no contact was found.
 
     """
-    email = args[0]
+    email = Email.validate_and_get_value(args[0])
     matching_records = book.find_record_by_email(email)
     if not matching_records:
         return (f'''{YELLOW}
