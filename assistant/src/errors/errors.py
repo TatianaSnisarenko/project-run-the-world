@@ -7,3 +7,6 @@ class EmptyNotesError(Exception):
 
 class PhoneError(Exception):
     pass
+
+class BreakError(Exception):
+    pass
