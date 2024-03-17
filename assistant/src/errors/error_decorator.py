@@ -20,7 +20,6 @@ def input_error(error_messages):
             except BreakError as e:
                 return str(e)
             except Exception as e:
-                print(e)
                 return generic_error_message
         return inner
     return decorator
