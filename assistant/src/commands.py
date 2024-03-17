@@ -72,9 +72,16 @@ def parse_input(user_input):
     return cmd, *args
 
 
+def check_break(input: str):
+    input_lower = input.strip().lower() if input else ''
+    if input_lower == 'b' or input_lower == 'break':
+        raise BreakError(f'''{YELLOW}
+Take notice! You interrupted command using 'break' command.
+            {RESET}''')
+
+
 @input_error(add_note_error_messages)
 def add_note(notes: Notes):
-
     """Adds a new note to the Notes object.
 
     Prompts the user to enter the title, content, and tags for the note.
@@ -88,15 +95,15 @@ def add_note(notes: Notes):
     """
     note_title = input(f"{CYAN}The jorney starts here. Enter title: {RESET}")
     check_break(note_title)
-    note_text = input(f'{CYAN}Write something wise, my dear friend. Enter note content: {RESET}')
+    note_text = input(
+        f'{CYAN}Write something wise, my dear friend. Enter note content: {RESET}')
     check_break(note_text)
     tags = input(f'{CYAN}And one more. Enter tags separated by comma: {RESET}')
     check_break(tags)
     note_tags = [tag.strip() for tag in tags.split(',')]
     notes.create_note(note_title, note_text, note_tags)
-    notes.create_note(note_title, note_text, note_tags)
     return (f'''{GREEN}
-The world is changed. I feel it in the water. 
+The world is changed. I feel it in the water.
 I feel it in the earth. I smell it in the air.{RESET}
 {BGREEN}Note added.
                    {RESET}''')
@@ -125,7 +132,7 @@ def add_tag(args, notes: Notes):
     note_id, tag = args
     notes.add_tag(note_id, tag)
     return (f'''{GREEN}
-The world is changed. I feel it in the water. 
+The world is changed. I feel it in the water.
 I feel it in the earth. I smell it in the air.{RESET}
 {BGREEN}Tag added.
             {RESET}''')
@@ -159,7 +166,7 @@ def change_title(args, notes: Notes):
     new_title = input("Let's do it! Enter new title: ")
     notes.change_title(existing_note, new_title)
     return (f'''{GREEN}
-The world is changed. I feel it in the water. 
+The world is changed. I feel it in the water.
 I feel it in the earth. I smell it in the air.{RESET}
 {BGREEN}Note title changed.
             {RESET}''')
@@ -193,17 +200,9 @@ def change_content(args, notes: Notes):
     new_content = input('Hurry up, my dear! Enter new content: ')
     notes.change_content(existing_note, new_content)
     return (f'''{GREEN}
-The world is changed. I feel it in the water. 
+The world is changed. I feel it in the water.
 I feel it in the earth. I smell it in the air.{RESET}
 {BGREEN}Note content changed.
-            {RESET}''')
-
-
-def check_break(input: str):
-    input_lower = input.strip().lower() if input else ''
-    if input_lower == 'b' or input_lower == 'break':
-        raise BreakError(f'''{YELLOW}
-Take notice! You interrupted command using 'break' command.
             {RESET}''')
 
 
@@ -285,7 +284,7 @@ def add_contact(book: AddressBook):
     book.create_record(validated_name, validated_phone,
                        validated_email, validated_birthday, validated_address)
     return (f'''{GREEN}
-The world is changed. I feel it in the water. 
+The world is changed. I feel it in the water.
 I feel it in the earth. I smell it in the air.{RESET}
 {BGREEN}Contact added.
             {RESET}''')
@@ -314,7 +313,7 @@ def change_record_phone(args, book: AddressBook):
     name, old_phone, new_phone = args
     book.change_record_phone(name, old_phone, new_phone)
     return (f'''{GREEN}
-The world is changed. I feel it in the water. 
+The world is changed. I feel it in the water.
 I feel it in the earth. I smell it in the air.{RESET}
 {BGREEN}Contact updated.
             {RESET}''')
@@ -398,7 +397,7 @@ def find_by_brithday(args, book: AddressBook):
     matching_records = book.find_record_by_birthday(birthday)
     if not matching_records:
         return (f'''{YELLOW}
-The wise speak only of what they know!{RESET}{BYELLOW} 
+The wise speak only of what they know!{RESET}{BYELLOW}
 No contact found with this birthday.
                 {RESET}''')
     else:
@@ -429,7 +428,7 @@ def find_by_phone(args, book: AddressBook):
     matching_records = book.find_record_by_phone(phone)
     if not matching_records:
         return (f'''{YELLOW}
-The wise speak only of what they know!{RESET}{BYELLOW} 
+The wise speak only of what they know!{RESET}{BYELLOW}
 No contact found with this phone number.
                 {RESET}''')
     else:
@@ -460,7 +459,7 @@ def find_by_email(args, book: AddressBook):
     matching_records = book.find_record_by_email(email)
     if not matching_records:
         return (f'''{YELLOW}
-The wise speak only of what they know!{RESET}{BYELLOW} 
+The wise speak only of what they know!{RESET}{BYELLOW}
 Do not tempt me! No contact found with this email.
                 {RESET}''')
     else:
@@ -491,7 +490,7 @@ def find_by_address(args, book: AddressBook):
     matching_records = book.find_record_by_address(address)
     if not matching_records:
         return (f'''{YELLOW}
-The wise speak only of what they know!{RESET}{BYELLOW} 
+The wise speak only of what they know!{RESET}{BYELLOW}
 No contact found with this address.
                 {RESET}''')
     else:
@@ -593,7 +592,7 @@ def change_tag(args, notes: Notes):
     id, old_tag, new_tag = args
     changed_note = notes.change_tag(id, old_tag, new_tag)
     return (f'''{GREEN}
-The world is changed. I feel it in the water. 
+The world is changed. I feel it in the water.
 I feel it in the earth. I smell it in the air.{RESET}
 {BGREEN}Tag changed.
             {RESET}''')
@@ -622,7 +621,7 @@ def find_by_title(args, notes: Notes):
         return format_as_table(result, 40)
     else:
         return (f'''{YELLOW}
-What a pitty, my dear friend!{RESET}{BYELLOW} 
+What a pitty, my dear friend!{RESET}{BYELLOW}
 There are no notes for such title: [{title}].
                 {RESET}''')
 
@@ -650,7 +649,7 @@ def find_by_content(args, notes: Notes):
         return format_as_table(result, 40)
     else:
         return (f'''{YELLOW}
-What a pitty, my dear friend!{RESET}{BYELLOW} 
+What a pitty, my dear friend!{RESET}{BYELLOW}
 There are no notes for such content: [{text}].
                 {RESET}''')
 
@@ -679,7 +678,7 @@ def find_by_tags(args, notes: Notes):
         return format_as_table(result, 40)
     else:
         return (f'''{YELLOW}
-What a pitty, my dear friend!{RESET}{BYELLOW} 
+What a pitty, my dear friend!{RESET}{BYELLOW}
 There are no notes for such tags: [{', '.join(tags)}].
                 {RESET}''')
 
@@ -780,7 +779,7 @@ def add_birthday(args, book: AddressBook):
     name, birthday = args
     book.add_record_birthday(name, birthday)
     return (f'''{GREEN}
-The world is changed. I feel it in the water. 
+The world is changed. I feel it in the water.
 I feel it in the earth. I smell it in the air.{RESET}
 {BGREEN}Birthday added.
             {RESET}''')
@@ -811,10 +810,11 @@ def change_birthday(args, book: AddressBook):
     name, birthday = args
     book.change_record_birthday(name, birthday)
     return (f'''{GREEN}
-The world is changed. I feel it in the water. 
+The world is changed. I feel it in the water.
 I feel it in the earth. I smell it in the air.{RESET}
 {BGREEN}Birthday changed.
             {RESET}''')
+
 
 @input_error(change_email_error_messages)
 def change_email(args, book: AddressBook):
@@ -917,9 +917,10 @@ def show_all_birthdays(args, book: AddressBook):
         raise KeyError
     birthdays = book.get_record_birthdays_per_week(per_days)
     return format_as_table(birthdays, 40) if birthdays else (f'''{YELLOW}
-What a pity, my dear friend!{RESET}{BYELLOW} 
+What a pity, my dear friend!{RESET}{BYELLOW}
 No birthdays for next {days} days.
     {RESET}''')
+
 
 @input_error([])
 def show_help():
@@ -954,6 +955,6 @@ Death is just another path - one that we all must take.{RESET}
 {RESET}''')
     else:
         return (f'''{YELLOW}
-What a pitty, my dear friend!{RESET}{BYELLOW} 
+What a pitty, my dear friend!{RESET}{BYELLOW}
 Contact '{name}' not found.
 {RESET}''')

@@ -26,7 +26,7 @@ The language is that of Mordor, which I will not utter here.{RESET}
 {BRED}Invalid note id: id must be a valid number.
 {RESET}''')
 tag_already_exists_error_message = (f'''{RED}
-You have no Power here. {RESET}                                             
+You have no Power here. {RESET}
 {BRED}Such tag: is already present for the note with id.
 {RESET}''')
 tag_doenst_exist_error_message = (f'''{RED}
@@ -37,7 +37,7 @@ note_doesnt_exist_error_message = (f'''{RED}
 You have no Power here. {RESET}
 {BRED}Note with provided ID does not exist.
 {RESET}''')
-invalid_email_error_message_template = (f'''{RED}
+invalid_email_error_message = (f'''{RED}
 The language is that of Mordor, which I will not utter here.{RESET}
 {BRED}Not a valid email provided. Please try again
                                         {RESET}''')
@@ -54,7 +54,7 @@ empty_notes_error_message = (f'''{RED}
 You have no Power here. {RESET}
 {BRED}Notes are empty, please add new notes first
 {RESET}''')
-invalid_email_error_message_template = (f'''{RED}
+invalid_email_error_message = (f'''{RED}
 The language is that of Mordor, which I will not utter here.{RESET}
 {BRED}Not a valid email provided. Please try again
                                         {RESET}''')
@@ -70,14 +70,14 @@ You have no Power here. {RESET}
 generic_invalid_command_format_message = (f'''{RED}
 My dear friend, be carefull!
 You've enterd command in invalid format.{RESET}
-{BRED}Please use <help> to display all available commands{RESET} 
+{BRED}Please use <help> to display all available commands{RESET}
 {RED}I've prepeared for you
                                           {RESET}''')
 
 add_note_error_messages = {
     'FormatError': (f'''{RED}
 You have no Power here. {RESET}
-{BRED}Such note is already present, please, use "change_note" command instead.
+{BRED}Such note is already present, please, use "change" command instead.
                     {RESET}'''),
     'KeyError': (f'''{RED}
 You have no Power here. {RESET}
@@ -239,7 +239,7 @@ Invalid "sort-by-tag" format. Command "sort-by-tag" must have 1 arguments: <find
 }
 
 find_by_tags_error_messages = {
-        'FormatError': (f'''{RED}
+    'FormatError': (f'''{RED}
 The language is that of Mordor, which I will not utter here.{RESET}
 {BRED}Invalid "find-by-tag" format. Command "find-by-tag" must have not less then 2 arguments: <find-by-tag tag1,tag2,tag3>.
                     {RESET}''')
